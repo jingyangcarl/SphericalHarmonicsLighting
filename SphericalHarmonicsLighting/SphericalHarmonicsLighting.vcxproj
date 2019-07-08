@@ -113,8 +113,14 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera3D.cpp" />
+    <ClCompile Include="Group3D.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object3D.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SphericalHarmonicsLighting.cpp" />
+    <ClCompile Include="Widget.cpp" />
+    <ClCompile Include="WidgetCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SphericalHarmonicsLighting.h" />
@@ -124,6 +130,14 @@
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="SphericalHarmonicsLighting.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera3D.h" />
+    <ClInclude Include="Group3D.h" />
+    <ClInclude Include="Object3D.h" />
+    <ClInclude Include="Skybox.h" />
+    <ClInclude Include="Transformational.h" />
+    <ClInclude Include="Widget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
