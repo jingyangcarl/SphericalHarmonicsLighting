@@ -5,10 +5,10 @@ Object3D::Object3D() :
 	v_scale = 1.0f;
 }
 
-Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, const QImage& texImage) :
+Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material) :
 	indexBuffer(QOpenGLBuffer::IndexBuffer), texture(0) {
 	v_scale = 1.0f;
-	init(vertices, indices, texImage);
+	init(vertices, indices, material);
 }
 
 Object3D::~Object3D() {
@@ -24,7 +24,7 @@ Object3D::~Object3D() {
 			texture->destroy();
 }
 
-void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, const QImage& texImage) {
+void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material) {
 	// load vertex data
 	vertexBuffer.create();
 	vertexBuffer.bind();
@@ -37,17 +37,31 @@ void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indi
 	indexBuffer.allocate(indices.constData(), indices.size() * sizeof(GLuint));
 	indexBuffer.release();
 
+	// load material
+	this->material = material;
+
 	// load texture
-	texture = new QOpenGLTexture(texImage.mirrored());
+	if (material) {
+		this->texture = new QOpenGLTexture((material->getDiffuseMap()).mirrored());
+	}
+	else {
+		// this->texture = new QOpenGLTexture(QOpenGLTexture::TargetRectangle);
+		/*material = new Material;
+		material->setAmbientColor(QVector3D(1.0, 1.0, 1.0));
+		material->setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
+		material->setSpecularColor(QVector3D(1.0, 1.0, 1.0));
+		material->setShinnes(96);*/
+		this->texture = new QOpenGLTexture(QImage("./defaultTexture.jpg"));
+	}
 
 	// set texture property
-	texture->setMinificationFilter(QOpenGLTexture::Linear); // nearest filtering mode
-	texture->setMagnificationFilter(QOpenGLTexture::Linear); // bilinear filtering mode
-	texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
+	this->texture->setMinificationFilter(QOpenGLTexture::Linear); // nearest filtering mode
+	this->texture->setMagnificationFilter(QOpenGLTexture::Linear); // bilinear filtering mode
+	this->texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
 }
 
 void Object3D::setTexture(QImage& texImage) {
-	texture->setData(texImage);
+	this->texture->setData(texImage);
 }
 
 void Object3D::rotate(const QQuaternion& r) {
@@ -59,7 +73,7 @@ void Object3D::translate(const QVector3D& t) {
 }
 
 void Object3D::scale(const float& s) {
-	v_scale += s;
+	v_scale *= s;
 }
 
 void Object3D::setGlobalTransform(const QMatrix4x4& g) {

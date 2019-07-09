@@ -7,6 +7,7 @@
 #include <qmatrix4x4.h>
 #include <qopenglshaderprogram.h>
 #include <qopenglfunctions.h>
+#include "Material.h"
 
 struct Vertex {
 	Vertex() {};
@@ -23,11 +24,11 @@ class Object3D :
 public:
 	// constructor
 	Object3D();
-	Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, const QImage& texImage);
+	Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material);
 	~Object3D();
 
 	// initialization
-	void init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, const QImage& texImage);
+	void init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material);
 	void setTexture(QImage& texImage);
 
 	// interface implementation
@@ -42,6 +43,7 @@ private:
 	QOpenGLBuffer vertexBuffer;
 	QOpenGLBuffer indexBuffer;
 	QOpenGLTexture* texture;
+	Material* material;
 
 	// linear transformation
 	QVector3D v_translation;

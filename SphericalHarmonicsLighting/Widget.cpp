@@ -37,41 +37,6 @@ void Widget::initShaders() {
 	}
 }
 
-void Widget::loadObj(const QString& objPath, const QString& imgPath = "./defaultTexture.jpg") {
-	QFile objFile(objPath);
-	if (!objFile.exists()) return;
-
-	QVector<QVector3D> verCoords;
-	QVector<QVector2D> texCoords;
-	QVector<QVector3D> normals;
-	QVector<Vertex> vertices;
-	QVector<GLuint> indices;
-
-	objFile.open(QIODevice::ReadOnly);
-	QTextStream input(&objFile);
-
-	while (!input.atEnd()) {
-		QString line = input.readLine();
-		QStringList list = line.split(" ");
-		if (list[0] == "v") {
-			verCoords << QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat());
-		} else if (list[0] == "vt") {
-			texCoords << QVector2D(list[1].toFloat(), list[2].toFloat());
-		} else if (list[0] == "vn") {
-			normals << QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat());
-		} else if (list[0] == "f") {
-			for (int i = 1; i <= 3; i++) {
-				QStringList v = list[i].split("/");
-				vertices.append(Vertex(verCoords[v[0].toLong() - 1], texCoords[v[1].toLong() - 1], normals[v[2].toLong() - 1]));
-				indices.append(indices.size());
-			}
-		}
-	}
-
-	objFile.close();
-	objects.append(new Object3D(vertices, indices, QImage(imgPath)));
-}
-
 void Widget::initializeGL() {
 
 	// Enable Keyboard
@@ -93,29 +58,31 @@ void Widget::initializeGL() {
 	// if you change the order/number of objects, remember to edit timerEvent
 	// Add model
 	groups.append(new Group3D());
-	//this->loadObj("./human.obj", "./human.jpg");
-	this->loadObj("./spaceship.obj");
+	objects.append(new ObjectEngine3D());
+	objects[objects.size() - 1]->loadObjectFromFile("./Max.obj");
+	objects[objects.size() - 1]->scale(0.1);
 	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
 	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
 	transformObjects.append(groups[groups.size() - 1]);
 
 	// add stars
-	groups.append(new Group3D());
-	for (int x = 0; x < 2; x++) {
-		for (int y = 0; y < 2; y++) {
-			for (int z = 0; z < 2; z++) {
-				this->loadObj("./estrellica.obj", "./texture1.jpg");
-				float dis = 8.0;
-				objects[objects.size() - 1]->translate(QVector3D(dis*(2.0*x - 1.0), dis*(2.0*y - 1.0), dis*(2.0*z - 1.0)));
-				groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
-			}
-		}
-	}
-	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
-	transformObjects.append(groups[groups.size() - 1]);
+	//groups.append(new Group3D());
+	//for (int x = 0; x < 2; x++) {
+	//	for (int y = 0; y < 2; y++) {
+	//		for (int z = 0; z < 2; z++) {
+	//			objects.append(new ObjectEngine3D());
+	//			objects[objects.size() - 1]->loadObjectFromFile("./estrellica.obj");
+	//			float dis = 8.0;
+	//			objects[objects.size() - 1]->translate(QVector3D(dis*(2.0*x - 1.0), dis*(2.0*y - 1.0), dis*(2.0*z - 1.0)));
+	//			groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
+	//		}
+	//	}
+	//}
+	//groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
+	//transformObjects.append(groups[groups.size() - 1]);
 
 	// start timer
-	timer.start(10, this);
+	// timer.start(10, this);
 }
 
 void Widget::resizeGL(int width, int height) {
@@ -136,7 +103,6 @@ void Widget::paintGL() {
 
 	// draw objects
 	objectShader.bind();
-	//objectShader.setAttributeArray();
 	objectShader.setUniformValue("u_projectionMatrix", projectionMatrix);
 	objectShader.setUniformValue("u_lightPosition", QVector4D(0.0, 0.0, 0.0, 1.0));
 	objectShader.setUniformValue("u_lightPower", 1.0f);

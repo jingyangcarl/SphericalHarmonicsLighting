@@ -5,7 +5,7 @@
 #include <QtMath>
 #include <qbasictimer.h>
 
-#include "Object3D.h"
+#include "ObjectEngine3D.h"
 #include "Group3D.h"
 #include "Camera3D.h"
 #include "SkyBox.h"
@@ -19,7 +19,6 @@ public:
 protected:
 	// initialization
 	void initShaders();
-	void loadObj(const QString& objPath, const QString &imgPath);
 
 	void initializeGL();
 	void resizeGL(int width, int height);
@@ -39,7 +38,7 @@ private:
 
 	// object
 	Skybox* skybox;
-	QVector<Object3D*> objects;
+	QVector<ObjectEngine3D*> objects;
 	QVector<Group3D*> groups;
 	QVector<Transformational*> transformObjects;
 

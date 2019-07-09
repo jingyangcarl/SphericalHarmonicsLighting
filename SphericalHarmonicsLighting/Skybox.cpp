@@ -50,7 +50,14 @@ Skybox::Skybox(float width, const QImage& texture) :
 	loadTextures();
 	loadCoefficients();
 
-	skybox = new Object3D(vertices, indices, texture);
+	Material* material = new Material;
+	material->setAmbientColor(QVector3D(1.0, 1.0, 1.0));
+	material->setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
+	material->setSpecularColor(QVector3D(1.0, 1.0, 1.0));
+	material->setShinnes(96);
+	material->setDiffuseMap(texture);
+
+	skybox = new Object3D(vertices, indices, material);
 }
 
 Skybox::~Skybox() {

@@ -78,6 +78,10 @@ void Widget::timerEvent(QTimerEvent* event) {
 	}
 
 	// for star group
+	if (groups.size() < 1) {
+		qDebug() << "Carl::Widget::timerEvent: error: group index out of bounds";
+		exit(-1);
+	}
 	groups[1]->rotate(QQuaternion::fromAxisAndAngle(1.0, 0.0, 0.0, qCos(angleGroup)));
 	groups[1]->rotate(QQuaternion::fromAxisAndAngle(0.0, 1.0, 0.0, -qCos(angleGroup)));
 
