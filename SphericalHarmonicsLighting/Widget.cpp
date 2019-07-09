@@ -106,7 +106,7 @@ void Widget::paintGL() {
 	objectShader.setUniformValue("u_projectionMatrix", projectionMatrix);
 	objectShader.setUniformValue("u_lightPosition", QVector4D(0.0, 0.0, 0.0, 1.0));
 	objectShader.setUniformValue("u_lightPower", 1.0f);
-	objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(0)).constData(), 16);
+	objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(skyboxIndex)).constData(), 16);
 	camera->draw(&objectShader);
 	for (int i = 0; i < transformObjects.size(); i++)
 		transformObjects[i]->draw(&objectShader, context()->functions());

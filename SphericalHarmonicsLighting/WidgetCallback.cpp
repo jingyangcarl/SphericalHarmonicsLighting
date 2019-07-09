@@ -1,15 +1,18 @@
 #include "Widget.h"
 
 void Widget::keyPressEvent(QKeyEvent* event) {
-	int index;
 	switch (event->key()) {
 	case Qt::Key_Left:
-		index = skybox->loadPrevious();
-		objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(index)).constData(), 16);
+		skyboxIndex = skybox->loadPrevious();
+		objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(skyboxIndex)).constData(), 16);
 		break;
 	case Qt::Key_Right:
-		index = skybox->loadNext();
-		objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(index)).constData(), 16);
+		skyboxIndex = skybox->loadNext();
+		objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(skyboxIndex)).constData(), 16);
+		break;
+	case Qt::Key_Up:
+		break;
+	case Qt::Key_Down:
 		break;
 	case Qt::Key_0:
 		camera = new Camera3D();

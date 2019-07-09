@@ -1,7 +1,7 @@
 #include "Skybox.h"
 
 Skybox::Skybox(float width, const QImage& texture) :
-	texIndex(0) {
+	skyboxIndex(0) {
 	QVector<Vertex> vertices;
 	vertices <<
 		// front
@@ -119,15 +119,15 @@ QVector<QVector3D>& Skybox::getSHCoefficient(int index) {
 }
 
 int Skybox::loadNext() {
-	texIndex++;
-	setTexture(abs(texIndex));
-	return abs(texIndex) % imgTextures.size();
+	skyboxIndex++;
+	setTexture(abs(skyboxIndex));
+	return abs(skyboxIndex) % imgTextures.size();
 }
 
 int Skybox::loadPrevious() {
-	texIndex--;
-	setTexture(abs(texIndex));
-	return abs(texIndex) % imgTextures.size();
+	skyboxIndex--;
+	setTexture(abs(skyboxIndex));
+	return abs(skyboxIndex) % imgTextures.size();
 }
 
 void Skybox::rotate(const QQuaternion& r) {

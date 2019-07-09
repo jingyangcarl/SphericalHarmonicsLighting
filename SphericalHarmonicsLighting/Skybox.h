@@ -34,7 +34,7 @@ private:
 	// texture
 	QVector<QImage> imgTextures;
 	QVector<QVector<QVector3D>> imgSHCoefficients;
-	int texIndex;
+	int skyboxIndex;
 
 	// Spherical Harmonics
 

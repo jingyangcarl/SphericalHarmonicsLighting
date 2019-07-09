@@ -67,11 +67,6 @@ void main(void) {
 	for (int i = 0; i < 16; i++)
 		shColor += u_coef[i] * basis[i];
 
-	if (diffMatColor[3] == 2.0) {
-		//gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-		//return;
-	}
-
 	diffMatColor *= vec4(shColor, 1.0);
 
 	gl_FragColor = diffMatColor;

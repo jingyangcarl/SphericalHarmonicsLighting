@@ -55,5 +55,8 @@ private:
 
 	// pMatrix
 	QMatrix4x4 projectionMatrix;
+
+	// index
+	int skyboxIndex = 0;
 };
 
