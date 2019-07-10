@@ -30,6 +30,9 @@ void SphericalHarmonicsSampler::ImageComposition() {
 	blackImage.fill(Qt::black);
 
 	// paint image
+	// |Black | PosY |Black |Black |
+	// | NegX | NegY | PosX | PosZ |
+	// |Black | NegY |Black |Black |
 	QPainter *painter = new QPainter(texture);
 	painter->drawImage(QPoint(0 * width, 0 * height), blackImage);
 	painter->drawImage(QPoint(1 * width, 0 * height), *images.find("posy").value());
@@ -50,4 +53,12 @@ void SphericalHarmonicsSampler::ImageComposition() {
 	if (!texture->save("./Resources/Output/texture.jpg")) {
 		qDebug() << "Carl::SphericalHarmonicsSampler::ImageComposition::images.size() error: save failed";
 	}
+}
+
+QVector3D SphericalHarmonicsSampler::CubeUV2XYZ(QVector2D uv) {
+	return QVector3D();
+}
+
+QVector2D SphericalHarmonicsSampler::CubeXYZ2UV(QVector3D xyz) {
+	return QVector2D();
 }

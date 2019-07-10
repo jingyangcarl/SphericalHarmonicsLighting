@@ -70,4 +70,5 @@ void main(void) {
 	diffMatColor *= vec4(shColor, 1.0);
 
 	gl_FragColor = diffMatColor;
+	// gl_FragColor = vec4(shColor, 1.0);
 }

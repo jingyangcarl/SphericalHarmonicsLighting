@@ -63,9 +63,9 @@ void Widget::mouseMoveEvent(QMouseEvent* event) {
 
 void Widget::wheelEvent(QWheelEvent* event) {
 	if (event->delta() > 0)
-		camera->translate(QVector3D(0.0f, 0.0f, 0.5f));
+		camera->translate(QVector3D(0.0f, 0.0f, 3.0f));
 	else if (event->delta() < 0)
-		camera->translate(QVector3D(0.0f, 0.0f, -0.5f));
+		camera->translate(QVector3D(0.0f, 0.0f, -3.0f));
 
 	update();
 }

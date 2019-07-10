@@ -5,38 +5,64 @@ Skybox::Skybox(float width, const QImage& texture) :
 	QVector<Vertex> vertices;
 	vertices <<
 		// front
-		Vertex(QVector3D(-width, width, width), QVector2D(4.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
-		Vertex(QVector3D(-width, -width, width), QVector2D(4.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
-		Vertex(QVector3D(width, width, width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
-		Vertex(QVector3D(width, -width, width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		//Vertex(QVector3D(-width, width, width), QVector2D(4.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		//Vertex(QVector3D(-width, -width, width), QVector2D(4.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		//Vertex(QVector3D(width, width, width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		//Vertex(QVector3D(width, -width, width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		Vertex(QVector3D(-width, width, width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		Vertex(QVector3D(-width, -width, width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		Vertex(QVector3D(width, width, width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
+		Vertex(QVector3D(width, -width, width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
 
-		// left
-		Vertex(QVector3D(width, width, width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
-		Vertex(QVector3D(width, -width, width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
-		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
-		Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		// right
+		//Vertex(QVector3D(width, width, width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		//Vertex(QVector3D(width, -width, width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		//Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		//Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(width, width, width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(width, -width, width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(width, width, -width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(width, -width, -width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
 
 		// top
-		Vertex(QVector3D(width, width, width), QVector2D(2.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
-		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
-		Vertex(QVector3D(-width, width, width), QVector2D(1.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
-		Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		//Vertex(QVector3D(width, width, width), QVector2D(2.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		//Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		//Vertex(QVector3D(-width, width, width), QVector2D(1.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		//Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		Vertex(QVector3D(width, width, width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 0.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		Vertex(QVector3D(-width, width, width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
+		Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 0.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
 
-		// 
-		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
-		Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
-		Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
-		Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		// back
+		//Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		//Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		//Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		//Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		Vertex(QVector3D(width, width, -width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		Vertex(QVector3D(width, -width, -width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		Vertex(QVector3D(-width, width, -width), QVector2D(4.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
+		Vertex(QVector3D(-width, -width, -width), QVector2D(4.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
 
-		Vertex(QVector3D(-width, width, width), QVector2D(0.0 / 4.0, 2.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
-		Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
-		Vertex(QVector3D(-width, -width, width), QVector2D(0.0 / 4.0, 1.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
-		Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		// left
+		//Vertex(QVector3D(-width, width, width), QVector2D(0.0 / 4.0, 2.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		//Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		//Vertex(QVector3D(-width, -width, width), QVector2D(0.0 / 4.0, 1.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		//Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(-width, width, width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(-width, width, -width), QVector2D(0.0 / 4.0, 1.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(-width, -width, width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
+		Vertex(QVector3D(-width, -width, -width), QVector2D(0.0 / 4.0, 2.0 / 3.0), QVector3D(1.0, 0.0, 0.0)) <<
 
-		Vertex(QVector3D(-width, -width, width), QVector2D(1.0 / 4.0, 0.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
-		Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
-		Vertex(QVector3D(width, -width, width), QVector2D(2.0 / 4.0, 0.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
-		Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 1.0, 0.0));
+		// bottom
+		//Vertex(QVector3D(-width, -width, width), QVector2D(1.0 / 4.0, 0.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
+		//Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
+		//Vertex(QVector3D(width, -width, width), QVector2D(2.0 / 4.0, 0.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
+		//Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 1.0, 0.0));
+		Vertex(QVector3D(-width, -width, width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
+		Vertex(QVector3D(-width, -width, -width), QVector2D(1.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
+		Vertex(QVector3D(width, -width, width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 1.0, 0.0)) <<
+		Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, 1.0, 0.0));
 
 	QVector<GLuint> indices;
 	indices << 0 << 1 << 2 << 2 << 1 << 3;
@@ -68,22 +94,22 @@ Skybox::~Skybox() {
 
 void Skybox::loadTextures() {
 	textures <<
-		QImage("./Skybox01.jpg").mirrored() <<
-		QImage("./Skybox02.jpg").mirrored() <<
-		QImage("./Skybox03.jpg").mirrored() <<
-		QImage("./Skybox04.jpg").mirrored() <<
-		QImage("./Skybox05.jpg").mirrored() <<
-		QImage("./Skybox06.jpg").mirrored() <<
-		QImage("./Skybox07.jpg").mirrored() <<
-		QImage("./Skybox08.jpg").mirrored() <<
-		QImage("./Skybox09.jpg").mirrored() <<
-		QImage("./Skybox10.jpg").mirrored() <<
-		QImage("./Skybox11.jpg").mirrored() <<
-		QImage("./Skybox12.jpg").mirrored() <<
-		QImage("./Skybox13.jpg").mirrored() <<
-		QImage("./Skybox14.jpg").mirrored() <<
-		QImage("./Skybox15.jpg").mirrored() <<
-		QImage("./Skybox16.jpg").mirrored();
+		QImage("./Skybox01.jpg") <<
+		QImage("./Skybox02.jpg") <<
+		QImage("./Skybox03.jpg") <<
+		QImage("./Skybox04.jpg") <<
+		QImage("./Skybox05.jpg") <<
+		QImage("./Skybox06.jpg") <<
+		QImage("./Skybox07.jpg") <<
+		QImage("./Skybox08.jpg") <<
+		QImage("./Skybox09.jpg") <<
+		QImage("./Skybox10.jpg") <<
+		QImage("./Skybox11.jpg") <<
+		QImage("./Skybox12.jpg") <<
+		QImage("./Skybox13.jpg") <<
+		QImage("./Skybox14.jpg") <<
+		QImage("./Skybox15.jpg") <<
+		QImage("./Skybox16.jpg");
 }
 
 void Skybox::loadCoefficients() {
