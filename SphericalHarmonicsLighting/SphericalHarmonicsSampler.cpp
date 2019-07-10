@@ -55,10 +55,79 @@ void SphericalHarmonicsSampler::ImageComposition() {
 	}
 }
 
-QVector3D SphericalHarmonicsSampler::CubeUV2XYZ(QVector2D uv) {
+QVector3D & SphericalHarmonicsSampler::CubeUV2XYZ(QVector2D & uv) {
+	// TODO: insert return statement here
 	return QVector3D();
 }
 
-QVector2D SphericalHarmonicsSampler::CubeXYZ2UV(QVector3D xyz) {
-	return QVector2D();
+QPair<QString, QVector2D> SphericalHarmonicsSampler::CubeXYZ2UV(QVector3D &verCoord) {
+	float x = verCoord[0];
+	float y = verCoord[1];
+	float z = verCoord[2];
+	float absX = abs(verCoord[0]);
+	float absY = abs(verCoord[1]);
+	float absZ = abs(verCoord[2]);
+	QPair<QString, QVector2D> uvPair;
+	
+	if (absX >= absY && absX >= absZ) {
+		if (x >= 0) {
+			// right
+			uvPair = QPair<QString, QVector2D>(QString("posx"), QVector2D(-z / x, y / absX));
+		}
+		else {
+			// left
+			uvPair = QPair<QString, QVector2D>(QString("negx"), QVector2D(-z / x, y / absX));
+		}
+	}
+	else if (absY >= absZ) {
+		if (y >= 0) {
+			// top
+			uvPair = QPair<QString, QVector2D>(QString("posy"), QVector2D(x / absY, -z / y));
+		}
+		else {
+			// bottom
+			uvPair = QPair<QString, QVector2D>(QString("negx"), QVector2D(x / absY, -z / y));
+		}
+	}
+	else {
+		if (z >= 0) {
+			// front
+			uvPair = QPair<QString, QVector2D>(QString("posz"), QVector2D(x / z, y / absZ));
+		}
+		else {
+			// back
+			uvPair = QPair<QString, QVector2D>(QString("negz"), QVector2D(x / z, y / absZ));
+		}
+	}
+	// mapping in a single pic
+	uvPair.second[0] = uvPair.second[0] * 0.5f + 0.5f;
+	uvPair.second[1] = uvPair.second[1] * 0.5f + 0.5f;
+	return uvPair;
+}
+
+float SphericalHarmonicsSampler::NormalRandom(const float mu, const float sigma) {
+	// Gaussian distribution
+	static std::default_random_engine generator;
+	static std::normal_distribution<float> distribution(mu, sigma);
+	return distribution(generator);
+}
+
+void SphericalHarmonicsSampler::RandomSampling(int number) {
+	for (int i = 0; i < number; i++) {
+		float x = NormalRandom(0.0f, 1.0f);
+		float y = NormalRandom(0.0f, 1.0f);
+		float z = NormalRandom(0.0f, 1.0f);
+		Sample *sample = new Sample();
+		sample->verCoord = QVector3D(x, y, z);
+		auto uvPair = CubeXYZ2UV(sample->verCoord);
+		sample->verColor = (images.find(uvPair.first).value())->pixel(uvPair.second[0], uvPair.second[1]);
+		samples << sample;
+	}
+}
+
+void SphericalHarmonicsSampler::Evaluate(int degree) {
+	int n = degree * degree;
+	for (const Sample* sample : samples) {
+
+	}
 }

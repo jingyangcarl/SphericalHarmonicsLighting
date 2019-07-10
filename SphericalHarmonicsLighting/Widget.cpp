@@ -17,6 +17,7 @@ void Widget::initSkybox() {
 	sampler.loadImage(QString("negy"), QString("./Resources/Skybox/CNTower/negy.jpg"));
 	sampler.loadImage(QString("negz"), QString("./Resources/Skybox/CNTower/negz.jpg"));
 	sampler.ImageComposition();
+	sampler.RandomSampling(1000000);
 }
 
 void Widget::initShaders() {

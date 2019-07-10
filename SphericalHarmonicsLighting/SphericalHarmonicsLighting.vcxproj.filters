@@ -69,6 +69,9 @@
     <ClCompile Include="SphericalHarmonicsSampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SphericalHarmonicsEvaluator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SphericalHarmonicsLighting.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SphericalHarmonicsSampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SphericalHarmonicsEvaluator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
