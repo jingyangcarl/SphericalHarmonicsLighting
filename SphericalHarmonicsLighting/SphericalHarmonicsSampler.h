@@ -10,13 +10,12 @@ public:
 	SphericalHarmonicsSampler();
 	~SphericalHarmonicsSampler();
 
-	void loadImage(QString & filePath);
-	void loadImages(QVector<QString> & filePaths);
+	void loadImage(QString &name, QString & filePath);
 	void ImageComposition();
 
 private:
 	// 
-	QVector<QImage*> images;
-	QImage texture;
+	QMap<QString, QImage*> images;
+	QImage* texture;
 };
 

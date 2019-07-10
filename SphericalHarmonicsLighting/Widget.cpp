@@ -10,12 +10,12 @@ Widget::~Widget() {}
 
 void Widget::initSkybox() {
 	SphericalHarmonicsSampler sampler;
-	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/posx.jpg"));
-	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/posy.jpg"));
-	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/posz.jpg"));
-	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/negx.jpg"));
-	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/negy.jpg"));
-	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/negz.jpg"));
+	sampler.loadImage(QString("posx"), QString("./Resources/Skybox/MarriottMadisonWest/posx.jpg"));
+	sampler.loadImage(QString("posy"), QString("./Resources/Skybox/MarriottMadisonWest/posy.jpg"));
+	sampler.loadImage(QString("posz"), QString("./Resources/Skybox/MarriottMadisonWest/posz.jpg"));
+	sampler.loadImage(QString("negx"), QString("./Resources/Skybox/MarriottMadisonWest/negx.jpg"));
+	sampler.loadImage(QString("negy"), QString("./Resources/Skybox/MarriottMadisonWest/negy.jpg"));
+	sampler.loadImage(QString("negz"), QString("./Resources/Skybox/MarriottMadisonWest/negz.jpg"));
 	sampler.ImageComposition();
 }
 
