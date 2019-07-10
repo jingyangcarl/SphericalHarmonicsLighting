@@ -8,6 +8,17 @@ Widget::Widget(QWidget* parent) :
 
 Widget::~Widget() {}
 
+void Widget::initSkybox() {
+	SphericalHarmonicsSampler sampler;
+	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/posx.jpg"));
+	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/posy.jpg"));
+	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/posz.jpg"));
+	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/negx.jpg"));
+	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/negy.jpg"));
+	sampler.loadImage(QString("./Resources/Skybox/MarriottMadisonWest/negz.jpg"));
+	sampler.ImageComposition();
+}
+
 void Widget::initShaders() {
 	// objectShader
 	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Object.vsh")) {
@@ -49,6 +60,7 @@ void Widget::initializeGL() {
 	glEnable(GL_CULL_FACE);
 
 	// initialize shaders
+	initSkybox();
 	initShaders();
 
 	// create skybox

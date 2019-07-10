@@ -32,8 +32,8 @@ private:
 	Object3D* skybox;
 
 	// texture
-	QVector<QImage> imgTextures;
-	QVector<QVector<QVector3D>> imgSHCoefficients;
+	QVector<QImage> textures;
+	QVector<QVector<QVector3D>> shCoefficients;
 	int skyboxIndex;
 
 	// Spherical Harmonics

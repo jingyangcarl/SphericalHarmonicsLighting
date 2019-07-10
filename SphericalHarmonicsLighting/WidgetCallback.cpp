@@ -50,9 +50,11 @@ void Widget::mouseMoveEvent(QMouseEvent* event) {
 
 	QVector3D axis = QVector3D(diff.y(), diff.x(), 0.0f);
 
-	if (event->buttons() == Qt::LeftButton)
+	if (event->buttons() == Qt::LeftButton) {
 		camera->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
-	//skybox->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
+		// skybox->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
+		//objects[0]->rotate(QQuaternion::fromAxisAndAngle(axis, -angle));
+	}
 	if (event->buttons() == Qt::RightButton)
 		objects[0]->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
 

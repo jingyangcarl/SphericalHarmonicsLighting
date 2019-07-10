@@ -66,6 +66,9 @@
     <ClCompile Include="ObjectEngine3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SphericalHarmonicsSampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SphericalHarmonicsLighting.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ObjectEngine3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SphericalHarmonicsSampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

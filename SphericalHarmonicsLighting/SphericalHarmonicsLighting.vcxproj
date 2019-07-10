@@ -122,6 +122,7 @@
     <ClCompile Include="ObjectEngine3D.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SphericalHarmonicsLighting.cpp" />
+    <ClCompile Include="SphericalHarmonicsSampler.cpp" />
     <ClCompile Include="Widget.cpp" />
     <ClCompile Include="WidgetCallback.cpp" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectEngine3D.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="SphericalHarmonicsSampler.h" />
     <ClInclude Include="Transformational.h" />
     <ClInclude Include="Widget.h" />
   </ItemGroup>

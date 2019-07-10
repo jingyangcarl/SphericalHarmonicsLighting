@@ -10,17 +10,19 @@ Skybox::Skybox(float width, const QImage& texture) :
 		Vertex(QVector3D(width, width, width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
 		Vertex(QVector3D(width, -width, width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, -1.0)) <<
 
-		//
+		// left
 		Vertex(QVector3D(width, width, width), QVector2D(3.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
 		Vertex(QVector3D(width, -width, width), QVector2D(3.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
 		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
 		Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(-1.0, 0.0, 0.0)) <<
 
+		// top
 		Vertex(QVector3D(width, width, width), QVector2D(2.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
 		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
 		Vertex(QVector3D(-width, width, width), QVector2D(1.0 / 4.0, 3.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
 		Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, -1.0, 0.0)) <<
 
+		// 
 		Vertex(QVector3D(width, width, -width), QVector2D(2.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
 		Vertex(QVector3D(width, -width, -width), QVector2D(2.0 / 4.0, 1.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
 		Vertex(QVector3D(-width, width, -width), QVector2D(1.0 / 4.0, 2.0 / 3.0), QVector3D(0.0, 0.0, 1.0)) <<
@@ -65,7 +67,7 @@ Skybox::~Skybox() {
 }
 
 void Skybox::loadTextures() {
-	imgTextures <<
+	textures <<
 		QImage("./Skybox01.jpg").mirrored() <<
 		QImage("./Skybox02.jpg").mirrored() <<
 		QImage("./Skybox03.jpg").mirrored() <<
@@ -98,7 +100,7 @@ void Skybox::loadCoefficients() {
 				QVector3D coef = { list[0].toFloat(), list[1].toFloat(), list[2].toFloat() };
 				coefs << coef;
 			}
-			imgSHCoefficients << coefs;
+			shCoefficients << coefs;
 		}
 		file.close();
 	}
@@ -110,24 +112,24 @@ void Skybox::setTexture(QImage& texImage) {
 }
 
 void Skybox::setTexture(int index) {
-	skybox->setTexture(imgTextures[index % imgTextures.size()]);
+	skybox->setTexture(textures[index % textures.size()]);
 }
 
 QVector<QVector3D>& Skybox::getSHCoefficient(int index) {
 	// TODO: insert return statement here
-	return imgSHCoefficients[index];
+	return shCoefficients[index];
 }
 
 int Skybox::loadNext() {
 	skyboxIndex++;
 	setTexture(abs(skyboxIndex));
-	return abs(skyboxIndex) % imgTextures.size();
+	return abs(skyboxIndex) % textures.size();
 }
 
 int Skybox::loadPrevious() {
 	skyboxIndex--;
 	setTexture(abs(skyboxIndex));
-	return abs(skyboxIndex) % imgTextures.size();
+	return abs(skyboxIndex) % textures.size();
 }
 
 void Skybox::rotate(const QQuaternion& r) {

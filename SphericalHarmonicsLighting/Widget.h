@@ -9,6 +9,7 @@
 #include "Group3D.h"
 #include "Camera3D.h"
 #include "SkyBox.h"
+#include "SphericalHarmonicsSampler.h"
 
 class Widget :
 	public QOpenGLWidget {
@@ -17,13 +18,15 @@ public:
 	~Widget();
 
 protected:
-	// initialization
+	/*----------------Widget.cpp-------------------*/
+	void initSkybox();
 	void initShaders();
 
 	void initializeGL();
 	void resizeGL(int width, int height);
 	void paintGL();
 
+	/*----------------WidgetCallback.cpp-------------------*/
 	// callback
 	void keyPressEvent(QKeyEvent* event);
 	void mousePressEvent(QMouseEvent* event);

@@ -35,7 +35,7 @@ public:
     {
         if (SphericalHarmonicsLightingClass->objectName().isEmpty())
             SphericalHarmonicsLightingClass->setObjectName(QString::fromUtf8("SphericalHarmonicsLightingClass"));
-        SphericalHarmonicsLightingClass->resize(1060, 747);
+        SphericalHarmonicsLightingClass->resize(1171, 739);
         centralWidget = new QWidget(SphericalHarmonicsLightingClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridlayout = new QGridLayout(centralWidget);
@@ -50,7 +50,7 @@ public:
         SphericalHarmonicsLightingClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SphericalHarmonicsLightingClass);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1060, 21));
+        menuBar->setGeometry(QRect(0, 0, 1171, 21));
         SphericalHarmonicsLightingClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(SphericalHarmonicsLightingClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
