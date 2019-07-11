@@ -62,6 +62,6 @@ private:
 
 	// index
 	int skyboxIndex = 0;
-	SphericalHarmonicsEvaluator *evaluator;
+	//SphericalHarmonicsEvaluator *evaluator;
 };
 

@@ -26,7 +26,7 @@ public:
 
 	// skybox initialization
 	void loadImage(QString &name, QString & filePath);
-	void ImageComposition();
+	QImage &ImageComposition();
 
 	// uv mapping
 	QVector3D &CubeUV2XYZ(QVector2D &uv);
@@ -42,7 +42,7 @@ public:
 private:
 	// input
 	QMap<QString, QImage*> images;
-	QImage* texture;
+	QImage texture;
 
 	// samples
 	QVector<Sample*> samples;

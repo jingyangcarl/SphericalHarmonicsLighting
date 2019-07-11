@@ -5,6 +5,10 @@ SphericalHarmonicsEvaluator::SphericalHarmonicsEvaluator(const QVector<Sample*>&
 }
 
 SphericalHarmonicsEvaluator::~SphericalHarmonicsEvaluator() {
+	qDeleteAll(samples);
+	samples.clear();
+
+	coefs.clear();
 }
 
 QVector<float> SphericalHarmonicsEvaluator::BasisCoefficient(QVector3D & verCoord) {
@@ -60,7 +64,7 @@ void SphericalHarmonicsEvaluator::Evaluate() {
 		}
 	}
 	for (auto coef = coefs.begin(); coef != coefs.end(); coef++) {
-		(*coef) = 4 * M_PI * (*coef) / (float)samples.size() / 300;
+		(*coef) = 4 * M_PI * (*coef) / (float)samples.size() / 256;
 	}
 
 	//// save

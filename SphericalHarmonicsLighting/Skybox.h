@@ -3,6 +3,10 @@
 #include "Object3D.h"
 
 #include <qfile.h>
+#include <qdir.h>
+
+#include "SphericalHarmonicsSampler.h"
+#include "SphericalHarmonicsEvaluator.h"
 
 class Skybox : public Transformational {
 public:
@@ -12,7 +16,6 @@ public:
 
 	// load
 	void loadTextures();
-	void loadCoefficients();
 
 	// reset texture
 	void setTexture(QImage& texture);
@@ -29,7 +32,7 @@ public:
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions);
 
 private:
-	Object3D* skybox;
+	Object3D* skyboxObj;
 
 	// texture
 	QVector<QImage> textures;
@@ -37,5 +40,6 @@ private:
 	int skyboxIndex;
 
 	// Spherical Harmonics
-
+	SphericalHarmonicsSampler *sampler;
+	SphericalHarmonicsEvaluator *evaluator;
 };

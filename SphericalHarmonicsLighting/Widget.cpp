@@ -9,18 +9,17 @@ Widget::Widget(QWidget* parent) :
 Widget::~Widget() {}
 
 void Widget::initSkybox() {
-	SphericalHarmonicsSampler sampler;
-	sampler.loadImage(QString("posx"), QString("./Resources/Skybox/CNTower/posx.jpg"));
-	sampler.loadImage(QString("posy"), QString("./Resources/Skybox/CNTower/posy.jpg"));
-	sampler.loadImage(QString("posz"), QString("./Resources/Skybox/CNTower/posz.jpg"));
-	sampler.loadImage(QString("negx"), QString("./Resources/Skybox/CNTower/negx.jpg"));
-	sampler.loadImage(QString("negy"), QString("./Resources/Skybox/CNTower/negy.jpg"));
-	sampler.loadImage(QString("negz"), QString("./Resources/Skybox/CNTower/negz.jpg"));
-	sampler.ImageComposition();
+	//SphericalHarmonicsSampler sampler;
+	//sampler.loadImage(QString("posx"), QString("./Resources/Skybox/GoldenGateBridge3/posx.jpg"));
+	//sampler.loadImage(QString("posy"), QString("./Resources/Skybox/GoldenGateBridge3/posy.jpg"));
+	//sampler.loadImage(QString("posz"), QString("./Resources/Skybox/GoldenGateBridge3/posz.jpg"));
+	//sampler.loadImage(QString("negx"), QString("./Resources/Skybox/GoldenGateBridge3/negx.jpg"));
+	//sampler.loadImage(QString("negy"), QString("./Resources/Skybox/GoldenGateBridge3/negy.jpg"));
+	//sampler.loadImage(QString("negz"), QString("./Resources/Skybox/GoldenGateBridge3/negz.jpg"));
+	//// sampler.ImageComposition();
 	//sampler.RandomSampling(1000000);
-	sampler.RandomSampling(1000000);
-	evaluator = new SphericalHarmonicsEvaluator(sampler.getSamples(), 3);
-	evaluator->Evaluate();
+	//evaluator = new SphericalHarmonicsEvaluator(sampler.getSamples(), 3);
+	//evaluator->Evaluate();
 }
 
 void Widget::initShaders() {
@@ -64,7 +63,7 @@ void Widget::initializeGL() {
 	glEnable(GL_CULL_FACE);
 
 	// initialize shaders
-	initSkybox();
+	// initSkybox();
 	initShaders();
 
 	// create skybox
@@ -122,8 +121,8 @@ void Widget::paintGL() {
 	objectShader.setUniformValue("u_projectionMatrix", projectionMatrix);
 	objectShader.setUniformValue("u_lightPosition", QVector4D(0.0, 0.0, 0.0, 1.0));
 	objectShader.setUniformValue("u_lightPower", 1.0f);
-	//objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(skyboxIndex)).constData(), 16);
-	objectShader.setUniformValueArray("u_coef", evaluator->getCoefficients().constData(), 16);
+	objectShader.setUniformValueArray("u_coef", (skybox->getSHCoefficient(skyboxIndex)).constData(), 16);
+	//objectShader.setUniformValueArray("u_coef", evaluator->getCoefficients().constData(), 16);
 	camera->draw(&objectShader);
 	for (int i = 0; i < transformObjects.size(); i++)
 		transformObjects[i]->draw(&objectShader, context()->functions());

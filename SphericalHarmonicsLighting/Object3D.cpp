@@ -61,6 +61,8 @@ void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indi
 }
 
 void Object3D::setTexture(QImage& texImage) {
+	this->texture->destroy();
+	this->texture->create();
 	this->texture->setData(texImage);
 }
 
