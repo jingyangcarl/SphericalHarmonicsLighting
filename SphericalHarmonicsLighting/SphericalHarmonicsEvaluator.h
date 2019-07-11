@@ -1,13 +1,28 @@
 #pragma once
-#include "sa"
+#include <qvector.h>
+#include <qvector3d.h>
+#include <qmath.h>
+#include "SphericalHarmonicsSampler.h"
+
+struct Sample;
 
 class SphericalHarmonicsEvaluator {
 public:
-	SphericalHarmonicsEvaluator();
+	SphericalHarmonicsEvaluator(const QVector<Sample*> &samples, int level);
 	~SphericalHarmonicsEvaluator();
 
-private:
-	int degree = 0;
+	QVector<float> BasisCoefficient(QVector3D& verCoord);
+	void Evaluate();
 
+	// get
+	const QVector<QVector3D> & getCoefficients() const;
+
+private:
+	// paramters
+	int level = 0;
+	QVector<Sample*> samples;
+
+	// coefficients
+	QVector<QVector3D> coefs;
 };
 

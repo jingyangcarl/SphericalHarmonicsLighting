@@ -36,9 +36,8 @@ public:
 	float NormalRandom(const float mu = 0.0f, const float sigma = 1.0f);
 	void RandomSampling(int number);
 
-	// spherical harmonics
-	QVector<float> BasisCoefficients(const QVector3D& verCoord);
-	void Evaluate(int degree);
+	// get
+	const QVector<Sample*> & getSamples() const;
 
 private:
 	// input
@@ -47,8 +46,5 @@ private:
 
 	// samples
 	QVector<Sample*> samples;
-
-	// coefficients
-	QVector<QVector3D> coefs;
 };
 
