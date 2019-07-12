@@ -15,6 +15,8 @@ public:
 	void setGlobalTransform(const QMatrix4x4& g);
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions = 0);
 
+	const QMatrix4x4 &getViewMatrix() const;
+
 private:
 	// linear transformation
 	QVector3D v_translation;

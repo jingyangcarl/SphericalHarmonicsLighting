@@ -5,6 +5,7 @@ uniform highp vec3 u_coef[16];
 varying highp vec4 v_position;
 varying highp vec2 v_texcoord;
 varying highp vec3 v_normal;
+varying highp mat4 v_viewMatrix;
 
 const float PI = 3.1415926535897932384626433832795;
 
@@ -37,6 +38,10 @@ void main(void) {
 
 	// SH
 	vec4 diffMatColor = texture2D(u_texture, v_texcoord);
+
+	// mat4 normal_trans = transpose(inverse(v_modelMatrix));
+	mat4 normal_trans = inverse(v_viewMatrix);
+	v_normal = vec3(normalize(normal_trans * vec4(v_normal, 0.0)));
 
 	float x = v_normal.x;
 	float y = v_normal.y;

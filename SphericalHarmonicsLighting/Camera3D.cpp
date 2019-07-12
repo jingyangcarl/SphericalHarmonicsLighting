@@ -32,3 +32,8 @@ void Camera3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 
 	shaderProgram->setUniformValue("u_viewMatrix", viewMatrix);
 }
+
+const QMatrix4x4 & Camera3D::getViewMatrix() const {
+	// TODO: insert return statement here
+	return viewMatrix;
+}

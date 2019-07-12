@@ -7,6 +7,7 @@ uniform highp mat4 u_viewMatrix;
 varying highp vec4 v_position;
 varying highp vec2 v_texcoord;
 varying highp vec3 v_normal;
+varying highp mat4 v_viewMatrix;
 
 void main(void) {
 
@@ -17,4 +18,5 @@ void main(void) {
 	v_texcoord = a_texcoord;
 	v_normal = normalize(vec3(mv_matrix * vec4(a_normal, 0.0)));
 	v_position = mv_matrix * a_position;
+	v_viewMatrix = u_viewMatrix;
 }

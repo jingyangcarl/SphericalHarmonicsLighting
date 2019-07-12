@@ -64,7 +64,8 @@ void SphericalHarmonicsEvaluator::Evaluate() {
 		}
 	}
 	for (auto coef = coefs.begin(); coef != coefs.end(); coef++) {
-		(*coef) = 4 * M_PI * (*coef) / (float)samples.size() / 256;
+		//(*coef) = 4 * M_PI * (*coef) / (float)samples.size() / 256;
+		(*coef) = 4 * M_PI * (*coef) / (float)samples.size() / 300;
 	}
 
 	//// save

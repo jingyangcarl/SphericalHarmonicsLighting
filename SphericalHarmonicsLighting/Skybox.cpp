@@ -61,6 +61,7 @@ Skybox::Skybox(float width, const QImage& texture) :
 	material->setDiffuseMap(texture);
 
 	skyboxObj = new Object3D(vertices, indices, material);
+	skyboxObj->setTexture(textures[0]);
 }
 
 Skybox::~Skybox() {
@@ -77,7 +78,7 @@ void Skybox::loadTextures() {
 
 	QStringList dirList = directory.entryList(QDir::Dirs);
 
-	for (int i = 2; i < 5; i++) {
+	for (int i = 6; i < 9; i++) {
 		directory.cd(dirList[i]);
 		QStringList jpgList = directory.entryList(QStringList() << "*.jpg");
 		sampler = new SphericalHarmonicsSampler();

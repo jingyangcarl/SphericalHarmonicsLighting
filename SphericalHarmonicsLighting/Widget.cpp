@@ -25,28 +25,28 @@ void Widget::initSkybox() {
 void Widget::initShaders() {
 	// objectShader
 	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Object.vsh")) {
-		QString log = objectShader.log();
+		qDebug() << objectShader.log();
 		close();
 	}
 	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Fragment, "./Object.fsh")) {
-		QString log = objectShader.log();
+		qDebug() << objectShader.log();
 		close();
 	}
 	if (!objectShader.link()) {
-		QString log = objectShader.log();
+		qDebug() << objectShader.log();
 		close();
 	}
 	// skyboxShader
 	if (!skyboxShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Skybox.vsh")) {
-		QString log = skyboxShader.log();
+		qDebug() << skyboxShader.log();
 		close();
 	}
 	if (!skyboxShader.addShaderFromSourceFile(QOpenGLShader::Fragment, "./Skybox.fsh")) {
-		QString log = skyboxShader.log();
+		qDebug() << skyboxShader.log();
 		close();
 	}
 	if (!skyboxShader.link()) {
-		QString log = skyboxShader.log();
+		qDebug() << skyboxShader.log();
 		close();
 	}
 }

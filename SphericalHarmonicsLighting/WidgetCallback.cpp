@@ -15,8 +15,8 @@ void Widget::keyPressEvent(QKeyEvent* event) {
 	case Qt::Key_Down:
 		break;
 	case Qt::Key_0:
-		camera = new Camera3D();
-		camera->translate(QVector3D(0.0, 0.0, -35.0));
+		/*camera = new Camera3D();
+		camera->translate(QVector3D(0.0, 0.0, -35.0));*/
 		break;
 	case Qt::Key_1:
 		groups[0]->delObject(camera);
@@ -52,11 +52,10 @@ void Widget::mouseMoveEvent(QMouseEvent* event) {
 
 	if (event->buttons() == Qt::LeftButton) {
 		camera->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
-		// skybox->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
-		//objects[0]->rotate(QQuaternion::fromAxisAndAngle(axis, -angle));
 	}
-	if (event->buttons() == Qt::RightButton)
+	if (event->buttons() == Qt::RightButton) {
 		objects[0]->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
+	}
 
 	update();
 }
