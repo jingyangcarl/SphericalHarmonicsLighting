@@ -1,6 +1,12 @@
 #include "Skybox.h"
 
-Skybox::Skybox(float width) :
+/*
+Description:
+	This function is a constructor;
+Input:
+	@ const float width: width of the skybox, where the default value is 70.0f;
+*/
+Skybox::Skybox(const float& width) :
 	index(0) {
 
 	QVector<Vertex> vertices;
@@ -29,8 +35,20 @@ Skybox::Skybox(float width) :
 	}
 }
 
+/*
+Description:
+	This function is a destructor;
+Input:
+	@ void paramter: void;
+*/
 Skybox::~Skybox() {
 	delete object;
+	qDeleteAll(textures);
+	qDeleteAll(coefficients);
+	delete currentTex;
+	delete currentCoef;
+	delete sampler;
+	delete evaluator;
 }
 
 /*
@@ -146,7 +164,7 @@ bool Skybox::loadTextures() {
 		sampler->loadImage(QString("negx"), QString(directory.path() + "/negx.jpg"));
 		sampler->loadImage(QString("negy"), QString(directory.path() + "/negy.jpg"));
 		sampler->loadImage(QString("negz"), QString(directory.path() + "/negz.jpg"));
-		textures << QImage(sampler->ImageExpand());
+		textures << new QImage(sampler->ImageExpand());
 
 		// sampling
 		sampler->RandomSampling(1000);
@@ -157,7 +175,7 @@ bool Skybox::loadTextures() {
 		evaluator->Evaluate();
 		
 		// load coefficients
-		coefficients << QVector<QVector3D>(evaluator->getCoefficients());
+		coefficients << new QVector<QVector3D>(evaluator->getCoefficients());
 
 		// release
 		evaluator->~SphericalHarmonicsEvaluator();
@@ -165,7 +183,7 @@ bool Skybox::loadTextures() {
 	}
 
 	if (coefficients.size() > 0) {
-		currentCoef = new auto(*coefficients.begin());
+		currentCoef = new auto(*(*coefficients.begin()));
 		return true;
 	}
 	else {
@@ -174,13 +192,21 @@ bool Skybox::loadTextures() {
 	}
 }
 
+/*
+Description:
+	This function is used to load material for the skybox;
+Input:
+	@ Material& material: the reference to a unloaded material;
+Output:
+	@ Material& material: the loaded material;
+*/
 bool Skybox::loadMaterial(Material& material) {
 	if (textures.size() > 0) {
 		material.setAmbientColor(QVector3D(1.0, 1.0, 1.0));
 		material.setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
 		material.setSpecularColor(QVector3D(1.0, 1.0, 1.0));
 		material.setShinnes(100);
-		material.setDiffuseMap((*textures.begin()).mirrored());
+		material.setDiffuseMap((*(*textures.begin())).mirrored());
 		return true;
 	}
 	else {
@@ -195,11 +221,11 @@ Description:
 Input:
 	@ QImage& image: an image used as the skybox texture, which should be an expanded image of a 6-sided cube;
 Output:
-	@ bool returnValue: whether the texture is successfuly set or not;
+	@ bool returnValue: whether the texture is successfully set or not;
 */
 bool Skybox::setTexture(QImage& image) {
 	if (object->setTexture(image)) {
-		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texture is not load;";
+		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texture is not load loaded successfully;";
 		return false;
 	}
 	return true;
@@ -215,8 +241,8 @@ Output:
 */
 bool Skybox::setTexture(int index) {
 	int i = index % textures.size();
-	if (!object->setTexture(textures[i])) {
-		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texture is not load;";
+	if (!object->setTexture(*textures[i])) {
+		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texture is not loaded successfully;";
 		return false;
 	}
 	return true;
@@ -226,16 +252,16 @@ bool Skybox::setTexture(int index) {
 Description:
 	This function is used to get texture from texture list by its index;
 Input:
-	@ int index: an image index refer to the texture image in the texture list;
+	@ const int index: an image index refer to the texture image in the texture list;
 Output:
 	@ QImage& returnValue: the texture image;
 */
-QImage& Skybox::getTexture(int index) {
+QImage& Skybox::getTexture(const int index) const {
 	if (index >= textures.size() || index < 0) {
 		qDebug() << "ERROR::Carl::Skybox::getTexture::index: invalid texture index;";
-		return QImage();
+		exit(-1);
 	}
-	return textures[index];
+	return *textures[index];
 }
 
 /*
@@ -246,10 +272,10 @@ Input:
 Output:
 	QVector<QVector3D>& returnValue: the current spherical harmonic (SH) lighting coefficients;
 */
-QVector<QVector3D>& Skybox::getCoefficient() {
+QVector<QVector3D>& Skybox::getCoefficient() const {
 	if (!currentCoef) {
 		qDebug() << "ERROR::Carl::Skybox::getCoefficient::currentCoef: currentCoef is not initialized;";
-		return QVector<QVector3D>();
+		exit(-1);
 	}
 	return *currentCoef;
 }
@@ -258,16 +284,16 @@ QVector<QVector3D>& Skybox::getCoefficient() {
 Description:
 	This function is used to get spherical harmonic (SH) lighting coefficients from coefficients list by its index;
 Input:
-	@ int index: an coefficient index refer to the spherical harmonic (SH) lighting coefficients in the coefficients list;
+	@ const int index: an coefficient index refer to the spherical harmonic (SH) lighting coefficients in the coefficients list;
 Output:
 	@ QVector<QVector3D>& returnValue: the spherical harmonic (SH) lighting coefficients;
 */
-QVector<QVector3D>& Skybox::getCoefficient(int index) {
+QVector<QVector3D>& Skybox::getCoefficient(const int index) const {
 	if (index >= coefficients.size() || index < 0) {
 		qDebug() << "ERROR::Carl::Skybox::getCoefficient::index: invalid coefficient index;";
-		return QVector<QVector3D>();
+		exit(-1);
 	}
-	return coefficients[index];
+	return *coefficients[index];
 }
 
 /*
@@ -289,7 +315,7 @@ void Skybox::loadNext() {
 		qDebug() << "ERROR::Carl::Skybox::loadNext::index: invalid coefficient index;";
 		exit(-1);
 	}
-	currentCoef = new auto(coefficients[i]);
+	currentCoef = new auto(*coefficients[i]);
 	return;
 }
 
@@ -312,7 +338,7 @@ void Skybox::loadPrev() {
 		qDebug() << "ERROR::Carl::Skybox::loadPrev::index: invalid coefficient index;";
 		exit(-1);
 	}
-	currentCoef = new auto(coefficients[i]);
+	currentCoef = new auto(*coefficients[i]);
 	return;
 }
 

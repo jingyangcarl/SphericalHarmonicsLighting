@@ -11,10 +11,10 @@
 class Skybox : public Transformational {
 public:
 	// constructor
-	Skybox(float width);
+	Skybox(const float& width = 70.0f);
 	~Skybox();
 
-	// load
+	// load data
 	bool loadCube(int width, QVector<Vertex>& desVertices, QVector<GLuint>& desIndices);
 	bool loadTextures();
 	bool loadMaterial(Material& material);
@@ -25,9 +25,9 @@ public:
 private:
 	bool setTexture(int index);
 public:
-	QImage& getTexture(int index);
-	QVector<QVector3D>& getCoefficient();
-	QVector<QVector3D>& getCoefficient(int index);
+	QImage& getTexture(const int index) const;
+	QVector<QVector3D>& getCoefficient() const;
+	QVector<QVector3D>& getCoefficient(const int index) const;
 
 	// change status
 	void loadNext();
@@ -41,16 +41,16 @@ public:
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions);
 
 private:
+	// object
 	Object3D* object;
 
 	// list
-	QVector<QImage> textures;
-	QVector<QVector<QVector3D>> coefficients;
+	QVector<QImage*> textures;
+	QVector<QVector<QVector3D>*> coefficients;
 
 	// current status
 	int index;
 	QImage* currentTex = 0;
-	// Material* material = 0;
 	QVector<QVector3D>* currentCoef = 0;
 
 	// Spherical Harmonics

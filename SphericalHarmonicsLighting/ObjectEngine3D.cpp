@@ -91,7 +91,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::usemtl error: not enough parameters";
 				exit(-1);
 			}
-			if (object) object->init(vertices, indices, materials.getMaterial(materialName));
+			if (object) object = new Object3D(vertices, indices, materials.getMaterial(materialName));
 			materialName = list[1];
 			addObject(object);
 
@@ -149,7 +149,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 	}
 
 	// add last object
-	if (object) object->init(vertices, indices, materials.getMaterial(materialName));
+	if (object) object = new Object3D(vertices, indices, materials.getMaterial(materialName));
 	addObject(object);
 
 	// close file

@@ -27,9 +27,8 @@ public:
 	Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material);
 	~Object3D();
 
-	// initialization
-	void init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material);
-	bool setTexture(QImage& image);
+	// set data
+	bool setTexture(const QImage& image);
 
 	// interface implementation
 	void rotate(const QQuaternion& r);
@@ -40,16 +39,16 @@ public:
 
 private:
 	// object buffer
-	QOpenGLBuffer vertexBuffer;
-	QOpenGLBuffer indexBuffer;
-	QOpenGLTexture* texture;
-	Material* material;
+	QOpenGLBuffer* vertexBuffer = 0;
+	QOpenGLBuffer* indexBuffer = 0;
+	QOpenGLTexture* texture = 0;
+	Material* material = 0;
 
 	// linear transformation
-	QVector3D v_translation;
-	QQuaternion v_rotation;
-	float v_scale;
-	QMatrix4x4 v_globalTransformation;
+	QVector3D translation;
+	QQuaternion rotation;
+	float scalar;
+	QMatrix4x4 globalTransformation;
 
 	// mMatrix
 	QMatrix4x4 modelMatrix;

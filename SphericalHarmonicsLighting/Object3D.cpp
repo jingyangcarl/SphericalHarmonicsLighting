@@ -1,41 +1,39 @@
 #include "Object3D.h"
 
+/*
+Description:
+	This function is a constructor;
+Input:
+	@ void parameter: void;
+*/
 Object3D::Object3D() :
-	indexBuffer(QOpenGLBuffer::IndexBuffer), texture(0) {
-	v_scale = 1.0f;
+	texture(0), scalar(1.0f) {
 }
 
+/*
+Description:
+	This function is a constructor with vertices reference, indices reference, and material;
+Input:
+	@ const QVector<Vertex>& vertices: the vertex list of a given object;
+	@ const QVector<GLuint>& indices: the index list of a given object;
+	@ Material* material: a given material;
+*/
 Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material) :
-	indexBuffer(QOpenGLBuffer::IndexBuffer), texture(0) {
-	v_scale = 1.0f;
-	init(vertices, indices, material);
-}
+	texture(0), scalar(1.0f) {
 
-Object3D::~Object3D() {
-	// release vertexBuffer
-	if (vertexBuffer.isCreated())
-		vertexBuffer.destroy();
-	// release indexBuffer
-	if (indexBuffer.isCreated())
-		indexBuffer.destroy();
-	// release texture
-	if (texture != 0)
-		if (texture->isCreated())
-			texture->destroy();
-}
-
-void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material) {
 	// load vertex data
-	vertexBuffer.create();
-	vertexBuffer.bind();
-	vertexBuffer.allocate(vertices.constData(), vertices.size() * sizeof(Vertex));
-	vertexBuffer.release();
+	vertexBuffer = new QOpenGLBuffer();
+	vertexBuffer->create();
+	vertexBuffer->bind();
+	vertexBuffer->allocate(vertices.constData(), vertices.size() * sizeof(Vertex));
+	vertexBuffer->release();
 
 	// load index data
-	indexBuffer.create();
-	indexBuffer.bind();
-	indexBuffer.allocate(indices.constData(), indices.size() * sizeof(GLuint));
-	indexBuffer.release();
+	indexBuffer = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+	indexBuffer->create();
+	indexBuffer->bind();
+	indexBuffer->allocate(indices.constData(), indices.size() * sizeof(GLuint));
+	indexBuffer->release();
 
 	// load material
 	this->material = material;
@@ -43,15 +41,11 @@ void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indi
 	// load texture
 	if (material) {
 		this->texture = new QOpenGLTexture((material->getDiffuseMap()).mirrored());
-	}
+	} 
 	else {
-		// this->texture = new QOpenGLTexture(QOpenGLTexture::TargetRectangle);
-		/*material = new Material;
-		material->setAmbientColor(QVector3D(1.0, 1.0, 1.0));
-		material->setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
-		material->setSpecularColor(QVector3D(1.0, 1.0, 1.0));
-		material->setShinnes(96);*/
-		this->texture = new QOpenGLTexture(QImage("./defaultTexture.jpg"));
+		QImage image(1, 1, QImage::Format_RGB32);
+		image.fill(Qt::white);
+		this->texture = new QOpenGLTexture(image);
 	}
 
 	// set texture property
@@ -60,7 +54,28 @@ void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indi
 	this->texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
 }
 
-bool Object3D::setTexture(QImage& image) {
+/*
+Description:
+	This function is a destructor;
+Input:
+	@ void patameter: void;
+*/
+Object3D::~Object3D() {
+	delete vertexBuffer;
+	delete indexBuffer;
+	delete texture;
+	delete material;
+}
+
+/*
+Description:
+	This function is used to set a new texture for the given object
+Input:
+	@ const QImage& image: an image used as the object texture;
+Output:
+	@ bool returnValue: whether the texture is successfully set or not;
+*/
+bool Object3D::setTexture(const QImage& image) {
 	// clear previous texture
 	this->texture->destroy();
 	this->texture->create();
@@ -76,24 +91,72 @@ bool Object3D::setTexture(QImage& image) {
 	}
 }
 
+/*
+Description:
+	This function is used to rotate the object;
+Input:
+	@ const QQuaternion& r: a quaternion (scalar, x position, y position, and z position) for rotation;
+Output:
+	@ void returnValue: void;
+*/
 void Object3D::rotate(const QQuaternion& r) {
-	v_rotation = r * v_rotation;
+	rotation = r * rotation;
 }
 
+/*
+Description:
+	This function is used to translate the object;
+Input:
+	@ const QVector3D& t: a translation vector;
+Output:
+	@ void returnValue: void;
+*/
 void Object3D::translate(const QVector3D& t) {
-	v_translation += t;
+	translation += t;
 }
 
+/*
+Description:
+	This function is used to scale the object;
+Input:
+	@ const float& s: a scalar;
+Output:
+	@ void returnValue: void;
+*/
 void Object3D::scale(const float& s) {
-	v_scale *= s;
+	scalar *= s;
 }
 
+/*
+Description:
+	This function is used to set the global transform for the object;
+Input:
+	@ const QMatrix4x4& g: a global transformation;
+Output:
+	@ void returnValue: void;
+*/
 void Object3D::setGlobalTransform(const QMatrix4x4& g) {
-	v_globalTransformation = g;
+	globalTransformation = g;
 }
 
+/*
+Description:
+	This function is used to set parameters for the vertex shader, fragment shader and etc. and draw the object;
+Input:
+	@ QOpenGLShaderProgram* shaderProgram: the shader program used for loading shaders and passing parameters;
+	@ QOpenGLFunctions* functions: the OpenGL functions used to drawing elements;
+Output:
+	@ void returnValue: void;
+*/
 void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions) {
-	if (!vertexBuffer.isCreated() || !indexBuffer.isCreated()) return;
+	if (!vertexBuffer->isCreated()) {
+		qDebug() << "ERROR::Carl::Object3D::draw:vertexBuffer: the vertex buffer is not created successfully;";
+		return;
+	}
+	if (!indexBuffer->isCreated()) {
+		qDebug() << "ERROR::Carl::Object3D::draw:indexBuffer: the index buffer is not created successfully;";
+		return;
+	}
 
 	// bind texture
 	texture->bind(0);
@@ -101,14 +164,14 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 
 	// set modelMatrix
 	modelMatrix.setToIdentity();
-	modelMatrix.translate(v_translation);
-	modelMatrix.rotate(v_rotation);
-	modelMatrix.scale(v_scale);
-	modelMatrix = v_globalTransformation * modelMatrix;
+	modelMatrix.translate(translation);
+	modelMatrix.rotate(rotation);
+	modelMatrix.scale(scalar);
+	modelMatrix = globalTransformation * modelMatrix;
 	shaderProgram->setUniformValue("u_modelMatrix", modelMatrix);
 
 	// bind vertexBuffer
-	vertexBuffer.bind();
+	vertexBuffer->bind();
 
 	int offset = 0;
 
@@ -129,14 +192,14 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 	shaderProgram->setAttributeBuffer(normLoc, GL_FLOAT, offset, 3, sizeof(Vertex));
 
 	// bind indexBuffer
-	indexBuffer.bind();
+	indexBuffer->bind();
 
 	// draw
-	functions->glDrawElements(GL_TRIANGLES, indexBuffer.size(), GL_UNSIGNED_INT, 0);
+	functions->glDrawElements(GL_TRIANGLES, indexBuffer->size(), GL_UNSIGNED_INT, 0);
 
 	// release
-	vertexBuffer.release();
-	indexBuffer.release();
+	vertexBuffer->release();
+	indexBuffer->release();
 	texture->release();
 }
 
