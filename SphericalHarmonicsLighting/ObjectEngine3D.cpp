@@ -101,7 +101,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 		}
 		else if (list[0] == "v") {
 			if (list.size() < 4) {
-				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::v error: not enough parameters";
+				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::v: not enough parameters";
 				exit(-1);
 			}
 			verCoords << QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat());
@@ -109,7 +109,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 		}
 		else if (list[0] == "vt") {
 			if (list.size() < 3) {
-				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::vt error: not enough parameters";
+				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::vt: not enough parameters";
 				exit(-1);
 			}
 			texCoords << QVector2D(list[1].toFloat(), list[2].toFloat());
@@ -117,7 +117,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 		} 
 		else if (list[0] == "vn") {
 			if (list.size() < 4) {
-				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::vn error: not enough parameters";
+				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::vn: not enough parameters";
 				exit(-1);
 			}
 			normals << QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat());
@@ -125,21 +125,24 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 		}
 		else if (list[0] == "f") {
 			if (list.size() < 4) {
-				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::f error: not enough parameters";
+				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::f: not enough parameters";
 				exit(-1);
 			}
 			else if (list.size() > 4) {
-				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::f error: not triangle mesh";
+				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::f: not triangle mesh";
 				exit(-1);
 			}
 			for (int i = 1; i <= 3; i++) {
 				QStringList sublist = list[i].split("/");
-				if (sublist.size() < 3) {
-					qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::f::forloop error: not enough parameters";
-					exit(-1);
+				if (sublist.size() == 3) {
+					vertices << Vertex(verCoords[sublist[0].toLong() - 1], texCoords[sublist[1].toLong() - 1], normals[sublist[2].toLong() - 1]);
+					indices << indices.size();
 				}
-				vertices << Vertex(verCoords[sublist[0].toLong() - 1], texCoords[sublist[1].toLong() - 1], normals[sublist[2].toLong() - 1]);
-				indices << indices.size();
+				else if (sublist.size() == 2) {
+					qDebug() << "WARNING::Carl::ObjectEngine3D::loadMaterialFromFile::f: lack texCoords";
+					vertices << Vertex(verCoords[sublist[0].toLong() - 1], QVector2D(0.0, 0.0), normals[sublist[2].toLong() - 1]);
+					indices << indices.size();
+				}
 			}
 			continue;
 		}

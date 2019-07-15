@@ -14,18 +14,19 @@ void SphericalHarmonicsSampler::loadImage(QString & name, QString & filePath) {
 		images.insert(name, image);
 	}
 	else {
-		qDebug() << "Carl::SphericalHarmonicsSampler::ImageComposition::images.size() error: image load failed";
+		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: image load failed";
 	}
 }
 
-QImage &SphericalHarmonicsSampler::ImageComposition() {
+QImage &SphericalHarmonicsSampler::ImageExpand() {
 	if (images.size() < 6) {
-		qDebug() << "Carl::SphericalHarmonicsSampler::ImageComposition::images.size() error: not enough images";
+		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: not enough images";
 		exit(-1);
 	}
 
 	int width = (images.begin()).value()->width();
 	int height = (images.begin()).value()->height();
+	// texture = QImage(width * 4, height * 3, QImage::Format_RGB32);
 	texture = QImage(width * 4, height * 3, QImage::Format_RGB32);
 	QImage blackImage(width, height, QImage::Format_RGB32);
 	blackImage.fill(Qt::black);
@@ -50,9 +51,13 @@ QImage &SphericalHarmonicsSampler::ImageComposition() {
 	painter->end();
 	painter->~QPainter();
 
+	// scale
+	float scaleRatio = 0.5;
+	texture = texture.scaled(texture.width() * scaleRatio, texture.height() * scaleRatio, Qt::KeepAspectRatio);
+
 	// save
 	if (!texture.save("./Resources/Output/texture.jpg")) {
-		qDebug() << "Carl::SphericalHarmonicsSampler::ImageComposition::images.size() error: save failed";
+		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: save failed";
 	}
 
 	return texture;

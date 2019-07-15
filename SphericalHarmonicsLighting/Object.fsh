@@ -39,7 +39,6 @@ void main(void) {
 	// SH
 	vec4 diffMatColor = texture2D(u_texture, v_texcoord);
 
-	// mat4 normal_trans = transpose(inverse(v_modelMatrix));
 	mat4 normal_trans = inverse(v_viewMatrix);
 	v_normal = vec3(normalize(normal_trans * vec4(v_normal, 0.0)));
 
@@ -74,6 +73,6 @@ void main(void) {
 
 	diffMatColor *= vec4(shColor, 1.0);
 
-	gl_FragColor = diffMatColor;
-	// gl_FragColor = vec4(shColor, 1.0);
+	// gl_FragColor = diffMatColor;
+	gl_FragColor = vec4(shColor, 1.0);
 }

@@ -29,7 +29,7 @@ public:
 
 	// initialization
 	void init(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material);
-	void setTexture(QImage& texImage);
+	bool setTexture(QImage& image);
 
 	// interface implementation
 	void rotate(const QQuaternion& r);

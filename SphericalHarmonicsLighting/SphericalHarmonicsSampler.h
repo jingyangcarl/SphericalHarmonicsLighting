@@ -26,7 +26,7 @@ public:
 
 	// skybox initialization
 	void loadImage(QString &name, QString & filePath);
-	QImage &ImageComposition();
+	QImage &ImageExpand();
 
 	// uv mapping
 	QVector3D &CubeUV2XYZ(QVector2D &uv);

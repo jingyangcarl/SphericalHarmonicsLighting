@@ -20,9 +20,7 @@ public:
 
 protected:
 	/*----------------Widget.cpp-------------------*/
-	void initSkybox();
 	void initShaders();
-
 	void initializeGL();
 	void resizeGL(int width, int height);
 	void paintGL();
@@ -46,8 +44,14 @@ private:
 	QVector<Group3D*> groups;
 	QVector<Transformational*> transformObjects;
 
+	// index
+	int skyboxIndex = 0;
+
 	// camera
 	Camera3D* camera;
+
+	// pMatrix
+	QMatrix4x4 projectionMatrix;
 
 	// mouse
 	QVector2D mousePosition;
@@ -56,12 +60,5 @@ private:
 	QBasicTimer timer;
 	float angleObject = 0.0f;
 	float angleGroup = 0.0f;
-
-	// pMatrix
-	QMatrix4x4 projectionMatrix;
-
-	// index
-	int skyboxIndex = 0;
-	//SphericalHarmonicsEvaluator *evaluator;
 };
 

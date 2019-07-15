@@ -11,18 +11,27 @@
 class Skybox : public Transformational {
 public:
 	// constructor
-	Skybox(float width, const QImage& texture = QImage());
+	Skybox(float width);
 	~Skybox();
 
 	// load
-	void loadTextures();
+	bool loadCube(int width, QVector<Vertex>& desVertices, QVector<GLuint>& desIndices);
+	bool loadTextures();
+	bool loadMaterial(Material& material);
 
-	// reset texture
-	void setTexture(QImage& texture);
-	void setTexture(int index);
-	QVector<QVector3D>& getSHCoefficient(int index);
-	int loadNext();
-	int loadPrevious();
+	// change texture
+public:
+	bool setTexture(QImage& image);
+private:
+	bool setTexture(int index);
+public:
+	QImage& getTexture(int index);
+	QVector<QVector3D>& getCoefficient();
+	QVector<QVector3D>& getCoefficient(int index);
+
+	// change status
+	void loadNext();
+	void loadPrev();
 
 	// interface implementation
 	void rotate(const QQuaternion& r);
@@ -32,14 +41,19 @@ public:
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions);
 
 private:
-	Object3D* skyboxObj;
+	Object3D* object;
 
-	// texture
+	// list
 	QVector<QImage> textures;
-	QVector<QVector<QVector3D>> shCoefficients;
-	int skyboxIndex;
+	QVector<QVector<QVector3D>> coefficients;
+
+	// current status
+	int index;
+	QImage* currentTex = 0;
+	// Material* material = 0;
+	QVector<QVector3D>* currentCoef = 0;
 
 	// Spherical Harmonics
-	SphericalHarmonicsSampler *sampler;
-	SphericalHarmonicsEvaluator *evaluator;
+	SphericalHarmonicsSampler *sampler = 0;
+	SphericalHarmonicsEvaluator *evaluator = 0;
 };

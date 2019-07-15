@@ -60,10 +60,20 @@ void Object3D::init(const QVector<Vertex>& vertices, const QVector<GLuint>& indi
 	this->texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
 }
 
-void Object3D::setTexture(QImage& texImage) {
+bool Object3D::setTexture(QImage& image) {
+	// clear previous texture
 	this->texture->destroy();
 	this->texture->create();
-	this->texture->setData(texImage);
+
+	// load texture
+	if (this->texture->isCreated()) {
+		this->texture->setData(image);
+		return true;
+	}
+	else {
+		qDebug() << "ERROR::Carl::Object3D::setTexture::texture: texture is not created successfully";
+		return false;
+	}
 }
 
 void Object3D::rotate(const QQuaternion& r) {
