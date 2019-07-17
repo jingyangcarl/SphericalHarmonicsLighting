@@ -154,7 +154,7 @@ bool Skybox::loadTextures() {
 
 	// load
 	QStringList dirList = directory.entryList(QDir::Dirs);
-	for (int i = 2; i < 6; i++) {
+	for (int i = 2; i < 7; i++) {
 		directory.cd(dirList[i]);
 		QStringList jpgList = directory.entryList(QStringList() << "*.jpg");
 		sampler = new SphericalHarmonicsSampler();
@@ -167,7 +167,7 @@ bool Skybox::loadTextures() {
 		textures << new QImage(sampler->ImageExpand());
 
 		// sampling
-		sampler->RandomSampling(1000);
+		sampler->RandomSampling(10000);
 		directory.cd("..");
 
 		// calculate coefficients

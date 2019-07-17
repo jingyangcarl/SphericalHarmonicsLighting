@@ -38,6 +38,8 @@ void Widget::mousePressEvent(QMouseEvent* event) {
 		mousePosition = QVector2D(event->localPos());
 	if (event->buttons() == Qt::RightButton)
 		mousePosition = QVector2D(event->localPos());
+	if (event->buttons() == Qt::MiddleButton)
+		mousePosition = QVector2D(event->localPos());
 	event->accept();
 	update();
 }
@@ -55,6 +57,9 @@ void Widget::mouseMoveEvent(QMouseEvent* event) {
 	}
 	if (event->buttons() == Qt::RightButton) {
 		objects[0]->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
+	}
+	if (event->buttons() == Qt::MiddleButton) {
+		// camera->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
 	}
 	update();
 }

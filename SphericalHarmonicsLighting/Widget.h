@@ -25,6 +25,14 @@ protected:
 	void resizeGL(int width, int height);
 	void paintGL();
 
+	/*------------------WidgetParameter.cpp-------------------*/
+	void setAmbientFactor(const float ambientFactor);
+	const float getAmbientFactor() const;
+	void setContrast(const float contrast);
+	const float getContrast() const;
+	void setBrightness(const float brightness);
+	const float getBrightness() const;
+
 	/*----------------WidgetCallback.cpp-------------------*/
 	// callback
 	void keyPressEvent(QKeyEvent* event);
@@ -60,5 +68,10 @@ private:
 	QBasicTimer timer;
 	float angleObject = 0.0f;
 	float angleGroup = 0.0f;
+
+	// paramters
+	float ambientFactor = 0.35f;
+	float contrast = 2.0f;
+	float brightness = 0.13f;
 };
 

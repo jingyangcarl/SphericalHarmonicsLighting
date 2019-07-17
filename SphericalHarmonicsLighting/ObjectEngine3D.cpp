@@ -61,7 +61,10 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 
 	QFile inputFile(filePath);
 
-	if (!inputFile.open(QIODevice::ReadOnly)) return;
+	if (!inputFile.open(QIODevice::ReadOnly)) {
+		qDebug() << "ERROR::ObjectEngine3D::loadObjectFromFile::inputFile: input file is not opened;";
+		return;
+	}
 
 	QTextStream input(&inputFile);
 	QFileInfo fileInfo(inputFile);
@@ -135,13 +138,17 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 			for (int i = 1; i <= 3; i++) {
 				QStringList sublist = list[i].split("/");
 				if (sublist.size() == 3) {
-					vertices << Vertex(verCoords[sublist[0].toLong() - 1], texCoords[sublist[1].toLong() - 1], normals[sublist[2].toLong() - 1]);
-					indices << indices.size();
+					if (sublist[1] == "") {
+						vertices << Vertex(verCoords[sublist[0].toLong() - 1], QVector2D(0.0, 0.0), normals[sublist[2].toLong() - 1]);
+						indices << indices.size();
+					}
+					else {
+						vertices << Vertex(verCoords[sublist[0].toLong() - 1], texCoords[sublist[1].toLong() - 1], normals[sublist[2].toLong() - 1]);
+						indices << indices.size();
+					}
 				}
 				else if (sublist.size() == 2) {
-					qDebug() << "WARNING::Carl::ObjectEngine3D::loadMaterialFromFile::f: lack texCoords";
-					vertices << Vertex(verCoords[sublist[0].toLong() - 1], QVector2D(0.0, 0.0), normals[sublist[2].toLong() - 1]);
-					indices << indices.size();
+					exit(-1);
 				}
 			}
 			continue;
@@ -149,7 +156,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 	}
 
 	// add last object
-	if (object) object = new Object3D(vertices, indices, materials.getMaterial(materialName));
+	object = new Object3D(vertices, indices, materials.getMaterial(materialName));
 	addObject(object);
 
 	// close file

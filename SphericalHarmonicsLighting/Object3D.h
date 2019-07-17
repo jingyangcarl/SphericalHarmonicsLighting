@@ -1,13 +1,14 @@
 #pragma once
 #include "Transformational.h"
+#include "Material.h"
+
 #include <qvector3d.h>
 #include <qopenglbuffer.h>
 #include <qopengltexture.h>
-#include <qquaternion.h>
-#include <qmatrix4x4.h>
 #include <qopenglshaderprogram.h>
 #include <qopenglfunctions.h>
-#include "Material.h"
+#include <qquaternion.h>
+#include <qmatrix4x4.h>
 
 struct Vertex {
 	Vertex() {};

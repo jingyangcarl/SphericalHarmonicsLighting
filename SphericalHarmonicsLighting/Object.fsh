@@ -1,13 +1,16 @@
 uniform sampler2D u_texture;
 uniform highp vec4 u_lightPosition;
 uniform highp float u_lightPower;
+uniform highp float u_ambientFactor;
+uniform highp float u_contrast;
+uniform highp float u_brightness;
 uniform highp vec3 u_coef[16];
 varying highp vec4 v_position;
 varying highp vec2 v_texcoord;
 varying highp vec3 v_normal;
 varying highp mat4 v_viewMatrix;
 
-const float PI = 3.1415926535897932384626433832795;
+const float M_PI = 3.14159265358979323846;
 
 void main(void) {
 
@@ -37,8 +40,8 @@ void main(void) {
 
 
 	// SH
-	vec4 diffMatColor = texture2D(u_texture, v_texcoord);
-
+	vec4 diffMatColor = texture2D(u_texture, v_texcoord) * u_ambientFactor;
+	
 	mat4 normal_trans = inverse(v_viewMatrix);
 	v_normal = vec3(normalize(normal_trans * vec4(v_normal, 0.0)));
 
@@ -50,28 +53,36 @@ void main(void) {
 	float z2 = z * z;
 
 	float basis[16];
-	basis[0] = 1.0f / 2.0f * sqrt(1.0f / PI);
-	basis[1] = sqrt(3.0f / (4.0f * PI)) * z;
-	basis[2] = sqrt(3.0f / (4.0f * PI)) * y;
-	basis[3] = sqrt(3.0f / (4.0f * PI)) * x;
-	basis[4] = 1.0f / 2.0f * sqrt(15.0f / PI) * x * z;
-	basis[5] = 1.0f / 2.0f * sqrt(15.0f / PI) * z * y;
-	basis[6] = 1.0f / 4.0f * sqrt(5.0f / PI) * (-x * x - z * z + 2.0f * y * y);
-	basis[7] = 1.0f / 2.0f * sqrt(15.0f / PI) * y * x;
-	basis[8] = 1.0f / 4.0f * sqrt(15.0f / PI) * (x * x - z * z);
-	basis[9] = 1.0f / 4.0f * sqrt(35.0f / (2.0f * PI)) * (3.0f * x2 - z2) * z;
-	basis[10] = 1.0f / 2.0f * sqrt(105.0f / PI) * x * z * y;
-	basis[11] = 1.0f / 4.0f * sqrt(21.0f / (2.0f * PI)) * z * (4.0f * y2 - x2 - z2);
-	basis[12] = 1.0f / 4.0f * sqrt(7.0f / PI) * y * (2.0f * y2 - 3.0f * x2 - 3.0f * z2);
-	basis[13] = 1.0f / 4.0f * sqrt(21.0f / (2.0f * PI)) * x * (4.0f * y2 - x2 - z2);
-	basis[14] = 1.0f / 4.0f * sqrt(105.0f / PI) * (x2 - z2) * y;
-	basis[15] = 1.0f / 4.0f * sqrt(35.0f / (2.0f * PI)) * (x2 - 3.0f * z2) * x;
+	basis[0] = 1.0f / 2.0f * sqrt(1.0f / M_PI); // check
+
+	basis[1] = sqrt(3.0f / (4.0f * M_PI)) * y; // check
+	basis[2] = sqrt(3.0f / (4.0f * M_PI)) * z; // check
+	basis[3] = sqrt(3.0f / (4.0f * M_PI)) * x; // check
+
+	basis[4] = 1.0f / 2.0f * sqrt(15.0f / M_PI) * x * y; // check
+	basis[5] = 1.0f / 2.0f * sqrt(15.0f / M_PI) * z * y; // check
+	basis[6] = 1.0f / 4.0f * sqrt(5.0f / M_PI) * (-x2 - y2 + 2.0f*z2); // check
+	basis[7] = 1.0f / 2.0f * sqrt(15.0f / M_PI) * x * z; // check
+	basis[8] = 1.0f / 4.0f * sqrt(15.0f / M_PI) * (x2 - y2); // check
+
+	basis[9] = 1.0f / 4.0f * sqrt(35.0f / (2.0f * M_PI)) * (3.0f*x2 - y2) * y; // check
+	basis[10] = 1.0f / 2.0f * sqrt(105.0f / M_PI) * x * z * y; // check
+	basis[11] = 1.0f / 4.0f * sqrt(21.0f / (2.0f * M_PI)) * y * (5.0f*z2 - x2 - y2); // check
+	basis[12] = 1.0f / 4.0f * sqrt(7.0f / M_PI) * z * (1.5f*z2 - 3.0f*x2 - 3.0f*y2); // check
+	basis[13] = 1.0f / 4.0f * sqrt(21.0f / (2.0f * M_PI)) * x * (5.0f*z2 - x2 - y2); // check
+	basis[14] = 1.0f / 4.0f * sqrt(105.0f / M_PI) * (x2 - y2) * z; // check
+	basis[15] = 1.0f / 4.0f * sqrt(35.0f / (2.0f * M_PI)) * (x2 - 3.0f*y2) * x; // check
 
 	vec3 shColor = vec3(0.0, 0.0, 0.0);
 	for (int i = 0; i < 16; i++)
 		shColor += u_coef[i] * basis[i];
 
-	diffMatColor *= vec4(shColor, 1.0);
+	// adjust contrast;
+	shColor = (shColor - 0.5f) * u_contrast + 0.5f;
+	// adjust brightnes;
+	shColor += u_brightness;
+
+	diffMatColor += vec4(shColor, 1.0);
 
 	gl_FragColor = diffMatColor;
 	// gl_FragColor = vec4(shColor, 1.0);

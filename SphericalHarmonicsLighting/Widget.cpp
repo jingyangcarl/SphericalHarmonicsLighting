@@ -51,17 +51,19 @@ void Widget::initializeGL() {
 	initShaders();
 
 	// create skybox
-	skybox = new Skybox(70);
+	skybox = new Skybox();
 
 	// add object groups
 	// if you change the order/number of objects, remember to edit timerEvent
 	// Add model
 	groups.append(new Group3D());
 	objects.append(new ObjectEngine3D());
-	objects[objects.size() - 1]->loadObjectFromFile("./Max.obj");
-	objects[objects.size() - 1]->scale(0.1);
-	//objects[objects.size() - 1]->loadObjectFromFile("./sphere_dense.obj");
-	//objects[objects.size() - 1]->scale(1);
+	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Max Curato/Max.obj");
+	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
+	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
+	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/spaceship.obj");
+	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/model_textured.obj");
+	objects[objects.size() - 1]->scale(5);
 	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
 	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
 	transformObjects.append(groups[groups.size() - 1]);
@@ -107,6 +109,9 @@ void Widget::paintGL() {
 	objectShader.setUniformValue("u_projectionMatrix", projectionMatrix);
 	objectShader.setUniformValue("u_lightPosition", QVector4D(0.0, 0.0, 0.0, 1.0));
 	objectShader.setUniformValue("u_lightPower", 1.0f);
+	objectShader.setUniformValue("u_ambientFactor", this->ambientFactor);
+	objectShader.setUniformValue("u_contrast", this->contrast);
+	objectShader.setUniformValue("u_brightness", this->brightness);
 	auto temp = skybox->getCoefficient();
 	objectShader.setUniformValueArray("u_coef", (skybox->getCoefficient()).constData(), 16);
 	camera->draw(&objectShader);

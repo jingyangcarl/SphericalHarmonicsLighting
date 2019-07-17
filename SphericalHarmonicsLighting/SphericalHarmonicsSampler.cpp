@@ -55,6 +55,21 @@ QImage &SphericalHarmonicsSampler::ImageExpand() {
 	float scaleRatio = 0.5;
 	texture = texture.scaled(texture.width() * scaleRatio, texture.height() * scaleRatio, Qt::KeepAspectRatio);
 
+	// ----------------------------------------------------
+	//QImage testImage = QImage(2048, 2048, QImage::Format_RGB32);
+	//QImage elementBlack(1024, 1024, QImage::Format_RGB32);
+	//QImage elementWhite(1024, 1024, QImage::Format_RGB32);
+	//elementBlack.fill(Qt::black);
+	//elementWhite.fill(Qt::white);
+	//QPainter *p = new QPainter(&testImage);
+	//p->drawImage(QPoint(0, 0), elementBlack);
+	//p->drawImage(QPoint(0, 1024), elementBlack);
+	//p->drawImage(QPoint(1024, 0), elementBlack);
+	//p->drawImage(QPoint(1024, 1024), elementBlack);
+	//p->drawImage(QPoint(512, 512), elementWhite);
+	//testImage.save("./Resources/Output/pos.jpg");
+	// --------------------------------------------------------
+
 	// save
 	if (!texture.save("./Resources/Output/texture.jpg")) {
 		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: save failed";
@@ -124,18 +139,19 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 
 	int width = (images.begin()).value()->width();
 	int height = (images.begin()).value()->height();
-	//QImage output_negx(width, height, QImage::Format_RGB32);
-	//QImage output_negy(width, height, QImage::Format_RGB32);
-	//QImage output_negz(width, height, QImage::Format_RGB32);
-	//QImage output_posx(width, height, QImage::Format_RGB32);
-	//QImage output_posy(width, height, QImage::Format_RGB32);
-	//QImage output_posz(width, height, QImage::Format_RGB32);
-	//int count_negx(0);
-	//int count_negy(0);
-	//int count_negz(0);
-	//int count_posx(0);
-	//int count_posy(0);
-	//int count_posz(0);
+
+	QImage output_negx(width, height, QImage::Format_RGB32);
+	QImage output_negy(width, height, QImage::Format_RGB32);
+	QImage output_negz(width, height, QImage::Format_RGB32);
+	QImage output_posx(width, height, QImage::Format_RGB32);
+	QImage output_posy(width, height, QImage::Format_RGB32);
+	QImage output_posz(width, height, QImage::Format_RGB32);
+	int count_negx(0);
+	int count_negy(0);
+	int count_negz(0);
+	int count_posx(0);
+	int count_posy(0);
+	int count_posz(0);
 
 	for (int i = 0; i < number; i++) {
 		float x = NormalRandom(0.0f, 1.0f);
@@ -149,39 +165,39 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 		sample->verColor = (images.find(uvPair.first).value())->pixelColor(pixelCoordX, pixelCoordY).rgb();
 		samples << sample;
 
-	//	if (uvPair.first == "negx") {
-	//		count_negx++;
-	//		output_negx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "negy") {
-	//		count_negy++;
-	//		output_negy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "negz") {
-	//		count_negz++;
-	//		output_negz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "posx") {
-	//		count_posx++;
-	//		output_posx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "posy") {
-	//		count_posy++;
-	//		output_posy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	} 
-	//	else if (uvPair.first == "posz") {
-	//		count_posz++;
-	//		output_posz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	
+		if (uvPair.first == "negx") {
+			count_negx++;
+			output_negx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
+		}
+		else if (uvPair.first == "negy") {
+			count_negy++;
+			output_negy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
+		}
+		else if (uvPair.first == "negz") {
+			count_negz++;
+			output_negz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
+		}
+		else if (uvPair.first == "posx") {
+			count_posx++;
+			output_posx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
+		}
+		else if (uvPair.first == "posy") {
+			count_posy++;
+			output_posy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
+		} 
+		else if (uvPair.first == "posz") {
+			count_posz++;
+			output_posz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
+		}
+		
 	}
 
-	//output_negx.save("./Resources/Output/negxRandom.jpg");
-	//output_negy.save("./Resources/Output/negyRandom.jpg");
-	//output_negz.save("./Resources/Output/negzRandom.jpg");
-	//output_posx.save("./Resources/Output/posxRandom.jpg");
-	//output_posy.save("./Resources/Output/posyRandom.jpg");
-	//output_posz.save("./Resources/Output/poszRandom.jpg");
+	output_negx.save("./Resources/Output/negxRandom.jpg");
+	output_negy.save("./Resources/Output/negyRandom.jpg");
+	output_negz.save("./Resources/Output/negzRandom.jpg");
+	output_posx.save("./Resources/Output/posxRandom.jpg");
+	output_posy.save("./Resources/Output/posyRandom.jpg");
+	output_posz.save("./Resources/Output/poszRandom.jpg");
 }
 
 const QVector<Sample*>& SphericalHarmonicsSampler::getSamples() const {
