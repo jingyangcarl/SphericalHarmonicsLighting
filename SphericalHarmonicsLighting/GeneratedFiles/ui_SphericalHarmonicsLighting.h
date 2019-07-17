@@ -21,7 +21,7 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
-#include "Widget.h"
+#include <Widget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -155,10 +155,10 @@ public:
     void retranslateUi(QMainWindow *SphericalHarmonicsLightingClass)
     {
         SphericalHarmonicsLightingClass->setWindowTitle(QCoreApplication::translate("SphericalHarmonicsLightingClass", "SphericalHarmonicsLighting", nullptr));
-        label_ambientFactor->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Ambient Factor", nullptr));
+        label_ambientFactor->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Ambient Factor (0.35)", nullptr));
         label->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Control Panel", nullptr));
-        label_contrast->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Contrast", nullptr));
-        label_brightness->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Brightness", nullptr));
+        label_contrast->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Contrast (2.0)", nullptr));
+        label_brightness->setText(QCoreApplication::translate("SphericalHarmonicsLightingClass", "Brightness (0.13)", nullptr));
     } // retranslateUi
 
 };

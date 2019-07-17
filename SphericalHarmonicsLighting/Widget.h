@@ -18,13 +18,6 @@ public:
 	Widget(QWidget* parent = 0);
 	~Widget();
 
-protected:
-	/*----------------Widget.cpp-------------------*/
-	void initShaders();
-	void initializeGL();
-	void resizeGL(int width, int height);
-	void paintGL();
-
 	/*------------------WidgetParameter.cpp-------------------*/
 	void setAmbientFactor(const float ambientFactor);
 	const float getAmbientFactor() const;
@@ -32,6 +25,13 @@ protected:
 	const float getContrast() const;
 	void setBrightness(const float brightness);
 	const float getBrightness() const;
+
+protected:
+	/*----------------Widget.cpp-------------------*/
+	void initShaders();
+	void initializeGL();
+	void resizeGL(int width, int height);
+	void paintGL();
 
 	/*----------------WidgetCallback.cpp-------------------*/
 	// callback

@@ -10,6 +10,14 @@ class SphericalHarmonicsLighting : public QMainWindow
 public:
 	SphericalHarmonicsLighting(QWidget *parent = Q_NULLPTR);
 
+public slots:
+	/*-------------------SlotFunction.cpp-------------------------*/
+	void HorizontalSliderAmbientFactor();
+	void HorizontalSliderContrast();
+	void HorizontalSliderBrightness();
+
 private:
 	Ui::SphericalHarmonicsLightingClass ui;
+
+
 };
