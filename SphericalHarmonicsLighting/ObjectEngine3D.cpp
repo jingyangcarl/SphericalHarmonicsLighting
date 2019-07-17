@@ -6,6 +6,34 @@ ObjectEngine3D::ObjectEngine3D() {
 ObjectEngine3D::~ObjectEngine3D() {
 }
 
+const int ObjectEngine3D::getVerCoordCount(const int index) const {
+	if (index >= objects.size() || index < 0) {
+		return -1;
+	}
+	return objects[index]->getVerCoordCount();
+}
+
+const int ObjectEngine3D::getTexCoordCount(const int index) const {
+	if (index >= objects.size() || index < 0) {
+		return -1;
+	}
+	return objects[index]->getTexCoordCount();
+}
+
+const int ObjectEngine3D::getNormalCount(const int index) const {
+	if (index >= objects.size() || index < 0) {
+		return -1;
+	}
+	return objects[index]->getNormalCount();
+}
+
+const int ObjectEngine3D::getFaceCount(const int index) const {
+	if (index >= objects.size() || index < 0) {
+		return -1;
+	}
+	return objects[index]->getFaceCount();
+}
+
 void ObjectEngine3D::rotate(const QQuaternion & r) {
 	for (QVector<Object3D*>::iterator iter = objects.begin(); iter != objects.end(); iter++) {
 		(*iter)->rotate(r);
@@ -78,6 +106,11 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 	Object3D* object = 0;
 	QString materialName;
 
+	int verCoordCount(0);
+	int texCoordCount(0);
+	int normalCount(0);
+	int faceCount(0);
+
 	while (!input.atEnd()) {
 		QString line = input.readLine();
 		QStringList list = line.split(" ");
@@ -94,7 +127,9 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 				qDebug() << "Carl::ObjectEngine3D::loadMaterialFromFile::usemtl error: not enough parameters";
 				exit(-1);
 			}
-			if (object) object = new Object3D(vertices, indices, materials.getMaterial(materialName));
+			if (object) {
+				object = new Object3D(vertices, indices, materials.getMaterial(materialName));
+			}
 			materialName = list[1];
 			addObject(object);
 
@@ -107,6 +142,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::v: not enough parameters";
 				exit(-1);
 			}
+			verCoordCount++;
 			verCoords << QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat());
 			continue;
 		}
@@ -115,6 +151,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::vt: not enough parameters";
 				exit(-1);
 			}
+			texCoordCount++;
 			texCoords << QVector2D(list[1].toFloat(), list[2].toFloat());
 			continue;
 		} 
@@ -123,6 +160,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::vn: not enough parameters";
 				exit(-1);
 			}
+			normalCount++;
 			normals << QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat());
 			continue;
 		}
@@ -135,6 +173,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 				qDebug() << "ERROR::Carl::ObjectEngine3D::loadMaterialFromFile::f: not triangle mesh";
 				exit(-1);
 			}
+			faceCount++;
 			for (int i = 1; i <= 3; i++) {
 				QStringList sublist = list[i].split("/");
 				if (sublist.size() == 3) {

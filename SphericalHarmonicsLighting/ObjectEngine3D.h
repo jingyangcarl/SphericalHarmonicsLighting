@@ -7,6 +7,12 @@ public:
 	ObjectEngine3D();
 	~ObjectEngine3D();
 
+	// getter
+	const int getVerCoordCount(const int index) const;
+	const int getTexCoordCount(const int index) const;
+	const int getNormalCount(const int index) const;
+	const int getFaceCount(const int index) const;
+
 	// interface implementation
 	void rotate(const QQuaternion& r);
 	void translate(const QVector3D& t);

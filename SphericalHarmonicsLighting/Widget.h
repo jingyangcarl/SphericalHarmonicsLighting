@@ -25,6 +25,9 @@ public:
 	const float getContrast() const;
 	void setBrightness(const float brightness);
 	const float getBrightness() const;
+	void setMeshScale(const float meshScale);
+	const float getMeshScale() const;
+	void reloadMesh(const QString file);
 
 protected:
 	/*----------------Widget.cpp-------------------*/
@@ -73,5 +76,6 @@ private:
 	float ambientFactor = 0.35f;
 	float contrast = 2.0f;
 	float brightness = 0.13f;
+	float meshScale = 1.0f;
 };
 

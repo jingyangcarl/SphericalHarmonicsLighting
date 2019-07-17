@@ -59,11 +59,11 @@ void Widget::initializeGL() {
 	groups.append(new Group3D());
 	objects.append(new ObjectEngine3D());
 	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Max Curato/Max.obj");
-	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
+	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
 	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
 	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/spaceship.obj");
 	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/model_textured.obj");
-	objects[objects.size() - 1]->scale(5);
+	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/dragon.obj");
 	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
 	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
 	transformObjects.append(groups[groups.size() - 1]);

@@ -28,8 +28,16 @@ public:
 	Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material);
 	~Object3D();
 
-	// set data
+	// setter and getter
 	bool setTexture(const QImage& image);
+	void setVerCoordCount(const int verCoordCount);
+	const int getVerCoordCount() const;
+	void setTexCoordCount(const int texCoordCount);
+	const int getTexCoordCount() const;
+	void setNormalCount(const int normalCount);
+	const int getNormalCount() const;
+	void setFaceCount(const int faceCount);
+	const int getFaceCount() const;
 
 	// interface implementation
 	void rotate(const QQuaternion& r);
@@ -53,5 +61,11 @@ private:
 
 	// mMatrix
 	QMatrix4x4 modelMatrix;
+
+	// data
+	int verCoordCount = 0;
+	int texCoordCount = 0;
+	int normalCount = 0;
+	int faceCount = 0;
 };
 

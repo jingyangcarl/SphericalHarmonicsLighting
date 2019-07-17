@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <qfiledialog.h>
 #include "ui_SphericalHarmonicsLighting.h"
 
 class SphericalHarmonicsLighting : public QMainWindow
@@ -15,6 +16,8 @@ public slots:
 	void HorizontalSliderAmbientFactor();
 	void HorizontalSliderContrast();
 	void HorizontalSliderBrightness();
+	void HorizontalSliderMeshScale();
+	void PushButtonLoadMesh();
 
 private:
 	Ui::SphericalHarmonicsLightingClass ui;

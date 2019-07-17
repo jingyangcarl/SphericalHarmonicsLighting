@@ -91,6 +91,38 @@ bool Object3D::setTexture(const QImage& image) {
 	}
 }
 
+void Object3D::setVerCoordCount(const int verCoordCount) {
+	this->verCoordCount = verCoordCount;
+}
+
+const int Object3D::getVerCoordCount() const {
+	return this->verCoordCount;
+}
+
+void Object3D::setTexCoordCount(const int texCoordCount) {
+	this->texCoordCount = texCoordCount;
+}
+
+const int Object3D::getTexCoordCount() const {
+	return this->texCoordCount;
+}
+
+void Object3D::setNormalCount(const int normalCount) {
+	this->normalCount = normalCount;
+}
+
+const int Object3D::getNormalCount() const {
+	return this->normalCount;
+}
+
+void Object3D::setFaceCount(const int faceCount) {
+	this->faceCount = faceCount;
+}
+
+const int Object3D::getFaceCount() const {
+	return this->faceCount;
+}
+
 /*
 Description:
 	This function is used to rotate the object;
