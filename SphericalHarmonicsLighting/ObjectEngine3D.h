@@ -8,6 +8,8 @@ public:
 	~ObjectEngine3D();
 
 	// getter
+	void addObject(Object3D* object);
+	const Object3D* getObject(int index) const;
 	const int getVerCoordCount(const int index) const;
 	const int getTexCoordCount(const int index) const;
 	const int getNormalCount(const int index) const;
@@ -20,8 +22,7 @@ public:
 	void setGlobalTransform(const QMatrix4x4& g);
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions);
 
-	void addObject(Object3D* object);
-	const Object3D* getObject(int index) const;
+	// load mesh
 	void loadObjectFromFile(const QString & filePath);
 
 private:
