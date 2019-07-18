@@ -78,6 +78,9 @@
     <ClCompile Include="SlotFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Transformational.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SphericalHarmonicsLighting.h">
@@ -136,12 +139,18 @@
     <None Include="Skybox.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
+    <None Include="Shader.fsh">
+      <Filter>Resource Files\Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
     <FxCompile Include="Skybox.vsh">
+      <Filter>Resource Files\Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
   </ItemGroup>

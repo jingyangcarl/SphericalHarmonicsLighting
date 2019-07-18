@@ -7,7 +7,7 @@ Input:
 	@ const float width: width of the skybox, where the default value is 70.0f;
 */
 Skybox::Skybox(const float& width) :
-	index(0) {
+	skyboxIndex(0) {
 
 	QVector<Vertex> vertices;
 	QVector<GLuint> indices;
@@ -156,7 +156,7 @@ bool Skybox::loadTextures() {
 	QStringList dirList = directory.entryList(QDir::Dirs);
 	dirList.removeFirst(); // remove ./
 	dirList.removeFirst(); // remove ../
-	for (int i = 1; i < 17; i++) {
+	for (int i = 3; i < 4; i++) {
 		directory.cd(dirList[i]);
 		QStringList jpgList = directory.entryList(QStringList() << "*.jpg");
 		sampler = new SphericalHarmonicsSampler();
@@ -260,7 +260,7 @@ Output:
 */
 QImage& Skybox::getTexture(const int index) const {
 	if (index >= textures.size() || index < 0) {
-		qDebug() << "ERROR::Carl::Skybox::getTexture::index: invalid texture index;";
+		qDebug() << "ERROR::Carl::Skybox::getTexture::skyboxIndex: invalid texture skyboxIndex;";
 		exit(-1);
 	}
 	return *textures[index];
@@ -292,7 +292,7 @@ Output:
 */
 QVector<QVector3D>& Skybox::getCoefficient(const int index) const {
 	if (index >= coefficients.size() || index < 0) {
-		qDebug() << "ERROR::Carl::Skybox::getCoefficient::index: invalid coefficient index;";
+		qDebug() << "ERROR::Carl::Skybox::getCoefficient::skyboxIndex: invalid coefficient skyboxIndex;";
 		exit(-1);
 	}
 	return *coefficients[index];
@@ -308,13 +308,13 @@ Output:
 */
 void Skybox::loadNext() {
 	// change current status
-	auto i = (abs(++index) % textures.size());
+	auto i = (abs(++skyboxIndex) % textures.size());
 	// set current texture
 	setTexture(i);
 	// set current coefficients;
 	if (currentCoef) currentCoef->~QVector();
 	if (i >= coefficients.size() || i < 0) {
-		qDebug() << "ERROR::Carl::Skybox::loadNext::index: invalid coefficient index;";
+		qDebug() << "ERROR::Carl::Skybox::loadNext::skyboxIndex: invalid coefficient skyboxIndex;";
 		exit(-1);
 	}
 	currentCoef = new auto(*coefficients[i]);
@@ -331,13 +331,13 @@ Output:
 */
 void Skybox::loadPrev() {
 	// change current status
-	auto i = (abs(--index) % textures.size());
+	auto i = (abs(--skyboxIndex) % textures.size());
 	// set current texture
 	setTexture(i);
 	// set current coefficients;
 	if (currentCoef) currentCoef->~QVector();
 	if (i >= coefficients.size() || i < 0) {
-		qDebug() << "ERROR::Carl::Skybox::loadPrev::index: invalid coefficient index;";
+		qDebug() << "ERROR::Carl::Skybox::loadPrev::skyboxIndex: invalid coefficient skyboxIndex;";
 		exit(-1);
 	}
 	currentCoef = new auto(*coefficients[i]);

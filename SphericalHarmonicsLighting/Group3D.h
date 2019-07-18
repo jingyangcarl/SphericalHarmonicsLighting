@@ -21,6 +21,9 @@ public:
 	void delObject(Transformational* object);
 	void delObject(const int& index);
 
+	// setter and getter
+
+
 private:
 	// linear transformation
 	QVector3D v_translation;
@@ -33,5 +36,6 @@ private:
 
 	// objects;
 	QVector<Transformational*> objects;
+	int textureIndex = 0;
 };
 

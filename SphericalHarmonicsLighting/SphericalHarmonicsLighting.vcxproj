@@ -125,6 +125,7 @@
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectEngine3D.cpp" />
     <ClCompile Include="SlotFunction.cpp" />
+    <ClCompile Include="Transformational.cpp" />
     <ClCompile Include="WidgetParameter.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SphericalHarmonicsEvaluator.cpp" />
@@ -156,6 +157,9 @@
     <ClInclude Include="Widget.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shader.fsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
     <None Include="Object.fsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
@@ -168,6 +172,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Skybox.vsh">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shader.vsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>

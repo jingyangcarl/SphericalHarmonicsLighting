@@ -1,3 +1,5 @@
+#version 330 core
+
 uniform sampler2D u_texture;
 uniform highp vec4 u_lightPosition;
 uniform highp float u_lightPower;
@@ -5,10 +7,13 @@ uniform highp float u_ambientFactor;
 uniform highp float u_contrast;
 uniform highp float u_brightness;
 uniform highp vec3 u_coef[16];
-varying highp vec4 v_position;
-varying highp vec2 v_texcoord;
-varying highp vec3 v_normal;
-varying highp mat4 v_viewMatrix;
+
+in highp vec4 v_position;
+in highp vec2 v_texcoord;
+in highp vec3 v_normal;
+in highp mat4 v_viewMatrix;
+
+out highp vec4 FragColor;
 
 const float M_PI = 3.14159265358979323846;
 
@@ -43,11 +48,11 @@ void main(void) {
 	vec4 diffMatColor = texture2D(u_texture, v_texcoord) * u_ambientFactor;
 	
 	mat4 normal_trans = inverse(v_viewMatrix);
-	v_normal = vec3(normalize(normal_trans * vec4(v_normal, 0.0)));
+	vec3 normal = vec3(normalize(normal_trans * vec4(v_normal, 0.0)));
 
-	float x = v_normal.x;
-	float y = v_normal.y;
-	float z = v_normal.z;
+	float x = normal.x;
+	float y = normal.y;
+	float z = normal.z;
 	float x2 = x * x;
 	float y2 = y * y;
 	float z2 = z * z;
@@ -84,6 +89,6 @@ void main(void) {
 
 	diffMatColor += vec4(shColor, 1.0);
 
-	gl_FragColor = diffMatColor;
-	// gl_FragColor = vec4(shColor, 1.0);
+	FragColor = diffMatColor;
+	// FragColor = vec4(shColor, 1.0);
 }

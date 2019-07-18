@@ -49,7 +49,7 @@ private:
 	QVector<QVector<QVector3D>*> coefficients;
 
 	// current status
-	int index;
+	int skyboxIndex;
 	QImage* currentTex = 0;
 	QVector<QVector3D>* currentCoef = 0;
 

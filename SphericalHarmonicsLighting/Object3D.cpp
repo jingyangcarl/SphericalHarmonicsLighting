@@ -186,13 +186,13 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 		return;
 	}
 	if (!indexBuffer->isCreated()) {
-		qDebug() << "ERROR::Carl::Object3D::draw:indexBuffer: the index buffer is not created successfully;";
+		qDebug() << "ERROR::Carl::Object3D::draw:indexBuffer: the skyboxIndex buffer is not created successfully;";
 		return;
 	}
 
 	// bind texture
-	texture->bind(0);
-	shaderProgram->setUniformValue("u_texture", 0);
+	texture->bind(getTexBindIndex());
+	shaderProgram->setUniformValue("u_texture", getTexBindIndex());
 
 	// set modelMatrix
 	modelMatrix.setToIdentity();
@@ -232,6 +232,6 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 	// release
 	vertexBuffer->release();
 	indexBuffer->release();
-	texture->release();
+	// texture->release();
 }
 
