@@ -8,11 +8,13 @@ in highp vec3 a_position;
 in highp vec2 a_texcoord;
 in highp vec3 a_normal;
 
-out highp vec2 v_texcoord;
+//out highp vec2 v_texcoord;
+out highp vec3 v_texcoord;
 
 void main(void) {
 	// passing parameters
-	v_texcoord = a_texcoord;
+	// v_texcoord = a_texcoord;
+	 v_texcoord = a_position;
 
 	// vertices
 	mat4 mv_matrix = u_viewMatrix * u_modelMatrix;

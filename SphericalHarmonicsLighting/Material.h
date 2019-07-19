@@ -2,6 +2,7 @@
 #include <qstring.h>
 #include <qvector3d.h>
 #include <qimage.h>
+#include <qopengltexture.h>
 
 class Material {
 public:
@@ -23,6 +24,8 @@ public:
 	const QImage& getDiffuseMap() const;
 	void setUsingDiffuseMap(bool usingDiffuseMap);
 	const bool isUsingDiffuseMap() const;
+	void setTexture(QOpenGLTexture * texture);
+	QOpenGLTexture * getTexture() const;
 
 private:
 	QString materialName;
@@ -32,4 +35,5 @@ private:
 	float shinnes;
 	QImage diffuseMap;
 	bool usingDiffuseMap = false;
+	QOpenGLTexture * texture;
 };

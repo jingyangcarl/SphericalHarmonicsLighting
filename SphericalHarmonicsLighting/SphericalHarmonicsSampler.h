@@ -7,6 +7,7 @@
 #include <qvector2d.h>
 #include <qvector3d.h>
 #include <random>
+#include <qopengltexture.h>
 
 struct Sample {
 public:
@@ -24,6 +25,10 @@ public:
 	SphericalHarmonicsSampler();
 	~SphericalHarmonicsSampler();
 
+	// setter and getter
+	QOpenGLTexture * getTexture();
+	QImage & getTextureImage();
+
 	// skybox initialization
 	void loadImage(QString &name, QString & filePath);
 	QImage &ImageExpand();
@@ -38,11 +43,13 @@ public:
 
 	// get
 	const QVector<Sample*> & getSamples() const;
+	void GenerateImage();
 
 private:
 	// input
 	QMap<QString, QImage*> images;
-	QImage texture;
+	QOpenGLTexture * texture;
+	QImage textureImg;
 
 	// samples
 	QVector<Sample*> samples;

@@ -40,18 +40,19 @@ Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indic
 
 	// load texture
 	if (material) {
-		this->texture = new QOpenGLTexture((material->getDiffuseMap()).mirrored());
+		// this->texture = new QOpenGLTexture((material->getDiffuseMap()).mirrored());
+		this->texture = material->getTexture();
 	} 
 	else {
 		QImage image(1, 1, QImage::Format_RGB32);
 		image.fill(Qt::white);
 		this->texture = new QOpenGLTexture(image);
+		// set texture property
+		this->texture->setMinificationFilter(QOpenGLTexture::Linear); // nearest filtering mode
+		this->texture->setMagnificationFilter(QOpenGLTexture::Linear); // bilinear filtering mode
+		this->texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
 	}
 
-	// set texture property
-	this->texture->setMinificationFilter(QOpenGLTexture::Linear); // nearest filtering mode
-	this->texture->setMagnificationFilter(QOpenGLTexture::Linear); // bilinear filtering mode
-	this->texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
 }
 
 /*
@@ -86,13 +87,21 @@ bool Object3D::setTexture(const QImage& image) {
 		return true;
 	}
 	else {
-		qDebug() << "ERROR::Carl::Object3D::setTexture::texture: texture is not created successfully";
+		qDebug() << "ERROR::Carl::Object3D::setTexture::image: textureImg is not created yet;";
 		return false;
 	}
 }
 
-void Object3D::setTexture(QOpenGLTexture * texture) {
-	this->texture = texture;
+bool Object3D::setTexture(QOpenGLTexture * texture) {
+	// load texture
+	if (texture) {
+		this->texture = texture;
+		return true;
+	}
+	else {
+		qDebug() << "ERROR::Carl::Object3D::setTexture::texture: texture is not created yet;";
+		return false;
+	}
 }
 
 QOpenGLTexture * Object3D::getTexture() const {

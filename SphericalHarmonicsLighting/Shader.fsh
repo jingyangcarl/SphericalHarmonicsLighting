@@ -1,7 +1,8 @@
 #version 330 core
 
 uniform sampler2D u_texture;
-uniform sampler2D u_skyboxTexture;
+// uniform sampler2D u_skyboxTexture;
+uniform samplerCube u_skyboxTexture;
 
 in highp vec4 v_position;
 in highp vec3 v_normal;
@@ -15,6 +16,6 @@ void main(void) {
 	vec3 eyeVec = normalize(v_position.xyz - eyePosition.xyz);
 	vec3 R = reflect(eyeVec, normalize(v_normal));
 
-	// FragColor = vec4(texture(u_skyboxTexture, R).rgb, 1.0) * 0.5;
-	FragColor = texture2D(u_texture, v_texcoord);
+	FragColor = vec4(texture(u_skyboxTexture, R).rgb, 1.0) * 0.5;
+	// FragColor = texture2D(u_texture, v_texcoord);
 }

@@ -22,6 +22,7 @@ public:
 	// change texture
 public:
 	bool setTexture(QImage& image);
+	bool setTexture(QOpenGLTexture * texture);
 private:
 	bool setTexture(int index);
 public:
@@ -46,7 +47,8 @@ private:
 	Object3D* object;
 
 	// list
-	QVector<QImage*> textures;
+	QVector<QImage*> texImages;
+	QVector<QOpenGLTexture *> textures;
 	QVector<QVector<QVector3D>*> coefficients;
 
 	// current status

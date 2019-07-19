@@ -7,6 +7,14 @@ SphericalHarmonicsSampler::~SphericalHarmonicsSampler() {
 	qDeleteAll(images);
 }
 
+QOpenGLTexture * SphericalHarmonicsSampler::getTexture() {
+	return this->texture;
+}
+
+QImage & SphericalHarmonicsSampler::getTextureImage() {
+	return this->textureImg;
+}
+
 void SphericalHarmonicsSampler::loadImage(QString & name, QString & filePath) {
 
 	QImage *image = new QImage(filePath);
@@ -26,15 +34,31 @@ QImage &SphericalHarmonicsSampler::ImageExpand() {
 
 	int width = (images.begin()).value()->width();
 	int height = (images.begin()).value()->height();
-	texture = QImage(width * 4, height * 3, QImage::Format_RGB32);
-	QImage blackImage(width, height, QImage::Format_RGB32);
-	blackImage.fill(Qt::black);
+
+	texture = new QOpenGLTexture(QOpenGLTexture::TargetCubeMap);
+	texture->create();
+	texture->setSize((*images.find("posx").value()).width(), (*images.find("posx").value()).height(), (*images.find("posx").value()).depth());
+	texture->setFormat(QOpenGLTexture::RGBAFormat);
+	texture->allocateStorage();
+	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posx").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posy").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posz").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negx").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negy").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negz").value()).constBits(), 0);
+	texture->setWrapMode(QOpenGLTexture::ClampToEdge);
+	texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+	texture->setMagnificationFilter(QOpenGLTexture::LinearMipMapLinear);
+	texture->generateMipMaps();
 
 	// paint image
 	// |Black | PosY |Black |Black |
 	// | NegX | NegY | PosX | PosZ |
 	// |Black | NegY |Black |Black |
-	QPainter *painter = new QPainter(&texture);
+	textureImg = QImage(width * 4, height * 3, QImage::Format_RGB32);
+	QImage blackImage(width, height, QImage::Format_RGB32);
+	blackImage.fill(Qt::black);
+	QPainter *painter = new QPainter(&textureImg);
 	painter->drawImage(QPoint(0 * width, 0 * height), blackImage);
 	painter->drawImage(QPoint(1 * width, 0 * height), *images.find("posy").value());
 	painter->drawImage(QPoint(2 * width, 0 * height), blackImage);
@@ -52,29 +76,14 @@ QImage &SphericalHarmonicsSampler::ImageExpand() {
 
 	// scale
 	float scaleRatio = 0.5;
-	texture = texture.scaled(texture.width() * scaleRatio, texture.height() * scaleRatio, Qt::KeepAspectRatio);
-
-	// ----------------------------------------------------
-	//QImage testImage = QImage(2048, 2048, QImage::Format_RGB32);
-	//QImage elementBlack(1024, 1024, QImage::Format_RGB32);
-	//QImage elementWhite(1024, 1024, QImage::Format_RGB32);
-	//elementBlack.fill(Qt::black);
-	//elementWhite.fill(Qt::white);
-	//QPainter *p = new QPainter(&testImage);
-	//p->drawImage(QPoint(0, 0), elementBlack);
-	//p->drawImage(QPoint(0, 1024), elementBlack);
-	//p->drawImage(QPoint(1024, 0), elementBlack);
-	//p->drawImage(QPoint(1024, 1024), elementBlack);
-	//p->drawImage(QPoint(512, 512), elementWhite);
-	//testImage.save("./Resources/Output/pos.jpg");
-	// --------------------------------------------------------
+	textureImg = textureImg.scaled(textureImg.width() * scaleRatio, textureImg.height() * scaleRatio, Qt::KeepAspectRatio);
 
 	// save
-	if (!texture.save("./Resources/Output/texture.jpg")) {
+	if (!textureImg.save("./Resources/Output/textureImg.jpg")) {
 		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: save failed";
 	}
 
-	return texture;
+	return textureImg;
 }
 
 QVector3D & SphericalHarmonicsSampler::CubeUV2XYZ(QVector2D & uv) {
@@ -202,4 +211,20 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 const QVector<Sample*>& SphericalHarmonicsSampler::getSamples() const {
 	// TODO: insert return statement here
 	return samples;
+}
+
+void SphericalHarmonicsSampler::GenerateImage() {
+
+	QImage testImage = QImage(2048, 2048, QImage::Format_RGB32);
+	QImage elementBlack(1024, 1024, QImage::Format_RGB32);
+	QImage elementWhite(1024, 1024, QImage::Format_RGB32);
+	elementBlack.fill(Qt::black);
+	elementWhite.fill(Qt::white);
+	QPainter *p = new QPainter(&testImage);
+	p->drawImage(QPoint(0, 0), elementBlack);
+	p->drawImage(QPoint(0, 1024), elementBlack);
+	p->drawImage(QPoint(1024, 0), elementBlack);
+	p->drawImage(QPoint(1024, 1024), elementBlack);
+	p->drawImage(QPoint(512, 512), elementWhite);
+	testImage.save("./Resources/Output/generate.jpg");
 }

@@ -154,3 +154,11 @@ const bool Material::isUsingDiffuseMap() const {
 	// TODO: insert return statement here
 	return this->usingDiffuseMap;
 }
+
+void Material::setTexture(QOpenGLTexture * texture) {
+	this->texture = texture;
+}
+
+QOpenGLTexture * Material::getTexture() const {
+	return this->texture;
+}
