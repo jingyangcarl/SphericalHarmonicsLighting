@@ -286,7 +286,7 @@ void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
 					if (sublist.size() == 3) {
 						if (sublist[1] == "") {
 							// f [] [] []
-							vertices << Vertex(verCoords[sublist[0].toLong() - 1], QVector2D(0.0, 0.0), normals[sublist[2].toLong() - 1]);
+							vertices << Vertex(verCoords[sublist[0].toLong() - 1], QVector2D(0.5, 0.5), normals[sublist[2].toLong() - 1]);
 							indices << indices.size();
 						} else {
 							vertices << Vertex(verCoords[sublist[0].toLong() - 1], texCoords[sublist[1].toLong() - 1], normals[sublist[2].toLong() - 1]);

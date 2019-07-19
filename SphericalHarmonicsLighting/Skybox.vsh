@@ -4,7 +4,7 @@ uniform highp mat4 u_modelMatrix;
 uniform highp mat4 u_projectionMatrix;
 uniform highp mat4 u_viewMatrix;
 
-in highp vec4 a_position;
+in highp vec3 a_position;
 in highp vec2 a_texcoord;
 in highp vec3 a_normal;
 
@@ -16,5 +16,5 @@ void main(void) {
 
 	// vertices
 	mat4 mv_matrix = u_viewMatrix * u_modelMatrix;
-	gl_Position = u_projectionMatrix * mv_matrix * a_position;
+	gl_Position = u_projectionMatrix * mv_matrix * vec4(a_position, 1.0);
 }

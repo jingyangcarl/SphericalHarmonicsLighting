@@ -78,9 +78,6 @@
     <ClCompile Include="SlotFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Transformational.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SphericalHarmonicsLighting.h">

@@ -25,7 +25,8 @@ public:
 private:
 	bool setTexture(int index);
 public:
-	QImage& getTexture(const int index) const;
+	QOpenGLTexture * getTexture() const;
+	QImage & getTexture(const int index) const;
 	QVector<QVector3D>& getCoefficient() const;
 	QVector<QVector3D>& getCoefficient(const int index) const;
 
@@ -50,7 +51,6 @@ private:
 
 	// current status
 	int skyboxIndex;
-	QImage* currentTex = 0;
 	QVector<QVector3D>* currentCoef = 0;
 
 	// Spherical Harmonics

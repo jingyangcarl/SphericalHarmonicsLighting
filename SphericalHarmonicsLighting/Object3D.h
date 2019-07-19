@@ -30,6 +30,8 @@ public:
 
 	// setter and getter
 	bool setTexture(const QImage& image);
+	void setTexture(QOpenGLTexture * texture);
+	QOpenGLTexture * getTexture() const;
 	void setVerCoordCount(const int verCoordCount);
 	const int getVerCoordCount() const;
 	void setTexCoordCount(const int texCoordCount);

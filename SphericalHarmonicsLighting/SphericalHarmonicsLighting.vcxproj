@@ -125,7 +125,6 @@
     <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="ObjectEngine3D.cpp" />
     <ClCompile Include="SlotFunction.cpp" />
-    <ClCompile Include="Transformational.cpp" />
     <ClCompile Include="WidgetParameter.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SphericalHarmonicsEvaluator.cpp" />

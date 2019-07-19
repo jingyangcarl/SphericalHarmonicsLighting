@@ -13,9 +13,4 @@ public:
 	virtual void scale(const float& s) = 0;
 	virtual void setGlobalTransform(const QMatrix4x4& g) = 0;
 	virtual void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions) = 0;
-
-	void setTexBindIndex(const int texBindIndex);
-	const int getTexBindIndex() const;
-private:
-	int texBindIndex = 0;
 };

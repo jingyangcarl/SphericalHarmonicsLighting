@@ -1,6 +1,7 @@
 #pragma once
 #include <qopenglwidget.h>
 #include <qopenglshaderprogram>
+#include <qopengldebug.h>
 #include <QKeyEvent>
 #include <QtMath>
 #include <qbasictimer.h>
@@ -32,6 +33,7 @@ public:
 protected:
 	/*----------------Widget.cpp-------------------*/
 	void initShaders();
+protected:
 	void initializeGL();
 	void resizeGL(int width, int height);
 	void paintGL();
@@ -48,6 +50,7 @@ private:
 	// shader
 	QOpenGLShaderProgram skyboxShader;
 	QOpenGLShaderProgram objectShader;
+	QOpenGLDebugLogger * debugLogger;
 
 	// object
 	Skybox* skybox;

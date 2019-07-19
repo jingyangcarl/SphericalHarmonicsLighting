@@ -91,6 +91,14 @@ bool Object3D::setTexture(const QImage& image) {
 	}
 }
 
+void Object3D::setTexture(QOpenGLTexture * texture) {
+	this->texture = texture;
+}
+
+QOpenGLTexture * Object3D::getTexture() const {
+	return this->texture;
+}
+
 void Object3D::setVerCoordCount(const int verCoordCount) {
 	this->verCoordCount = verCoordCount;
 }
@@ -191,8 +199,9 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 	}
 
 	// bind texture
-	texture->bind(getTexBindIndex());
-	shaderProgram->setUniformValue("u_texture", getTexBindIndex());
+	auto index = shaderProgram->property("textureIndex").toInt();
+	texture->bind(index);
+	shaderProgram->setUniformValue("u_texture", index);
 
 	// set modelMatrix
 	modelMatrix.setToIdentity();
@@ -232,6 +241,6 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 	// release
 	vertexBuffer->release();
 	indexBuffer->release();
-	// texture->release();
+	texture->release();
 }
 

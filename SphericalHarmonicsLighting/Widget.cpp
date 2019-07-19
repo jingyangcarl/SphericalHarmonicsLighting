@@ -10,11 +10,11 @@ Widget::~Widget() {}
 
 void Widget::initShaders() {
 	// objectShader
-	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Object.vsh")) {
+	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Shader.vsh")) {
 		qDebug() << objectShader.log();
 		close();
 	}
-	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Fragment, "./Object.fsh")) {
+	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Fragment, "./Shader.fsh")) {
 		qDebug() << objectShader.log();
 		close();
 	}
@@ -52,7 +52,6 @@ void Widget::initializeGL() {
 
 	// create skybox
 	skybox = new Skybox();
-	skybox->setTexBindIndex(0);
 
 	// add object groups
 	// if you change the order/number of objects, remember to edit timerEvent
@@ -67,7 +66,6 @@ void Widget::initializeGL() {
 	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/dragon.obj");
 	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
 	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
-	groups[groups.size() - 1]->setTexBindIndex(1);
 	transformObjects.append(groups[groups.size() - 1]);
 
 	// add stars
@@ -102,22 +100,30 @@ void Widget::paintGL() {
 	// draw skybox
 	skyboxShader.bind();
 	skyboxShader.setUniformValue("u_projectionMatrix", projectionMatrix);
+	skyboxShader.setProperty("textureIndex", 0);
 	camera->draw(&skyboxShader);
 	skybox->draw(&skyboxShader, context()->functions());
 	skyboxShader.release();
 
+	// get skybox texture
+	QOpenGLTexture *skyboxTexture = skybox->getTexture();
+	skyboxTexture->bind(0);
+
 	// draw objects
 	objectShader.bind();
+	objectShader.setUniformValue("u_skyboxTexture", 0);
 	objectShader.setUniformValue("u_projectionMatrix", projectionMatrix);
 	objectShader.setUniformValue("u_lightPosition", QVector4D(0.0, 0.0, 0.0, 1.0));
 	objectShader.setUniformValue("u_lightPower", 1.0f);
 	objectShader.setUniformValue("u_ambientFactor", this->ambientFactor);
 	objectShader.setUniformValue("u_contrast", this->contrast);
 	objectShader.setUniformValue("u_brightness", this->brightness);
-	objectShader.setUniformValue("u_skyboxTexture", 1);
 	objectShader.setUniformValueArray("u_coef", (skybox->getCoefficient()).constData(), 16);
+	objectShader.setProperty("textureIndex", 1);
 	camera->draw(&objectShader);
 	for (int i = 0; i < transformObjects.size(); i++)
 		transformObjects[i]->draw(&objectShader, context()->functions());
 	objectShader.release();
+
+	skyboxTexture->release();
 }

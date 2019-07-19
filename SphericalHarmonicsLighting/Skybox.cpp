@@ -45,7 +45,6 @@ Skybox::~Skybox() {
 	delete object;
 	qDeleteAll(textures);
 	qDeleteAll(coefficients);
-	delete currentTex;
 	delete currentCoef;
 	delete sampler;
 	delete evaluator;
@@ -250,6 +249,10 @@ bool Skybox::setTexture(int index) {
 	return true;
 }
 
+QOpenGLTexture * Skybox::getTexture() const {
+	return object->getTexture();
+}
+
 /*
 Description:
 	This function is used to get texture from texture list by its index;
@@ -258,7 +261,7 @@ Input:
 Output:
 	@ QImage& returnValue: the texture image;
 */
-QImage& Skybox::getTexture(const int index) const {
+QImage & Skybox::getTexture(const int index) const {
 	if (index >= textures.size() || index < 0) {
 		qDebug() << "ERROR::Carl::Skybox::getTexture::skyboxIndex: invalid texture skyboxIndex;";
 		exit(-1);
