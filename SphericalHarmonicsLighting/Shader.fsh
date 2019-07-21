@@ -12,9 +12,16 @@ out highp vec4 FragColor;
 
 void main(void) {
 
+	// vec4 eyePosition = vec4(1.0, 0.0, 0.0, 1.0);
+	// vec3 eyeVec = normalize(v_position.xyz - eyePosition.xyz);
+	// vec3 R = reflect(eyeVec, normalize(v_normal));
+
+	// FragColor = vec4(texture(u_skyboxTexture, R).rgb, 1.0) * 0.5;
+
+	float ratio = 1.00 / 1.1;
 	vec4 eyePosition = vec4(1.0, 0.0, 0.0, 1.0);
 	vec3 eyeVec = normalize(v_position.xyz - eyePosition.xyz);
-	vec3 R = reflect(eyeVec, normalize(v_normal));
+	vec3 R = refract(eyeVec, normalize(v_normal), ratio);
+	FragColor = vec4(texture(u_skyboxTexture, R).rgb, 1.0);
 
-	FragColor = vec4(texture(u_skyboxTexture, R).rgb, 1.0) * 0.5;
 }
