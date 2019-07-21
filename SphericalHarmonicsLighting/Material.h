@@ -3,10 +3,12 @@
 #include <qvector3d.h>
 #include <qimage.h>
 #include <qopengltexture.h>
+#include <qdebug.h>
 
 class Material {
 public:
 	Material();
+	Material(Material & material);
 	~Material();
 
 	void setMaterialName(const QString & materialName);
@@ -25,7 +27,20 @@ public:
 	void setUsingDiffuseMap(bool usingDiffuseMap);
 	const bool isUsingDiffuseMap() const;
 	void setTexture(QOpenGLTexture * texture);
+	void setTexture(const QImage & image);
 	QOpenGLTexture * getTexture() const;
+
+	bool create();
+	bool createTexture();
+	bool isCreated();
+	bool isTextureCreated();
+	void bind();
+	void bind(const int index);
+	void setMinificationFilter(QOpenGLTexture::Filter filter);
+	void setMagnificationFilter(QOpenGLTexture::Filter filter);
+	void setWrapMode(QOpenGLTexture::WrapMode wrapMode);
+	void release();
+	void destroy();
 
 private:
 	QString materialName;

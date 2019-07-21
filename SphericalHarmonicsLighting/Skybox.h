@@ -17,7 +17,7 @@ public:
 	// load data
 	bool loadCube(int width, QVector<Vertex>& desVertices, QVector<GLuint>& desIndices);
 	bool loadTextures();
-	bool loadMaterial(Material& material);
+	bool loadMaterial();
 
 	// change texture
 public:
@@ -53,6 +53,7 @@ private:
 
 	// current status
 	int skyboxIndex;
+	Material * material = 0;
 	QVector<QVector3D>* currentCoef = 0;
 
 	// Spherical Harmonics

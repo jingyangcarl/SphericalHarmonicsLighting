@@ -17,5 +17,4 @@ void main(void) {
 	vec3 R = reflect(eyeVec, normalize(v_normal));
 
 	FragColor = vec4(texture(u_skyboxTexture, R).rgb, 1.0) * 0.5;
-	// FragColor = texture2D(u_texture, v_texcoord);
 }

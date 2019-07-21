@@ -7,7 +7,7 @@ Input:
 	@ void parameter: void;
 */
 Object3D::Object3D() :
-	texture(0), scalar(1.0f) {
+	scalar(1.0f) {
 }
 
 /*
@@ -19,7 +19,7 @@ Input:
 	@ Material* material: a given material;
 */
 Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indices, Material* material) :
-	texture(0), scalar(1.0f) {
+	scalar(1.0f) {
 
 	// load vertex data
 	vertexBuffer = new QOpenGLBuffer();
@@ -35,24 +35,25 @@ Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indic
 	indexBuffer->allocate(indices.constData(), indices.size() * sizeof(GLuint));
 	indexBuffer->release();
 
-	// load material
-	this->material = material;
 
-	// load texture
-	if (material) {
-		// this->texture = new QOpenGLTexture((material->getDiffuseMap()).mirrored());
-		this->texture = material->getTexture();
+	if (material->isCreated() && material->isTextureCreated()) {
+		// material is created
+		this->material = material;
 	} 
-	else {
-		QImage image(1, 1, QImage::Format_RGB32);
-		image.fill(Qt::white);
-		this->texture = new QOpenGLTexture(image);
-		// set texture property
-		this->texture->setMinificationFilter(QOpenGLTexture::Linear); // nearest filtering mode
-		this->texture->setMagnificationFilter(QOpenGLTexture::Linear); // bilinear filtering mode
-		this->texture->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
+	if (!material->isCreated()) {
+		// the mateiral is not created
+		/*Material material;
+		material.create();
+		this->material = &material;*/
+		material = new Material;
+		material->create();
+		this->material = material;
 	}
-
+	else if (!material->isTextureCreated()) {
+		// texture is not created in the material
+		material->createTexture();
+		this->material = material;
+	}
 }
 
 /*
@@ -64,7 +65,6 @@ Input:
 Object3D::~Object3D() {
 	delete vertexBuffer;
 	delete indexBuffer;
-	delete texture;
 	delete material;
 }
 
@@ -78,12 +78,15 @@ Output:
 */
 bool Object3D::setTexture(const QImage& image) {
 	// clear previous texture
-	this->texture->destroy();
-	this->texture->create();
+	// this->texture->destroy();
+	// this->texture->create();
+	this->material->destroy();
+	this->material->create();
 
 	// load texture
-	if (this->texture->isCreated()) {
-		this->texture->setData(image);
+	if (this->material->isCreated()) {
+		// this->texture->setData(image);
+		this->material->setTexture(image);
 		return true;
 	}
 	else {
@@ -95,7 +98,8 @@ bool Object3D::setTexture(const QImage& image) {
 bool Object3D::setTexture(QOpenGLTexture * texture) {
 	// load texture
 	if (texture) {
-		this->texture = texture;
+		this->material->setTexture(texture);
+		//this->texture = texture;
 		return true;
 	}
 	else {
@@ -105,7 +109,8 @@ bool Object3D::setTexture(QOpenGLTexture * texture) {
 }
 
 QOpenGLTexture * Object3D::getTexture() const {
-	return this->texture;
+	//return this->texture;
+	return this->material->getTexture();
 }
 
 void Object3D::setVerCoordCount(const int verCoordCount) {
@@ -209,7 +214,8 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 
 	// bind texture
 	auto index = shaderProgram->property("textureIndex").toInt();
-	texture->bind(index);
+	// texture->bind(index);
+	material->bind(index);
 	shaderProgram->setUniformValue("u_texture", index);
 
 	// set modelMatrix
@@ -250,6 +256,6 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 	// release
 	vertexBuffer->release();
 	indexBuffer->release();
-	texture->release();
+	material->release();
 }
 

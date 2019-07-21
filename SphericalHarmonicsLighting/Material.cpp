@@ -1,6 +1,23 @@
 #include "Material.h"
 
-Material::Material() {
+Material::Material() : 
+	texture(0) {
+}
+
+Material::Material(Material & material) {
+	this->materialName = material.getMaterialName();
+	this->ambientColor = material.getAmbientColor();
+	this->diffuseColor = material.getDiffuseColor();
+	this->specularColor = material.getSpecularColor();
+	this->shinnes = material.getShinnes();
+	this->diffuseMap = material.getDiffuseMap();
+	this->usingDiffuseMap = material.isUsingDiffuseMap();
+	if (material.getTexture()) {
+		this->texture = material.getTexture();
+	}
+	else {
+		this->texture = new QOpenGLTexture(QImage());
+	}
 }
 
 Material::~Material() {
@@ -159,6 +176,104 @@ void Material::setTexture(QOpenGLTexture * texture) {
 	this->texture = texture;
 }
 
+void Material::setTexture(const QImage & image) {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::setTexture::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->setData(image);
+}
+
 QOpenGLTexture * Material::getTexture() const {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::getMaterial::texture: texture is not created yet;";
+		return 0;
+	}
 	return this->texture;
+}
+
+bool Material::create() {
+	if (!this) return false;
+	this->setAmbientColor(QVector3D(1.0, 1.0, 1.0));
+	this->setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
+	this->setSpecularColor(QVector3D(1.0, 1.0, 1.0));
+	this->setShinnes(100);
+	this->createTexture();
+	return true;
+}
+
+bool Material::createTexture() {
+	QImage image(1, 1, QImage::Format_RGB32);
+	image.fill(Qt::white);
+	this->texture = new QOpenGLTexture(image);
+	this->setMinificationFilter(QOpenGLTexture::Linear); // nearest filtering mode
+	this->setMagnificationFilter(QOpenGLTexture::Linear); // bilinear filtering mode
+	this->setWrapMode(QOpenGLTexture::Repeat); // wrap texture coordinates by repreating
+	return true;
+}
+
+bool Material::isCreated() {
+	if (!this) return false;
+	return true;
+}
+
+bool Material::isTextureCreated() {
+	if (!this->texture) return false;
+	return true;
+}
+
+void Material::bind() {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::bind::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->bind();
+}
+
+void Material::bind(const int index) {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::bind::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->bind(index);
+}
+
+void Material::setMinificationFilter(QOpenGLTexture::Filter filter) {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::setMinificationFilter::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->setMinificationFilter(filter);
+}
+
+void Material::setMagnificationFilter(QOpenGLTexture::Filter filter) {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::setMagnificationFilter::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->setMagnificationFilter(filter);
+}
+
+void Material::setWrapMode(QOpenGLTexture::WrapMode wrapMode) {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::setWrapMode::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->setWrapMode(wrapMode);
+}
+
+void Material::release() {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::release::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->release();
+}
+
+void Material::destroy() {
+	if (!this->texture) {
+		qDebug() << "ERROR::Carl::Material::destroy::texture: texture is not created yet;";
+		return;
+	}
+	this->texture->destroy();
 }

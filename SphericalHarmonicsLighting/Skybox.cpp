@@ -11,16 +11,17 @@ Skybox::Skybox(const float& width) :
 
 	QVector<Vertex> vertices;
 	QVector<GLuint> indices;
-	Material material;
+	material = new Material();
 
 	// load data
 	bool isCube = loadCube(width, vertices, indices);
 	bool isTexture = loadTextures();
-	bool isMaterial = loadMaterial(material);
+	bool isMaterial = loadMaterial();
 
 	// create skybox
 	if (isCube && isTexture && isMaterial) {
-		object = new Object3D(vertices, indices, &material);
+		object = new Object3D(vertices, indices, material);
+		qDebug() << this->getTexture();
 	}
 	else {
 		if (!isCube) {
@@ -203,14 +204,14 @@ Input:
 Output:
 	@ Material& material: the loaded material;
 */
-bool Skybox::loadMaterial(Material& material) {
+bool Skybox::loadMaterial() {
 	if (texImages.size() > 0) {
-		material.setAmbientColor(QVector3D(1.0, 1.0, 1.0));
-		material.setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
-		material.setSpecularColor(QVector3D(1.0, 1.0, 1.0));
-		material.setShinnes(100);
-		material.setDiffuseMap((*(*texImages.begin())).mirrored());
-		material.setTexture(*textures.begin());
+		material->setAmbientColor(QVector3D(1.0, 1.0, 1.0));
+		material->setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
+		material->setSpecularColor(QVector3D(1.0, 1.0, 1.0));
+		material->setShinnes(100);
+		material->setDiffuseMap((*(*texImages.begin())).mirrored());
+		material->setTexture(*textures.begin());
 		return true;
 	}
 	else {

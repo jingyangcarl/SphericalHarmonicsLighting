@@ -52,7 +52,7 @@ private:
 	// object buffer
 	QOpenGLBuffer* vertexBuffer = 0;
 	QOpenGLBuffer* indexBuffer = 0;
-	QOpenGLTexture* texture = 0;
+	// QOpenGLTexture* texture = 0;
 	Material* material = 0;
 
 	// linear transformation
