@@ -31,52 +31,67 @@
     <Filter Include="Resource Files\Shader">
       <UniqueIdentifier>{88c2b4d9-f72f-47df-80af-322bfcfa8fe1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics Engine">
+      <UniqueIdentifier>{66ff1b4b-41cd-4bd7-bdfc-3e241c33fc9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Spherical Harmonics">
+      <UniqueIdentifier>{7d176f9f-9d9e-4f88-a177-4b5ec9e3695b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics Engine">
+      <UniqueIdentifier>{49bbd60f-87d2-477a-b9bb-7ed75628c9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Spherical Harmonics">
+      <UniqueIdentifier>{d7d0a472-0c25-4c5d-babf-e064445c081d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Widget">
+      <UniqueIdentifier>{e819f486-c8f2-461c-bc56-571cd2106dcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SphericalHarmonicsLighting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera3D.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
     <ClCompile Include="Group3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Object3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WidgetCallback.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
     <ClCompile Include="MaterialLibrary.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object3D.cpp">
+      <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
     <ClCompile Include="ObjectEngine3D.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
-    <ClCompile Include="SphericalHarmonicsSampler.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
     <ClCompile Include="SphericalHarmonicsEvaluator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Spherical Harmonics</Filter>
     </ClCompile>
-    <ClCompile Include="WidgetParameter.cpp">
+    <ClCompile Include="SphericalHarmonicsSampler.cpp">
+      <Filter>Source Files\Spherical Harmonics</Filter>
+    </ClCompile>
+    <ClCompile Include="SphericalHarmonicsLighting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SlotFunction.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <Filter>Source Files\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetCallback.cpp">
+      <Filter>Source Files\Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetParameter.cpp">
+      <Filter>Source Files\Widget</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,38 +110,38 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Group3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transformational.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Widget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camera3D.h">
+      <Filter>Header Files\Graphics Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Group3D.h">
+      <Filter>Header Files\Graphics Engine</Filter>
+    </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics Engine</Filter>
     </ClInclude>
     <ClInclude Include="MaterialLibrary.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Object3D.h">
+      <Filter>Header Files\Graphics Engine</Filter>
     </ClInclude>
     <ClInclude Include="ObjectEngine3D.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics Engine</Filter>
     </ClInclude>
-    <ClInclude Include="SphericalHarmonicsSampler.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files\Graphics Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformational.h">
+      <Filter>Header Files\Graphics Engine</Filter>
     </ClInclude>
     <ClInclude Include="SphericalHarmonicsEvaluator.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Spherical Harmonics</Filter>
+    </ClInclude>
+    <ClInclude Include="SphericalHarmonicsSampler.h">
+      <Filter>Header Files\Spherical Harmonics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

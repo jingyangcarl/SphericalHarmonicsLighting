@@ -87,7 +87,7 @@ void main(void) {
 	// adjust brightnes;
 	shColor += u_brightness;
 
-	diffMatColor += vec4(shColor, 1.0);
+	// diffMatColor += vec4(shColor, 1.0);
 
 	FragColor = diffMatColor;
 	// FragColor = vec4(shColor, 1.0);

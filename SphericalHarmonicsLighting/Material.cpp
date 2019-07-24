@@ -181,7 +181,16 @@ void Material::setTexture(const QImage & image) {
 		qDebug() << "ERROR::Carl::Material::setTexture::texture: texture is not created yet;";
 		return;
 	}
+	this->texture->destroy();
+	this->texture->create();
 	this->texture->setData(image);
+}
+
+void Material::setTexture(const QString & texPath) {
+	QImage image(texPath);
+	if (!image.isNull()) {
+		setTexture(image.mirrored());
+	}
 }
 
 QOpenGLTexture * Material::getTexture() const {

@@ -12,7 +12,7 @@ QOpenGLTexture * SphericalHarmonicsSampler::getTexture() {
 }
 
 QImage & SphericalHarmonicsSampler::getTextureImage() {
-	return this->textureImg;
+	return this->texImage;
 }
 
 void SphericalHarmonicsSampler::loadImage(QString & name, QString & filePath) {
@@ -22,43 +22,27 @@ void SphericalHarmonicsSampler::loadImage(QString & name, QString & filePath) {
 		images.insert(name, image);
 	}
 	else {
-		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: image load failed";
+		qDebug() << "Carl::SphericalHarmonicsSampler::TextureImageExpand::images.size() error: image load failed";
 	}
 }
 
-QImage &SphericalHarmonicsSampler::ImageExpand() {
+QImage &SphericalHarmonicsSampler::TextureImageExpand(bool isSave, float scaleRatio) {
 	if (images.size() < 6) {
-		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: not enough images";
+		qDebug() << "Carl::SphericalHarmonicsSampler::TextureImageExpand::images.size() error: not enough images";
 		exit(-1);
 	}
 
 	int width = (images.begin()).value()->width();
 	int height = (images.begin()).value()->height();
 
-	texture = new QOpenGLTexture(QOpenGLTexture::TargetCubeMap);
-	texture->create();
-	texture->setSize((*images.find("posx").value()).width(), (*images.find("posx").value()).height(), (*images.find("posx").value()).depth());
-	texture->setFormat(QOpenGLTexture::RGBAFormat);
-	texture->allocateStorage();
-	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posx").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posy").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posz").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negx").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negy").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negz").value()).constBits(), 0);
-	texture->setWrapMode(QOpenGLTexture::ClampToEdge);
-	texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-	texture->setMagnificationFilter(QOpenGLTexture::LinearMipMapLinear);
-	texture->generateMipMaps();
-
 	// paint image
 	// |Black | PosY |Black |Black |
 	// | NegX | NegY | PosX | PosZ |
 	// |Black | NegY |Black |Black |
-	textureImg = QImage(width * 4, height * 3, QImage::Format_RGB32);
+	texImage = QImage(width * 4, height * 3, QImage::Format_RGB32);
 	QImage blackImage(width, height, QImage::Format_RGB32);
 	blackImage.fill(Qt::black);
-	QPainter *painter = new QPainter(&textureImg);
+	QPainter *painter = new QPainter(&texImage);
 	painter->drawImage(QPoint(0 * width, 0 * height), blackImage);
 	painter->drawImage(QPoint(1 * width, 0 * height), *images.find("posy").value());
 	painter->drawImage(QPoint(2 * width, 0 * height), blackImage);
@@ -75,15 +59,40 @@ QImage &SphericalHarmonicsSampler::ImageExpand() {
 	painter->~QPainter();
 
 	// scale
-	float scaleRatio = 0.5;
-	textureImg = textureImg.scaled(textureImg.width() * scaleRatio, textureImg.height() * scaleRatio, Qt::KeepAspectRatio);
+	texImage = texImage.scaled(texImage.width() * scaleRatio, texImage.height() * scaleRatio, Qt::KeepAspectRatio);
 
 	// save
-	if (!textureImg.save("./Resources/Output/textureImg.jpg")) {
-		qDebug() << "Carl::SphericalHarmonicsSampler::ImageExpand::images.size() error: save failed";
+	if (isSave) {
+		if (!texImage.save("./Resources/Output/texImage.jpg")) {
+			qDebug() << "Carl::SphericalHarmonicsSampler::TextureImageExpand::images.size() error: save failed";
+		}
 	}
 
-	return textureImg;
+	return texImage;
+}
+
+QOpenGLTexture * SphericalHarmonicsSampler::TextureExpand() {
+	if (images.size() < 6) {
+		qDebug() << "Carl::SphericalHarmonicsSampler::TextureExpand::images.size() error: not enough images";
+		exit(-1);
+	}
+	texture = new QOpenGLTexture(QOpenGLTexture::TargetCubeMap);
+	texture->create();
+	texture->setSize((*images.find("posx").value()).width(), (*images.find("posx").value()).height(), (*images.find("posx").value()).depth());
+	texture->setFormat(QOpenGLTexture::RGBAFormat);
+	texture->allocateStorage();
+	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posx").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posy").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posz").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negx").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negy").value()).constBits(), 0);
+	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negz").value()).constBits(), 0);
+	texture->setWrapMode(QOpenGLTexture::ClampToEdge);
+	texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+	texture->setMagnificationFilter(QOpenGLTexture::LinearMipMapLinear);
+	texture->generateMipMaps();
+
+	return texture;
 }
 
 QVector3D & SphericalHarmonicsSampler::CubeUV2XYZ(QVector2D & uv) {
@@ -148,19 +157,6 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 	int width = (images.begin()).value()->width();
 	int height = (images.begin()).value()->height();
 
-	//QImage output_negx(width, height, QImage::Format_RGB32);
-	//QImage output_negy(width, height, QImage::Format_RGB32);
-	//QImage output_negz(width, height, QImage::Format_RGB32);
-	//QImage output_posx(width, height, QImage::Format_RGB32);
-	//QImage output_posy(width, height, QImage::Format_RGB32);
-	//QImage output_posz(width, height, QImage::Format_RGB32);
-	//int count_negx(0);
-	//int count_negy(0);
-	//int count_negz(0);
-	//int count_posx(0);
-	//int count_posy(0);
-	//int count_posz(0);
-
 	for (int i = 0; i < number; i++) {
 		float x = NormalRandom(0.0f, 1.0f);
 		float y = NormalRandom(0.0f, 1.0f);
@@ -172,59 +168,10 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 		int pixelCoordY = uvPair.second[1] * height;
 		sample->verColor = (images.find(uvPair.first).value())->pixelColor(pixelCoordX, pixelCoordY).rgb();
 		samples << sample;
-
-	//	if (uvPair.first == "negx") {
-	//		count_negx++;
-	//		output_negx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "negy") {
-	//		count_negy++;
-	//		output_negy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "negz") {
-	//		count_negz++;
-	//		output_negz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "posx") {
-	//		count_posx++;
-	//		output_posx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	else if (uvPair.first == "posy") {
-	//		count_posy++;
-	//		output_posy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	} 
-	//	else if (uvPair.first == "posz") {
-	//		count_posz++;
-	//		output_posz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb());
-	//	}
-	//	
 	}
-
-	//output_negx.save("./Resources/Output/negxRandom.jpg");
-	//output_negy.save("./Resources/Output/negyRandom.jpg");
-	//output_negz.save("./Resources/Output/negzRandom.jpg");
-	//output_posx.save("./Resources/Output/posxRandom.jpg");
-	//output_posy.save("./Resources/Output/posyRandom.jpg");
-	//output_posz.save("./Resources/Output/poszRandom.jpg");
 }
 
 const QVector<Sample*>& SphericalHarmonicsSampler::getSamples() const {
 	// TODO: insert return statement here
 	return samples;
-}
-
-void SphericalHarmonicsSampler::GenerateImage() {
-
-	QImage testImage = QImage(2048, 2048, QImage::Format_RGB32);
-	QImage elementBlack(1024, 1024, QImage::Format_RGB32);
-	QImage elementWhite(1024, 1024, QImage::Format_RGB32);
-	elementBlack.fill(Qt::black);
-	elementWhite.fill(Qt::white);
-	QPainter *p = new QPainter(&testImage);
-	p->drawImage(QPoint(0, 0), elementBlack);
-	p->drawImage(QPoint(0, 1024), elementBlack);
-	p->drawImage(QPoint(1024, 0), elementBlack);
-	p->drawImage(QPoint(1024, 1024), elementBlack);
-	p->drawImage(QPoint(512, 512), elementWhite);
-	testImage.save("./Resources/Output/generate.jpg");
 }

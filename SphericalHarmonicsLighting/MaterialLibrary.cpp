@@ -102,7 +102,8 @@ void MaterialLibrary::loadMaterialFromFile(const QString & fileName) {
 				qDebug() << "Carl::MaterialLibrary::loadMaterialFromFile::map_Kd error: not enough parameters";
 				exit(-1);
 			}
-			material->setDiffuseMap(QString("%1/%2").arg(fileInfo.absolutePath()).arg(list[1]));
+			material->create();
+			material->setTexture(QString("%1/%2").arg(fileInfo.absolutePath()).arg(list[1]));
 			continue;
 		}
 	}

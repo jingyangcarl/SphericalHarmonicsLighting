@@ -21,14 +21,13 @@ Skybox::Skybox(const float& width) :
 	// create skybox
 	if (isCube && isTexture && isMaterial) {
 		object = new Object3D(vertices, indices, material);
-		qDebug() << this->getTexture();
 	}
 	else {
 		if (!isCube) {
 			qDebug() << "ERROR::Carl::Skybox::Skybox::isCube: cube initialization failed;";
 		}
 		else if (!isTexture) {
-			qDebug() << "ERROR::Carl::Skybox::skybox::isTexture: textureImg initialization failed;";
+			qDebug() << "ERROR::Carl::Skybox::skybox::isTexture: texImage initialization failed;";
 		}
 		else if (!isMaterial) {
 			qDebug() << "ERROR::Carl::Skybox::skybox::isMaterial: material initialization failed;";
@@ -166,8 +165,7 @@ bool Skybox::loadTextures() {
 		sampler->loadImage(QString("negx"), QString(directory.path() + "/negx.jpg"));
 		sampler->loadImage(QString("negy"), QString(directory.path() + "/negy.jpg"));
 		sampler->loadImage(QString("negz"), QString(directory.path() + "/negz.jpg"));
-		sampler->ImageExpand();
-		texImages << new QImage(sampler->getTextureImage());
+		sampler->TextureExpand();
 		textures << sampler->getTexture();
 
 		// sampling
@@ -205,17 +203,17 @@ Output:
 	@ Material& material: the loaded material;
 */
 bool Skybox::loadMaterial() {
-	if (texImages.size() > 0) {
+	if (textures.size() > 0) {
 		material->setAmbientColor(QVector3D(1.0, 1.0, 1.0));
 		material->setDiffuseColor(QVector3D(1.0, 1.0, 1.0));
 		material->setSpecularColor(QVector3D(1.0, 1.0, 1.0));
 		material->setShinnes(100);
-		material->setDiffuseMap((*(*texImages.begin())).mirrored());
+		// material->setDiffuseMap((*(*texImages.begin())).mirrored());
 		material->setTexture(*textures.begin());
 		return true;
 	}
 	else {
-		qDebug() << "ERROR::Carl::Skybox::loadMaterial::texImages: no available texImages;";
+		qDebug() << "ERROR::Carl::Skybox::loadMaterial::textures: no available textures;";
 		return false;
 	}
 }
@@ -230,7 +228,7 @@ Output:
 */
 bool Skybox::setTexture(QImage& image) {
 	if (!object->setTexture(image)) {
-		qDebug() << "ERROR::Carl::Skybox::setTexture::object: textureImg is not loaded successfully;";
+		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texImage is not loaded successfully;";
 		return false;
 	}
 	return true;
@@ -253,9 +251,9 @@ Output:
 	@ bool returnValue: whether the texture is successfuly set or not;
 */
 bool Skybox::setTexture(int index) {
-	int i = index % texImages.size();
+	int i = index % textures.size();
 	if (!object->setTexture(textures[i])) {
-		qDebug() << "ERROR::Carl::Skybox::setTexture::object: textureImg is not loaded successfully;";
+		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texImage is not loaded successfully;";
 		return false;
 	}
 	return true;
@@ -275,7 +273,7 @@ Output:
 */
 QImage & Skybox::getTexture(const int index) const {
 	if (index >= texImages.size() || index < 0) {
-		qDebug() << "ERROR::Carl::Skybox::getTexture::skyboxIndex: invalid textureImg skyboxIndex;";
+		qDebug() << "ERROR::Carl::Skybox::getTexture::skyboxIndex: invalid texImage skyboxIndex;";
 		exit(-1);
 	}
 	return *texImages[index];
@@ -323,7 +321,7 @@ Output:
 */
 void Skybox::loadNext() {
 	// change current status
-	auto i = (abs(++skyboxIndex) % texImages.size());
+	auto i = (abs(++skyboxIndex) % textures.size());
 	// set current texture
 	setTexture(i);
 	// set current coefficients;
@@ -346,7 +344,7 @@ Output:
 */
 void Skybox::loadPrev() {
 	// change current status
-	auto i = (abs(--skyboxIndex) % texImages.size());
+	auto i = (abs(--skyboxIndex) % textures.size());
 	// set current texture
 	setTexture(i);
 	// set current coefficients;

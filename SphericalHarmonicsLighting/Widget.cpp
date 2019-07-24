@@ -58,8 +58,8 @@ void Widget::initializeGL() {
 	// Add model
 	groups.append(new Group3D());
 	objects.append(new ObjectEngine3D());
-	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/dragon.obj");
-	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
+	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
+	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Max Curato/Max.obj");
 	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
 	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
 	transformObjects.append(groups[groups.size() - 1]);
@@ -119,18 +119,6 @@ void Widget::paintGL() {
 	camera->draw(&objectShader);
 	for (int i = 0; i < transformObjects.size(); i++)
 		transformObjects[i]->draw(&objectShader, context()->functions());
-
-	//QMatrix4x4 viewMatrix = camera->getViewMatrix();
-	//qDebug() << viewMatrix;
-	//QVector4D eyePosition = viewMatrix.column(3);
-	//viewMatrix.setColumn(3, QVector4D(0.0, 0.0, 0.0, 1.0));
-	//qDebug() << viewMatrix;
-	//eyePosition = viewMatrix * eyePosition;
-	//qDebug() << eyePosition;
-	//QVector3D eyeVector = -eyePosition.toVector3D();
-	//qDebug() << eyeVector;
-
 	objectShader.release();
-
 	skyboxTexture->release();
 }

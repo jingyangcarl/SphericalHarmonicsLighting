@@ -50,5 +50,4 @@ void SphericalHarmonicsLighting::ComboBoxMaterialType() {
 void SphericalHarmonicsLighting::PushButtonLoadMesh() {
 	QString file = QFileDialog::getOpenFileName(this, tr("Select Mesh File"), "./Resources/Model", tr("Mesh File(*.obj)"));
 	ui.openGLWidget->reloadMesh(file);
-	// HorizontalSliderMeshScale();
 }

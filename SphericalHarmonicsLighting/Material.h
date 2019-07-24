@@ -28,6 +28,7 @@ public:
 	const bool isUsingDiffuseMap() const;
 	void setTexture(QOpenGLTexture * texture);
 	void setTexture(const QImage & image);
+	void setTexture(const QString & texPath);
 	QOpenGLTexture * getTexture() const;
 
 	bool create();

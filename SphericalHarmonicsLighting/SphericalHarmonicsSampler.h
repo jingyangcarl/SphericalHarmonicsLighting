@@ -31,7 +31,9 @@ public:
 
 	// skybox initialization
 	void loadImage(QString &name, QString & filePath);
-	QImage &ImageExpand();
+	QImage &TextureImageExpand(bool isSave = false, float scaleRatio = 0.5f);
+	QOpenGLTexture * TextureExpand();
+
 
 	// uv mapping
 	QVector3D &CubeUV2XYZ(QVector2D &uv);
@@ -43,13 +45,12 @@ public:
 
 	// get
 	const QVector<Sample*> & getSamples() const;
-	void GenerateImage();
 
 private:
 	// input
 	QMap<QString, QImage*> images;
 	QOpenGLTexture * texture;
-	QImage textureImg;
+	QImage texImage;
 
 	// samples
 	QVector<Sample*> samples;

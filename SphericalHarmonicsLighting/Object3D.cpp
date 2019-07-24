@@ -42,9 +42,6 @@ Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indic
 	} 
 	if (!material->isCreated()) {
 		// the mateiral is not created
-		/*Material material;
-		material.create();
-		this->material = &material;*/
 		material = new Material;
 		material->create();
 		this->material = material;
@@ -90,7 +87,7 @@ bool Object3D::setTexture(const QImage& image) {
 		return true;
 	}
 	else {
-		qDebug() << "ERROR::Carl::Object3D::setTexture::image: textureImg is not created yet;";
+		qDebug() << "ERROR::Carl::Object3D::setTexture::image: texImage is not created yet;";
 		return false;
 	}
 }
@@ -214,7 +211,6 @@ void Object3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* funct
 
 	// bind texture
 	auto index = shaderProgram->property("textureIndex").toInt();
-	// texture->bind(index);
 	material->bind(index);
 	shaderProgram->setUniformValue("u_texture", index);
 

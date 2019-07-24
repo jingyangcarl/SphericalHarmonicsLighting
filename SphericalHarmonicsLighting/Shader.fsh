@@ -20,6 +20,7 @@ uniform highp float u_refractRatio;
 in highp vec4 v_position;
 in highp vec3 v_normal;
 in highp vec2 v_texcoord;
+in highp mat4 v_modelMatrix;
 in highp mat4 v_viewMatrix;
 in highp vec4 v_rotation;
 
@@ -45,22 +46,14 @@ void main(void) {
 		vec4 ambientColor = u_ambientFactor * diffMapColor;
 
 		// ads Color
-		vec4 adsColor = diffColor + ambientColor;
-
-		// contrast;
-		adsColor = (adsColor - 0.5f) * u_contrast + 0.5f;
-
-		// brightness;
-		adsColor += u_brightness;
+		// vec4 adsColor = diffColor + ambientColor;
+		vec4 adsColor = ambientColor;
 
 		FragColor = adsColor;
 	}
 	else if (u_materialType == DIFFUSE_SH) {
 		// diffuse spherical harmonics lighting
 		vec4 diffuseColor = texture2D(u_texture, v_texcoord) * u_ambientFactor;
-		
-		// mat4 normal_trans = inverse(v_viewMatrix);
-		// vec3 normal = vec3(normalize(normal_trans * vec4(v_normal, 0.0)));
 		vec3 normal = vec3(normalize(v_normal));
 
 		// spherical harmonics lighting
@@ -112,8 +105,6 @@ void main(void) {
 		// reflection: mirror
 
 		vec4 eyePosition = mat4(mat3(v_viewMatrix)) * v_viewMatrix[3];
-		//vec3 eyePosition = vec3(v_viewMatrix[3].xyz);
-		// eyePosition = eyePosition + 2.0 * cross(cross(eyePosition, v_rotation.xyz) + v_rotation.w * eyePosition, v_rotation.xyz);
 		vec3 eyeVec = normalize(v_position.xyz - eyePosition.xyz);
 		eyeVec.z = -eyeVec.z;
 
