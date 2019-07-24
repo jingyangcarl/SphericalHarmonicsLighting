@@ -12,6 +12,12 @@ SphericalHarmonicsLighting::SphericalHarmonicsLighting(QWidget *parent)
 	connect(ui.pushButton_loadMesh, SIGNAL(clicked()), 
 			this, SLOT(PushButtonLoadMesh()));
 
+	// Material Type
+	ui.comboBox_materialType->setCurrentIndex(0);
+	ui.lineEdit_materialType->setText(ui.comboBox_materialType->currentText());
+	connect(ui.comboBox_materialType, SIGNAL(currentTextChanged(QString)),
+			this, SLOT(ComboBoxMaterialType()));
+
 	// Ambient Factor
 	ui.horizontalSlider_ambientFactor->setMaximum(100);
 	ui.horizontalSlider_ambientFactor->setMinimum(0);
@@ -43,4 +49,13 @@ SphericalHarmonicsLighting::SphericalHarmonicsLighting(QWidget *parent)
 	ui.lineEdit_meshScale->setText(QString::number(1.0));
 	connect(ui.horizontalSlider_meshScale, SIGNAL(valueChanged(int)),
 			this, SLOT(HorizontalSliderMeshScale()));
+
+	// Refract ratio
+	ui.horizontalSlider_refractRatio->setMaximum(100);
+	ui.horizontalSlider_refractRatio->setMinimum(1);
+	ui.horizontalSlider_refractRatio->setValue(66);
+	ui.lineEdit_refractRatio->setText(QString::number(0.66));
+	connect(ui.horizontalSlider_refractRatio, SIGNAL(valueChanged(int)),
+			this, SLOT(HorizontalSliderRefractRatio()));
+
 }

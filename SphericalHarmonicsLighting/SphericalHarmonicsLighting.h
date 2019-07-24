@@ -17,10 +17,10 @@ public slots:
 	void HorizontalSliderContrast();
 	void HorizontalSliderBrightness();
 	void HorizontalSliderMeshScale();
+	void HorizontalSliderRefractRatio();
+	void ComboBoxMaterialType();
 	void PushButtonLoadMesh();
 
 private:
 	Ui::SphericalHarmonicsLightingClass ui;
-
-
 };

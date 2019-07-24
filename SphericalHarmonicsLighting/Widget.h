@@ -28,6 +28,11 @@ public:
 	const float getBrightness() const;
 	void setMeshScale(const float meshScale);
 	const float getMeshScale() const;
+	void setMaterialType(const float materialType);
+	void setMaterialType(const QString & materialType);
+	const float getMaterialType() const;
+	void setRefractRatio(const float refractRatio);
+	const float getRefractRatio() const;
 	void reloadMesh(const QString file);
 
 protected:
@@ -80,5 +85,7 @@ private:
 	float contrast = 2.0f;
 	float brightness = 0.13f;
 	float meshScale = 1.0f;
+	float materialType = 0.0f;
+	float refractRatio = 0.6f;
 };
 

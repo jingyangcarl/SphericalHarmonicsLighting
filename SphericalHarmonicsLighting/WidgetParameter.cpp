@@ -33,6 +33,29 @@ const float Widget::getMeshScale() const {
 	return this->meshScale;
 }
 
+void Widget::setMaterialType(const float materialType) {
+	this->materialType = materialType;
+}
+
+void Widget::setMaterialType(const QString & materialType) {
+	if (materialType == "Diffuse") this->materialType = 0.0f;
+	else if (materialType == "Diffuse_SphericalHarmonic") this->materialType = 1.0f;
+	else if (materialType == "Mirror") this->materialType = 2.0f;
+	else if (materialType == "Glass") this->materialType = 3.0f;
+}
+
+const float Widget::getMaterialType() const {
+	return this->materialType;
+}
+
+void Widget::setRefractRatio(const float refractRatio) {
+	this->refractRatio = refractRatio;
+}
+
+const float Widget::getRefractRatio() const {
+	return this->refractRatio;
+}
+
 void Widget::reloadMesh(const QString file) {
 	if (groups.size() <= 0) {
 		qDebug() << "ERROR::Carl::Widget::reloadMesh::groups: no group available;";

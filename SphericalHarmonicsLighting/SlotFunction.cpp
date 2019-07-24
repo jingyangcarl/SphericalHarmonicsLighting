@@ -32,7 +32,23 @@ void SphericalHarmonicsLighting::HorizontalSliderMeshScale() {
 	ui.openGLWidget->update();
 }
 
+void SphericalHarmonicsLighting::HorizontalSliderRefractRatio() {
+	int value = ui.horizontalSlider_refractRatio->value();
+	float refractRatio = value / 100.0;
+	ui.lineEdit_refractRatio->setText(QString::number(refractRatio));
+	ui.openGLWidget->setRefractRatio(refractRatio);
+	ui.openGLWidget->update();
+}
+
+void SphericalHarmonicsLighting::ComboBoxMaterialType() {
+	QString value = ui.comboBox_materialType->currentText();
+	ui.lineEdit_materialType->setText(value);
+	ui.openGLWidget->setMaterialType(value);
+	ui.openGLWidget->update();
+}
+
 void SphericalHarmonicsLighting::PushButtonLoadMesh() {
 	QString file = QFileDialog::getOpenFileName(this, tr("Select Mesh File"), "./Resources/Model", tr("Mesh File(*.obj)"));
 	ui.openGLWidget->reloadMesh(file);
+	// HorizontalSliderMeshScale();
 }

@@ -16,6 +16,7 @@ public:
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions = 0);
 
 	const QMatrix4x4 &getViewMatrix() const;
+	static const QVector3D getCameraPos(QMatrix4x4 & viewMatrix);
 
 private:
 	// linear transformation
