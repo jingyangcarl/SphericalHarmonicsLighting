@@ -30,24 +30,26 @@ void main(void) {
 
 	if (u_materialType == DIFFUSE) {
 		
-		vec4 eyePosition = v_viewMatrix[3];
-		eyePosition = mat4(mat3(v_viewMatrix)) * eyePosition;
-		vec4 lightPosition = vec4(0.0, 0.0, 1.0, 1.0);
+		vec4 eyePosition = mat4(mat3(v_viewMatrix)) * v_viewMatrix[3];
+		vec3 eyeVec = normalize(v_position.xyz - eyePosition.xyz);
+
+		vec4 lightPosition = eyePosition;
 		vec3 lightVec = normalize(v_position.xyz - lightPosition.xyz);
-		float lightPower = 3.0f;
+
+		float lightPower = 2.0f;
 
 		// 
 		vec4 diffMapColor = texture2D(u_texture, v_texcoord);
 
 		// diffuse Color
-		vec4 diffColor = lightPower * max(0.0, dot(v_normal, -lightVec)) * diffMapColor;
+		vec4 diffColor = lightPower * max(0.0, dot(v_normal, lightVec)) * diffMapColor;
 
 		// ambient Color
 		vec4 ambientColor = u_ambientFactor * diffMapColor;
 
 		// ads Color
-		// vec4 adsColor = diffColor + ambientColor;
-		vec4 adsColor = ambientColor;
+		vec4 adsColor = diffColor + ambientColor;
+		// vec4 adsColor = ambientColor;
 
 		FragColor = adsColor;
 	}

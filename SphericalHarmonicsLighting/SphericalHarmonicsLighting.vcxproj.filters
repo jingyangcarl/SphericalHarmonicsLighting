@@ -149,13 +149,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="SphericalHarmonicsLighting.h">
+      <Filter>Header Files\Qt Framework</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Object.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
-    <None Include="Skybox.fsh">
+    <None Include="Shader.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
-    <None Include="Shader.fsh">
+    <None Include="Skybox.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
   </ItemGroup>
@@ -163,16 +168,11 @@
     <FxCompile Include="Object.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Skybox.vsh">
-      <Filter>Resource Files\Shader</Filter>
-    </FxCompile>
     <FxCompile Include="Shader.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="SphericalHarmonicsLighting.h">
-      <Filter>Header Files\Qt Framework</Filter>
-    </QtMoc>
+    <FxCompile Include="Skybox.vsh">
+      <Filter>Resource Files\Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
