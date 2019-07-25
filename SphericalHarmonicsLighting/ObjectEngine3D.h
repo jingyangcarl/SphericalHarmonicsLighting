@@ -23,7 +23,7 @@ public:
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions);
 
 	// load mesh
-	void loadObjectFromFile(const QString & filePath);
+	void loadObjectFromFile(const QString & fileName);
 
 private:
 	QVector<Object3D *> objects;

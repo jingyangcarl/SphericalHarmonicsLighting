@@ -129,11 +129,11 @@ Description:
 Input:
 	@ const QString & filePath: the path refer to the .obj file
 Output:
-	@void returnValue: void;
+	@ void returnValue: void;
 */
-void ObjectEngine3D::loadObjectFromFile(const QString & filePath) {
+void ObjectEngine3D::loadObjectFromFile(const QString & fileName) {
 
-	QFile inputFile(filePath);
+	QFile inputFile(fileName);
 
 	if (!inputFile.open(QIODevice::ReadOnly)) {
 		qDebug() << "ERROR::ObjectEngine3D::loadObjectFromFile::inputFile: input file is not opened;";

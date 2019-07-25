@@ -11,7 +11,7 @@ public:
 	~MaterialLibrary();
 
 	void addMaterial(Material *material);
-	Material* getMaterial(int index);
+	Material* getMaterial(const int index);
 	Material* getMaterial(const QString & materialName);
 	void loadMaterialFromFile(const QString & fileName);
 

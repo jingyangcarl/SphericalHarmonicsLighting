@@ -1,11 +1,32 @@
 #include "MaterialLibrary.h"
 
+/*
+Description:
+	This function is a constructor;
+Input:
+	@ void parameter: void;
+*/
 MaterialLibrary::MaterialLibrary() {
 }
 
+/*
+Description:
+	This function is a destructor;
+Input:
+	@ void patameter: void;
+*/
 MaterialLibrary::~MaterialLibrary() {
+	qDeleteAll(materials);
 }
 
+/*
+Description:
+	This function is used to add material to the material list;
+Input:
+	@ Material * mateiral: a given material;
+Output:
+	@ void returnValue: void;	
+*/
 void MaterialLibrary::addMaterial(Material * material) {
 	if (!material) return;
 
@@ -18,11 +39,27 @@ void MaterialLibrary::addMaterial(Material * material) {
 	materials.append(material);
 }
 
-Material * MaterialLibrary::getMaterial(int index) {
+/*
+Description:
+	this function is used to get material from the material list by its index;
+Input:
+	@ const int index: a index refer to the material;
+Output:
+	@ Material * returnValue: a material;
+*/
+Material * MaterialLibrary::getMaterial(const int index) {
 	if (index < 0 || index >= materials.size()) return 0;
 	return materials[index];
 }
 
+/*
+Description:
+	This function is used to get material from the material list by its name;
+Input:
+	@ const QString & materialName: a name refer to the material;
+Output:
+	@ Material * returnValue: a material;
+*/
 Material * MaterialLibrary::getMaterial(const QString & materialName) {
 	for (int i = 0; i < materials.size(); i++) {
 		if (materials[i]->getMaterialName() == materialName) {
@@ -32,16 +69,17 @@ Material * MaterialLibrary::getMaterial(const QString & materialName) {
 	return 0;
 }
 
+/*
+Description:
+	This function is used to load .mtl file froma given file path, the .mtl file should include
+	material name [newmtl], ambience color [Ka], diffuse color [Kd], specular color [Ks], shinnes [Ns], diffuse map file name [map_Kd], etc.
+	If the .mtl file doesn't have a diffuse map / texture file name [map_Kd], there will be a default diffuse map / texture generated when material or object is constructed;
+Input:
+	@ const QString & fileName: the path refer to the .mtl file
+Output:
+	@ void returnValue: void;
+*/
 void MaterialLibrary::loadMaterialFromFile(const QString & fileName) {
-	// Read .mtl file, where the file includes
-	// newmtl [name]
-	// Ka [AmbienceColor]
-	// Kd [DiffuseColor]
-	// Ks [SpecularColor]
-	// d []
-	// Ns [Shinnes]
-	// illum []
-	// map_Kd [diffuseMap]
 
 	QFile inputFile(fileName);
 	
