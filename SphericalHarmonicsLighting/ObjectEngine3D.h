@@ -10,10 +10,6 @@ public:
 	// getter
 	void addObject(Object3D* object);
 	const Object3D* getObject(int index) const;
-	const int getVerCoordCount(const int index) const;
-	const int getTexCoordCount(const int index) const;
-	const int getNormalCount(const int index) const;
-	const int getFaceCount(const int index) const;
 
 	// interface implementation
 	void rotate(const QQuaternion& r);

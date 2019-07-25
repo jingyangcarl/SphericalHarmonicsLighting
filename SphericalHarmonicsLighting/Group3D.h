@@ -19,23 +19,18 @@ public:
 	// operation
 	void addObject(Transformational* object);
 	void delObject(Transformational* object);
-	void delObject(const int& index);
-
-	// setter and getter
-
 
 private:
 	// linear transformation
-	QVector3D v_translation;
-	QQuaternion v_rotation;
-	float v_scale;
-	QMatrix4x4 v_globalTransformation;
+	QVector3D translation;
+	QQuaternion rotation;
+	float scalar;
+	QMatrix4x4 globalTransformation;
 
 	// mMatrix
 	QMatrix4x4 localMatrix;
 
 	// objects;
 	QVector<Transformational*> objects;
-	int textureIndex = 0;
 };
 

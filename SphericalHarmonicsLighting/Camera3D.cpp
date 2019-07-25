@@ -1,56 +1,100 @@
 #include "Camera3D.h"
 
+/*
+Description:
+	This function is a constructor;
+Input:
+	@ void parameter: void;
+*/
 Camera3D::Camera3D() {
-	v_scale = 1.0f;
-	v_globalTransformation.setToIdentity();
+	scalar = 1.0f;
+	globalTransformation.setToIdentity();
 }
 
+/*
+Description:
+	This function is a destructor;
+Input:
+	@ void patameter: void;
+*/
+Camera3D::~Camera3D() {
+	delete &translation;
+	delete &rotation;
+	delete &scalar;
+	delete &globalTransformation;
+	delete &viewMatrix;
+}
+
+/*
+Description:
+	This function is used to rotate the camera;
+Input:
+	@ const QQuaternion& r: a quaternion (scalar, x position, y position, and z position) for rotation;
+Output:
+	@ void returnValue: void;
+*/
 void Camera3D::rotate(const QQuaternion& r) {
-	v_rotation = r * v_rotation;
+	rotation = r * rotation;
 }
 
+/*
+Description:
+	This function is used to translate the camera;
+Input:
+	@ const QVector3D& t: a translation vector;
+Output:
+	@ void returnValue: void;
+*/
 void Camera3D::translate(const QVector3D& t) {
-	v_translation += t;
+	translation += t;
 }
 
+/*
+Description:
+	This function is used to scale the camera;
+Input:
+	@ const float& s: a scalar;
+Output:
+	@ void returnValue: void;
+*/
 void Camera3D::scale(const float& s) {
-	v_scale += s;
+	scalar += s;
 }
 
+/*
+Description:
+	This function is used to set the global transform for the camera;
+Input:
+	@ const QMatrix4x4& g: a global transformation;
+Output:
+	@ void returnValue: void;
+*/
 void Camera3D::setGlobalTransform(const QMatrix4x4& g) {
-	v_globalTransformation = g;
+	globalTransformation = g;
 }
 
+/*
+Description:
+	This function is used to set parameters for the vertex shader, fragment shader and etc.;
+Input:
+	@ QOpenGLShaderProgram* shaderProgram: the shader program used for loading shaders and passing parameters;
+	@ QOpenGLFunctions* functions: the OpenGL functions used to drawing elements;
+Output:
+	@ void returnValue: void;
+*/
 void Camera3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions) {
 	if (functions != 0) return;
 
 	viewMatrix.setToIdentity();
-	viewMatrix.translate(v_translation);
-	viewMatrix.rotate(v_rotation);
-	viewMatrix.scale(v_scale);
-	viewMatrix = viewMatrix * v_globalTransformation.inverted();
+	viewMatrix.translate(translation);
+	viewMatrix.rotate(rotation);
+	viewMatrix.scale(scalar);
+	viewMatrix = viewMatrix * globalTransformation.inverted();
 
 	shaderProgram->setUniformValue("u_viewMatrix", viewMatrix);
-	shaderProgram->setUniformValue("u_rotation", v_rotation.toVector4D());
+	shaderProgram->setUniformValue("u_rotation", rotation.toVector4D());
 	// try to pass camera pos to the shader program
-	getCameraPos(viewMatrix);
-	qDebug() << v_rotation;
-	qDebug() << v_rotation.rotatedVector(viewMatrix.column(3).toVector3D());
-	qDebug();
-}
-
-const QMatrix4x4 & Camera3D::getViewMatrix() const {
-	// TODO: insert return statement here
-	return viewMatrix;
-}
-
-const QVector3D Camera3D::getCameraPos(QMatrix4x4 & viewMatrix) {
-	QMatrix3x3 rotation = viewMatrix.normalMatrix();
 	qDebug() << rotation;
-	QQuaternion quaternion = QQuaternion::fromRotationMatrix(rotation);
-	qDebug() << quaternion;
-	QVector3D result = quaternion.rotatedVector(viewMatrix.column(3).toVector3D());
-	qDebug() << result;
-	qDebug() << viewMatrix.mapVector(viewMatrix.column(3).toVector3D());
-	return result;
+	qDebug() << rotation.rotatedVector(viewMatrix.column(3).toVector3D());
+	qDebug();
 }

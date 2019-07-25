@@ -16,6 +16,8 @@ Input:
 	@ void patameter: void;
 */
 ObjectEngine3D::~ObjectEngine3D() {
+	qDeleteAll(objects);
+	delete &materials;
 }
 
 /*

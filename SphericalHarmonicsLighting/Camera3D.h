@@ -7,6 +7,7 @@ class Camera3D : public Transformational {
 public:
 	// constructor
 	Camera3D();
+	~Camera3D();
 
 	// interface implementation
 	void rotate(const QQuaternion& r);
@@ -15,15 +16,12 @@ public:
 	void setGlobalTransform(const QMatrix4x4& g);
 	void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions = 0);
 
-	const QMatrix4x4 &getViewMatrix() const;
-	static const QVector3D getCameraPos(QMatrix4x4 & viewMatrix);
-
 private:
 	// linear transformation
-	QVector3D v_translation;
-	QQuaternion v_rotation;
-	float v_scale;
-	QMatrix4x4 v_globalTransformation;
+	QVector3D translation;
+	QQuaternion rotation;
+	float scalar;
+	QMatrix4x4 globalTransformation;
 
 	// vMatrix
 	QMatrix4x4 viewMatrix;

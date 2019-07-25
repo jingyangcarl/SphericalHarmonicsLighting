@@ -64,6 +64,11 @@ Input:
 Object3D::~Object3D() {
 	delete vertexBuffer;
 	delete indexBuffer;
+	delete &translation;
+	delete &rotation;
+	delete &scalar;
+	delete &globalTransformation;
+	delete &modelMatrix;
 	delete material;
 }
 

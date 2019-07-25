@@ -55,30 +55,31 @@ void Widget::initializeGL() {
 
 	// add object groups
 	// if you change the order/number of objects, remember to edit timerEvent
-	// Add model
+
+	// add stars
 	groups.append(new Group3D());
-	objects.append(new ObjectEngine3D());
-	//objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Sphere/sphere_dense.obj");
-	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Max Curato/Max.obj");
-	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
+	for (int x = 0; x < 2; x++) {
+		for (int y = 0; y < 2; y++) {
+			for (int z = 0; z < 2; z++) {
+				objects.append(new ObjectEngine3D());
+				objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Cube/cube.obj");
+				float dis = 8.0;
+				objects[objects.size() - 1]->translate(QVector3D(dis*(2.0*x - 1.0), dis*(2.0*y - 1.0), dis*(2.0*z - 1.0)));
+				objects[objects.size() - 1]->scale(0.5);
+				groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
+			}
+		}
+	}
 	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
 	transformObjects.append(groups[groups.size() - 1]);
 
-	// add stars
-	//groups.append(new Group3D());
-	//for (int x = 0; x < 2; x++) {
-	//	for (int y = 0; y < 2; y++) {
-	//		for (int z = 0; z < 2; z++) {
-	//			objects.append(new ObjectEngine3D());
-	//			objects[objects.size() - 1]->loadObjectFromFile("./estrellica.obj");
-	//			float dis = 8.0;
-	//			objects[objects.size() - 1]->translate(QVector3D(dis*(2.0*x - 1.0), dis*(2.0*y - 1.0), dis*(2.0*z - 1.0)));
-	//			groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
-	//		}
-	//	}
-	//}
-	//groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
-	//transformObjects.append(groups[groups.size() - 1]);
+	// Add model
+	groups.append(new Group3D());
+	objects.append(new ObjectEngine3D());
+	objects[objects.size() - 1]->loadObjectFromFile("./Resources/Model/Triangle Mesh/Intergalactic Spaceship/Intergalactic_Spaceship.obj");
+	groups[groups.size() - 1]->addObject(objects[objects.size() - 1]);
+	groups[groups.size() - 1]->translate(QVector3D(0.0, 0.0, 0.0));
+	transformObjects.append(groups[groups.size() - 1]);
 
 	// start timer
 	timer.start(10, this);
