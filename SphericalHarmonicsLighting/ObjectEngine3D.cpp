@@ -49,65 +49,6 @@ const Object3D * ObjectEngine3D::getObject(int index) const {
 	return objects[index];
 }
 
-/*
-Description:
-	This function is used to get the total number of vertex coordinations of a given object from object list by its index;
-Input:
-	@ const int index: index refer to the object;
-Output:
-	@ const int returnValue: total number of vertex coordinations;
-*/
-const int ObjectEngine3D::getVerCoordCount(const int index) const {
-	if (index >= objects.size() || index < 0) {
-		return -1;
-	}
-	return objects[index]->getVerCoordCount();
-}
-
-/*
-Description:
-	This function is used to get the total number of texture coordinations of a given object from object list by its index;
-Input:
-	@ const int index: index refer to the object;
-Output:
-	@ const int returnValue: total number of texture coordinations;
-*/
-const int ObjectEngine3D::getTexCoordCount(const int index) const {
-	if (index >= objects.size() || index < 0) {
-		return -1;
-	}
-	return objects[index]->getTexCoordCount();
-}
-
-/*
-Description:
-	This function is used to get the total number of normals of a given object from object list by its index;
-Input:
-	@ const int index: index refer to the object;
-Output:
-	@ const int returnValue: total number of normals;
-*/
-const int ObjectEngine3D::getNormalCount(const int index) const {
-	if (index >= objects.size() || index < 0) {
-		return -1;
-	}
-	return objects[index]->getNormalCount();
-}
-
-/*
-Description:
-	This function is used to get the total number of faces of a given object from object list by its index;
-Input:
-	@ const int index: index refer to the object;
-Output:
-	@ const int returnValue: total number of faces;
-*/
-const int ObjectEngine3D::getFaceCount(const int index) const {
-	if (index >= objects.size() || index < 0) {
-		return -1;
-	}
-	return objects[index]->getFaceCount();
-}
 
 /*
 Description:

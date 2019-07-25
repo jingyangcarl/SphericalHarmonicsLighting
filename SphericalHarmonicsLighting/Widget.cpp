@@ -10,11 +10,11 @@ Widget::~Widget() {}
 
 void Widget::initShaders() {
 	// objectShader
-	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Shader.vsh")) {
+	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Object.vsh")) {
 		qDebug() << objectShader.log();
 		close();
 	}
-	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Fragment, "./Shader.fsh")) {
+	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Fragment, "./Object.fsh")) {
 		qDebug() << objectShader.log();
 		close();
 	}

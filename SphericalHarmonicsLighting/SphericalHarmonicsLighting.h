@@ -11,14 +11,25 @@ class SphericalHarmonicsLighting : public QMainWindow
 public:
 	SphericalHarmonicsLighting(QWidget *parent = Q_NULLPTR);
 
+	/*----------------QtInitialization.cpp-------------------*/
+	void QWidgetInit();
+	void InitHoriSliderAmbientFactor();
+	void InitHoriSliderContrast();
+	void InitHoriSliderBrightness();
+	void InitHoriSliderMeshScale();
+	void InitHoriSliderRefreactRatio();
+	void InitComboBoxMaterialType();
+	void InitPushButtonLoadMesh();
+	void InitConnection();
+
 public slots:
-	/*-------------------SlotFunction.cpp-------------------------*/
-	void HorizontalSliderAmbientFactor();
-	void HorizontalSliderContrast();
-	void HorizontalSliderBrightness();
-	void HorizontalSliderMeshScale();
-	void HorizontalSliderRefractRatio();
-	void ComboBoxMaterialType();
+	/*---------------QtSlotFunction.cpp---------------------*/
+	void HorizontalSliderAmbientFactor(int value);
+	void HorizontalSliderContrast(int value);
+	void HorizontalSliderBrightness(int value);
+	void HorizontalSliderMeshScale(int value);
+	void HorizontalSliderRefractRatio(int value);
+	void ComboBoxMaterialType(QString value);
 	void PushButtonLoadMesh();
 
 private:

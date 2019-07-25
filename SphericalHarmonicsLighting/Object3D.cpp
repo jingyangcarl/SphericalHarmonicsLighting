@@ -13,6 +13,8 @@ Object3D::Object3D() :
 /*
 Description:
 	This function is a constructor with vertices reference, indices reference, and material;
+	If material is not provided, then create one;
+	If only texture is not provided, then create texture;
 Input:
 	@ const QVector<Vertex>& vertices: the vertex list of a given object;
 	@ const QVector<GLuint>& indices: the index list of a given object;
@@ -35,20 +37,20 @@ Object3D::Object3D(const QVector<Vertex>& vertices, const QVector<GLuint>& indic
 	indexBuffer->allocate(indices.constData(), indices.size() * sizeof(GLuint));
 	indexBuffer->release();
 
-
-	if (material->isCreated() && material->isTextureCreated()) {
-		// material is created
-		this->material = material;
-	} 
 	if (!material->isCreated()) {
 		// the mateiral is not created
 		material = new Material;
 		material->create();
-		this->material = material;
+		// this->material = material;
 	}
 	else if (!material->isTextureCreated()) {
 		// texture is not created in the material
 		material->createTexture();
+		// this->material = material;
+	}
+
+	if (material->isCreated() && material->isTextureCreated()) {
+		// material is created
 		this->material = material;
 	}
 }
@@ -75,14 +77,11 @@ Output:
 */
 bool Object3D::setTexture(const QImage& image) {
 	// clear previous texture
-	// this->texture->destroy();
-	// this->texture->create();
 	this->material->destroy();
 	this->material->create();
 
 	// load texture
 	if (this->material->isCreated()) {
-		// this->texture->setData(image);
 		this->material->setTexture(image);
 		return true;
 	}
@@ -92,11 +91,18 @@ bool Object3D::setTexture(const QImage& image) {
 	}
 }
 
+/*
+Description:
+	This function is used to set a given texture for the object;
+Input:
+	@ QOpenGLTexture * texture: a given texture;
+Output:
+	@ bool returnValue: whether the texture is set successfully;
+*/
 bool Object3D::setTexture(QOpenGLTexture * texture) {
 	// load texture
 	if (texture) {
 		this->material->setTexture(texture);
-		//this->texture = texture;
 		return true;
 	}
 	else {
@@ -105,41 +111,16 @@ bool Object3D::setTexture(QOpenGLTexture * texture) {
 	}
 }
 
+/*
+Description:
+	This function is used to get current texture of the object;
+Input:
+	@ void parameter: void;
+Output:
+	@ QOpenGLTexture *: the current texture;
+*/
 QOpenGLTexture * Object3D::getTexture() const {
-	//return this->texture;
 	return this->material->getTexture();
-}
-
-void Object3D::setVerCoordCount(const int verCoordCount) {
-	this->verCoordCount = verCoordCount;
-}
-
-const int Object3D::getVerCoordCount() const {
-	return this->verCoordCount;
-}
-
-void Object3D::setTexCoordCount(const int texCoordCount) {
-	this->texCoordCount = texCoordCount;
-}
-
-const int Object3D::getTexCoordCount() const {
-	return this->texCoordCount;
-}
-
-void Object3D::setNormalCount(const int normalCount) {
-	this->normalCount = normalCount;
-}
-
-const int Object3D::getNormalCount() const {
-	return this->normalCount;
-}
-
-void Object3D::setFaceCount(const int faceCount) {
-	this->faceCount = faceCount;
-}
-
-const int Object3D::getFaceCount() const {
-	return this->faceCount;
 }
 
 /*

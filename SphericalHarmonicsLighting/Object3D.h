@@ -32,14 +32,6 @@ public:
 	bool setTexture(const QImage& image);
 	bool setTexture(QOpenGLTexture * texture);
 	QOpenGLTexture * getTexture() const;
-	void setVerCoordCount(const int verCoordCount);
-	const int getVerCoordCount() const;
-	void setTexCoordCount(const int texCoordCount);
-	const int getTexCoordCount() const;
-	void setNormalCount(const int normalCount);
-	const int getNormalCount() const;
-	void setFaceCount(const int faceCount);
-	const int getFaceCount() const;
 
 	// interface implementation
 	void rotate(const QQuaternion& r);
@@ -52,8 +44,6 @@ private:
 	// object buffer
 	QOpenGLBuffer* vertexBuffer = 0;
 	QOpenGLBuffer* indexBuffer = 0;
-	// QOpenGLTexture* texture = 0;
-	Material* material = 0;
 
 	// linear transformation
 	QVector3D translation;
@@ -64,10 +54,7 @@ private:
 	// mMatrix
 	QMatrix4x4 modelMatrix;
 
-	// data
-	int verCoordCount = 0;
-	int texCoordCount = 0;
-	int normalCount = 0;
-	int faceCount = 0;
+	// material
+	Material* material = 0;
 };
 
