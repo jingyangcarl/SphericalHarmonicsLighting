@@ -128,7 +128,7 @@
     <ClCompile Include="QtSlotFunction.cpp" />
     <ClCompile Include="WidgetParameter.cpp" />
     <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="SphericalHarmonicsEvaluator.cpp" />
+    <ClCompile Include="SphericalHarmonicsEvaluation.cpp" />
     <ClCompile Include="SphericalHarmonicsLighting.cpp" />
     <ClCompile Include="SphericalHarmonicsSampler.cpp" />
     <ClCompile Include="Widget.cpp" />
@@ -151,7 +151,6 @@
     <ClInclude Include="Object3D.h" />
     <ClInclude Include="ObjectEngine3D.h" />
     <ClInclude Include="Skybox.h" />
-    <ClInclude Include="SphericalHarmonicsEvaluator.h" />
     <ClInclude Include="SphericalHarmonicsSampler.h" />
     <ClInclude Include="Transformational.h" />
     <ClInclude Include="Widget.h" />

@@ -6,7 +6,6 @@
 #include <qdir.h>
 
 #include "SphericalHarmonicsSampler.h"
-#include "SphericalHarmonicsEvaluator.h"
 
 class Skybox : public Transformational {
 public:
@@ -27,7 +26,6 @@ private:
 	bool setTexture(int index);
 public:
 	QOpenGLTexture * getTexture() const;
-	QImage & getTexture(const int index) const;
 	QVector<QVector3D>& getCoefficient() const;
 	QVector<QVector3D>& getCoefficient(const int index) const;
 
@@ -47,7 +45,6 @@ private:
 	Object3D* object;
 
 	// list
-	QVector<QImage*> texImages;
 	QVector<QOpenGLTexture *> textures;
 	QVector<QVector<QVector3D>*> coefficients;
 
@@ -58,5 +55,4 @@ private:
 
 	// Spherical Harmonics
 	SphericalHarmonicsSampler *sampler = 0;
-	SphericalHarmonicsEvaluator *evaluator = 0;
 };

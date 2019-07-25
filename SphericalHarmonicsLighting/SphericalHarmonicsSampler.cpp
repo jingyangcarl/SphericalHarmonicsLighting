@@ -1,105 +1,58 @@
 #include "SphericalHarmonicsSampler.h"
 
-SphericalHarmonicsSampler::SphericalHarmonicsSampler() {
+/*
+Description:
+	This function is a constructor;
+Input:
+	@ void parameter: void;
+*/
+SphericalHarmonicsSampler::SphericalHarmonicsSampler(QMap<QString, QImage*> &images) :
+	images(images) {
 }
 
+/*
+Description:
+	This function is a destructor;
+Input:
+	@ void patameter: void;
+*/
 SphericalHarmonicsSampler::~SphericalHarmonicsSampler() {
 	qDeleteAll(images);
+	qDeleteAll(samples);
 }
 
-QOpenGLTexture * SphericalHarmonicsSampler::getTexture() {
-	return this->texture;
+/*
+Description:
+	This function is used to set spherical harmonics level for the sampler;
+Input:
+	@ const int level: spherical harmonic level;
+Output:
+	@ void returnValue: void;
+*/
+void SphericalHarmonicsSampler::setSphericalHarmonicLevel(const int level) {
+	this->level = level;
 }
 
-QImage & SphericalHarmonicsSampler::getTextureImage() {
-	return this->texImage;
+/*
+Description:
+	This function is used for getting samples for Spherical Harmonics Evaluator;
+Input:
+	@ void parameter: void;
+Output:
+	@ const QVector<Sample*>& returnValue: samples
+*/
+const QVector<Sample*>& SphericalHarmonicsSampler::getSamples() const {
+	return samples;
 }
 
-void SphericalHarmonicsSampler::loadImage(QString & name, QString & filePath) {
-
-	QImage *image = new QImage(filePath);
-	if (image && image->width() != 0) {
-		images.insert(name, image);
-	}
-	else {
-		qDebug() << "Carl::SphericalHarmonicsSampler::TextureImageExpand::images.size() error: image load failed";
-	}
-}
-
-QImage &SphericalHarmonicsSampler::TextureImageExpand(bool isSave, float scaleRatio) {
-	if (images.size() < 6) {
-		qDebug() << "Carl::SphericalHarmonicsSampler::TextureImageExpand::images.size() error: not enough images";
-		exit(-1);
-	}
-
-	int width = (images.begin()).value()->width();
-	int height = (images.begin()).value()->height();
-
-	// paint image
-	// |Black | PosY |Black |Black |
-	// | NegX | NegY | PosX | PosZ |
-	// |Black | NegY |Black |Black |
-	texImage = QImage(width * 4, height * 3, QImage::Format_RGB32);
-	QImage blackImage(width, height, QImage::Format_RGB32);
-	blackImage.fill(Qt::black);
-	QPainter *painter = new QPainter(&texImage);
-	painter->drawImage(QPoint(0 * width, 0 * height), blackImage);
-	painter->drawImage(QPoint(1 * width, 0 * height), *images.find("posy").value());
-	painter->drawImage(QPoint(2 * width, 0 * height), blackImage);
-	painter->drawImage(QPoint(3 * width, 0 * height), blackImage);
-	painter->drawImage(QPoint(0 * width, 1 * height), *images.find("negx").value());
-	painter->drawImage(QPoint(1 * width, 1 * height), *images.find("posz").value());
-	painter->drawImage(QPoint(2 * width, 1 * height), *images.find("posx").value());
-	painter->drawImage(QPoint(3 * width, 1 * height), *images.find("negz").value());
-	painter->drawImage(QPoint(0 * width, 2 * height), blackImage);
-	painter->drawImage(QPoint(1 * width, 2 * height), *images.find("negy").value());
-	painter->drawImage(QPoint(2 * width, 2 * height), blackImage);
-	painter->drawImage(QPoint(3 * width, 2 * height), blackImage);
-	painter->end();
-	painter->~QPainter();
-
-	// scale
-	texImage = texImage.scaled(texImage.width() * scaleRatio, texImage.height() * scaleRatio, Qt::KeepAspectRatio);
-
-	// save
-	if (isSave) {
-		if (!texImage.save("./Resources/Output/texImage.jpg")) {
-			qDebug() << "Carl::SphericalHarmonicsSampler::TextureImageExpand::images.size() error: save failed";
-		}
-	}
-
-	return texImage;
-}
-
-QOpenGLTexture * SphericalHarmonicsSampler::TextureExpand() {
-	if (images.size() < 6) {
-		qDebug() << "Carl::SphericalHarmonicsSampler::TextureExpand::images.size() error: not enough images";
-		exit(-1);
-	}
-	texture = new QOpenGLTexture(QOpenGLTexture::TargetCubeMap);
-	texture->create();
-	texture->setSize((*images.find("posx").value()).width(), (*images.find("posx").value()).height(), (*images.find("posx").value()).depth());
-	texture->setFormat(QOpenGLTexture::RGBAFormat);
-	texture->allocateStorage();
-	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posx").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posy").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posz").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negx").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negy").value()).constBits(), 0);
-	texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negz").value()).constBits(), 0);
-	texture->setWrapMode(QOpenGLTexture::ClampToEdge);
-	texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-	texture->setMagnificationFilter(QOpenGLTexture::LinearMipMapLinear);
-	texture->generateMipMaps();
-
-	return texture;
-}
-
-QVector3D & SphericalHarmonicsSampler::CubeUV2XYZ(QVector2D & uv) {
-	// TODO: insert return statement here
-	return QVector3D();
-}
-
+/*
+Description:
+	This function is used for the transformation from 3D coordination to uv map coordination;
+Input:
+	@ QVector3D &verCoord: a 3D coordination;
+Output:
+	@ QPair<QString, QVector2D> returnValue: uv map coordination with its face index;
+*/
 QPair<QString, QVector2D> SphericalHarmonicsSampler::CubeXYZ2UV(QVector3D &verCoord) {
 	float x = verCoord[0];
 	float y = verCoord[1];
@@ -110,41 +63,33 @@ QPair<QString, QVector2D> SphericalHarmonicsSampler::CubeXYZ2UV(QVector3D &verCo
 	QPair<QString, QVector2D> uvPair;
 	
 	if (absX >= absY && absX >= absZ) {
-		if (x >= 0) {
-			// right
-			uvPair = QPair<QString, QVector2D>(QString("posx"), QVector2D(-z / x, y / absX));
-		}
-		else {
-			// left
-			uvPair = QPair<QString, QVector2D>(QString("negx"), QVector2D(-z / x, y / absX));
-		}
+		// right / left
+		uvPair = QPair<QString, QVector2D>(QString(x >= 0 ? "posx" : "negx"), QVector2D(-z / x, y / absX));
 	}
 	else if (absY >= absZ) {
-		if (y >= 0) {
-			// top
-			uvPair = QPair<QString, QVector2D>(QString("posy"), QVector2D(x / absY, -z / y));
-		}
-		else {
-			// bottom
-			uvPair = QPair<QString, QVector2D>(QString("negy"), QVector2D(x / absY, -z / y));
-		}
+		// top / bottom
+		uvPair = QPair<QString, QVector2D>(QString(y >= 0 ? "posy" : "negy"), QVector2D(x / absY, -z / y));
 	}
 	else {
-		if (z >= 0) {
-			// front
-			uvPair = QPair<QString, QVector2D>(QString("posz"), QVector2D(x / z, y / absZ));
-		}
-		else {
-			// back
-			uvPair = QPair<QString, QVector2D>(QString("negz"), QVector2D(x / z, y / absZ));
-		}
+		// front / back
+		uvPair = QPair<QString, QVector2D>(QString(z >= 0 ? "posz" : "negz"), QVector2D(x / z, y / absZ));
 	}
+
 	// mapping in a single pic
 	uvPair.second[0] = uvPair.second[0] * 0.5f + 0.5f;
 	uvPair.second[1] = uvPair.second[1] * 0.5f + 0.5f;
 	return uvPair;
 }
 
+/*
+Description:
+	This function is used to generate a normal random value;
+Input:
+	@ const float mu: the mean of the distribution;
+	@ const float sigma: the standard deviation;
+Output:
+	@ float returnValue: a generated random value;
+*/
 float SphericalHarmonicsSampler::NormalRandom(const float mu, const float sigma) {
 	// Gaussian distribution
 	static std::default_random_engine generator;
@@ -152,6 +97,14 @@ float SphericalHarmonicsSampler::NormalRandom(const float mu, const float sigma)
 	return distribution(generator);
 }
 
+/*
+Description:
+	This function is used to generate a given number of samples that consist of coordinations and its corresponding colors on uv map;
+Input:
+	@ int number: number of samples;
+Output:
+	@ void returnValue: void;
+*/
 void SphericalHarmonicsSampler::RandomSampling(int number) {
 
 	int width = (images.begin()).value()->width();
@@ -169,9 +122,4 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 		sample->verColor = (images.find(uvPair.first).value())->pixelColor(pixelCoordX, pixelCoordY).rgb();
 		samples << sample;
 	}
-}
-
-const QVector<Sample*>& SphericalHarmonicsSampler::getSamples() const {
-	// TODO: insert return statement here
-	return samples;
 }

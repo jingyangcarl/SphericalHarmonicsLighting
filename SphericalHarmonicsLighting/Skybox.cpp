@@ -43,11 +43,10 @@ Input:
 */
 Skybox::~Skybox() {
 	delete object;
-	qDeleteAll(texImages);
+	// qDeleteAll(texImages);
 	qDeleteAll(coefficients);
 	delete currentCoef;
 	delete sampler;
-	delete evaluator;
 }
 
 /*
@@ -142,6 +141,15 @@ bool Skybox::loadCube(int width, QVector<Vertex>& desVertices, QVector<GLuint>& 
 	}
 }
 
+/*
+Description:
+	This function is used to load skybox images from directory and generate corresponding textures. 
+	The images will be pass to Spherical harmonics Sampler for spherical harmonic coefficienets.
+Input:
+	@ void parameter: void;
+Output:
+	@ void returnValue: void;
+*/
 bool Skybox::loadTextures() {
 
 	// init
@@ -151,6 +159,10 @@ bool Skybox::loadTextures() {
 		qDebug() << "ERROR::Carl::Skybox::loadTextures::dirPath: no such directory";
 	}
 
+	// texture
+	QMap<QString, QImage*> images;
+	QOpenGLTexture * texture;
+
 	// load
 	QStringList dirList = directory.entryList(QDir::Dirs);
 	dirList.removeFirst(); // remove ./
@@ -158,30 +170,40 @@ bool Skybox::loadTextures() {
 	for (int i = 1; i < 10; i++) {
 		directory.cd(dirList[i]);
 		QStringList jpgList = directory.entryList(QStringList() << "*.jpg");
-		sampler = new SphericalHarmonicsSampler();
-		sampler->loadImage(QString("posx"), QString(directory.path() + "/posx.jpg"));
-		sampler->loadImage(QString("posy"), QString(directory.path() + "/posy.jpg"));
-		sampler->loadImage(QString("posz"), QString(directory.path() + "/posz.jpg"));
-		sampler->loadImage(QString("negx"), QString(directory.path() + "/negx.jpg"));
-		sampler->loadImage(QString("negy"), QString(directory.path() + "/negy.jpg"));
-		sampler->loadImage(QString("negz"), QString(directory.path() + "/negz.jpg"));
-		sampler->TextureExpand();
-		textures << sampler->getTexture();
+
+		images.clear();
+		images.insert(QString("posx"), new QImage(directory.path() + "/posx.jpg"));
+		images.insert(QString("posy"), new QImage(directory.path() + "/posy.jpg"));
+		images.insert(QString("posz"), new QImage(directory.path() + "/posz.jpg"));
+		images.insert(QString("negx"), new QImage(directory.path() + "/negx.jpg"));
+		images.insert(QString("negy"), new QImage(directory.path() + "/negy.jpg"));
+		images.insert(QString("negz"), new QImage(directory.path() + "/negz.jpg"));
+
+		texture = new QOpenGLTexture(QOpenGLTexture::TargetCubeMap);
+		texture->create();
+		texture->setSize((*images.find("posx").value()).width(), (*images.find("posx").value()).height(), (*images.find("posx").value()).depth());
+		texture->setFormat(QOpenGLTexture::RGBAFormat);
+		texture->allocateStorage();
+		texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posx").value()).constBits(), 0);
+		texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posy").value()).constBits(), 0);
+		texture->setData(0, 0, QOpenGLTexture::CubeMapPositiveZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("posz").value()).constBits(), 0);
+		texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeX, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negx").value()).constBits(), 0);
+		texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeY, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negy").value()).constBits(), 0);
+		texture->setData(0, 0, QOpenGLTexture::CubeMapNegativeZ, QOpenGLTexture::BGRA, QOpenGLTexture::UInt8, (const void*)(*images.find("negz").value()).constBits(), 0);
+		texture->setWrapMode(QOpenGLTexture::ClampToEdge);
+		texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+		texture->setMagnificationFilter(QOpenGLTexture::LinearMipMapLinear);
+		texture->generateMipMaps();
+		textures << texture;
 
 		// sampling
+		sampler = new SphericalHarmonicsSampler(images);
 		sampler->RandomSampling(10000);
-		directory.cd("..");
-
-		// calculate coefficients
-		evaluator = new SphericalHarmonicsEvaluator(sampler->getSamples(), 3);
-		evaluator->Evaluate();
-		
-		// load coefficients
-		coefficients << new QVector<QVector3D>(evaluator->getCoefficients());
-
-		// release
-		evaluator->~SphericalHarmonicsEvaluator();
+		sampler->setSphericalHarmonicLevel(3);
+		coefficients << new auto(sampler->Evaluate());
 		sampler->~SphericalHarmonicsSampler();
+
+		directory.cd("..");
 	}
 
 	if (coefficients.size() > 0) {
@@ -234,6 +256,14 @@ bool Skybox::setTexture(QImage& image) {
 	return true;
 }
 
+/*
+Description:
+	This function is used to change the texture of the skybox, which calls Object3D::setTexture(QImage &) for texture setting;
+Input:
+	@ QImage& image: an image used as the skybox texture, which should be an expanded image of a 6-sided cube;
+Output:
+	@ bool returnValue: whether the texture is successfully set or not;
+*/
 bool Skybox::setTexture(QOpenGLTexture * texture) {
 	if (!object->setTexture(texture)) {
 		qDebug() << "ERROR::Carl::Skybox::setTexture::object: texture is not loaded successfully;";
@@ -261,22 +291,6 @@ bool Skybox::setTexture(int index) {
 
 QOpenGLTexture * Skybox::getTexture() const {
 	return object->getTexture();
-}
-
-/*
-Description:
-	This function is used to get texture from texture list by its index;
-Input:
-	@ const int index: an image index refer to the texture image in the texture list;
-Output:
-	@ QImage& returnValue: the texture image;
-*/
-QImage & Skybox::getTexture(const int index) const {
-	if (index >= texImages.size() || index < 0) {
-		qDebug() << "ERROR::Carl::Skybox::getTexture::skyboxIndex: invalid texImage skyboxIndex;";
-		exit(-1);
-	}
-	return *texImages[index];
 }
 
 /*

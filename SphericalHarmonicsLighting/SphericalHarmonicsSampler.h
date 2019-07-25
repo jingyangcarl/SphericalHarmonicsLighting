@@ -8,6 +8,7 @@
 #include <qvector3d.h>
 #include <random>
 #include <qopengltexture.h>
+#include <qmath.h>
 
 struct Sample {
 public:
@@ -22,35 +23,33 @@ public:
 
 class SphericalHarmonicsSampler {
 public:
-	SphericalHarmonicsSampler();
+	SphericalHarmonicsSampler(QMap<QString, QImage*> &images);
 	~SphericalHarmonicsSampler();
 
 	// setter and getter
-	QOpenGLTexture * getTexture();
-	QImage & getTextureImage();
+	void setSphericalHarmonicLevel(const int level = 3);
+	const QVector<Sample*> & getSamples() const;
 
-	// skybox initialization
-	void loadImage(QString &name, QString & filePath);
-	QImage &TextureImageExpand(bool isSave = false, float scaleRatio = 0.5f);
-	QOpenGLTexture * TextureExpand();
-
-
+private:
 	// uv mapping
-	QVector3D &CubeUV2XYZ(QVector2D &uv);
 	QPair<QString, QVector2D> CubeXYZ2UV(QVector3D &verCoord);
 
 	// sampling
 	float NormalRandom(const float mu = 0.0f, const float sigma = 1.0f);
+public:
 	void RandomSampling(int number);
 
-	// get
-	const QVector<Sample*> & getSamples() const;
+	/*---------------------SphericalHarmonicsEvaluation.cpp-------------------------*/
+	// evaluation
+private:
+	QVector<float> BasisCoefficient(QVector3D& verCoord);
+public:
+	QVector<QVector3D> Evaluate();
 
 private:
 	// input
-	QMap<QString, QImage*> images;
-	QOpenGLTexture * texture;
-	QImage texImage;
+	QMap<QString, QImage*> &images;
+	int level = 0;
 
 	// samples
 	QVector<Sample*> samples;

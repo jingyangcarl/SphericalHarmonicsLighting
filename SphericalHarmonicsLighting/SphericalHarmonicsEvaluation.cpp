@@ -1,17 +1,14 @@
-#include "SphericalHarmonicsEvaluator.h"
+#include "SphericalHarmonicsSampler.h"
 
-SphericalHarmonicsEvaluator::SphericalHarmonicsEvaluator(const QVector<Sample*>& samples, int level) :
-	samples(samples), level(level) {
-}
-
-SphericalHarmonicsEvaluator::~SphericalHarmonicsEvaluator() {
-	qDeleteAll(samples);
-	samples.clear();
-
-	coefs.clear();
-}
-
-QVector<float> SphericalHarmonicsEvaluator::BasisCoefficient(QVector3D & verCoord) {
+/*
+Description:
+	This function is used to generate spherical harmonic lighting basis, a 16x1 vector, for a given point;
+Input:
+	@ QVector3D & verCoord: a given sample's location;
+Output:
+	@ QVector<float> returnValue: corresponding spherical harmonic lighting coefficients;
+*/
+QVector<float> SphericalHarmonicsSampler::BasisCoefficient(QVector3D & verCoord) {
 
 	int n = pow(level + 1, 2);
 	QVector<float> Y(n);
@@ -52,10 +49,17 @@ QVector<float> SphericalHarmonicsEvaluator::BasisCoefficient(QVector3D & verCoor
 	return Y;
 }
 
-void SphericalHarmonicsEvaluator::Evaluate() {
-
+/*
+Description:
+	This function is used to evaluate all the samples and generate spherical harmonics lighting coefficients;
+Input:
+	@ void parameter: void;
+Output:
+	@ QVector<QVector3D> & returnValue: spherical harmonic lighting coefficients;
+*/
+QVector<QVector3D> SphericalHarmonicsSampler::Evaluate() {
 	int n = pow(level + 1, 2);
-	coefs = QVector<QVector3D>(n, QVector3D());
+	QVector<QVector3D> coefs = QVector<QVector3D>(n, QVector3D());
 
 	for (int i = 0; i < samples.size(); i++) {
 		auto Y = BasisCoefficient((samples[i])->verCoord);
@@ -74,17 +78,5 @@ void SphericalHarmonicsEvaluator::Evaluate() {
 		(*coef) = factor * 4 * M_PI * (*coef) / samples.size();
 	}
 
-	// save
-	QFile file("./Resources/Output/outputCoef.txt");
-	if (file.open(QIODevice::ReadWrite)) {
-		QTextStream output(&file);
-		for (int i = 0; i < coefs.size(); i++) {
-			output << coefs[i][0] << '\t' << coefs[i][1] << '\t' << coefs[i][2] << endl;
-		}
-	}
-}
-
-const QVector<QVector3D>& SphericalHarmonicsEvaluator::getCoefficients() const {
-	// TODO: insert return statement here
 	return coefs;
 }

@@ -81,9 +81,6 @@
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\Graphics Engine</Filter>
     </ClCompile>
-    <ClCompile Include="SphericalHarmonicsEvaluator.cpp">
-      <Filter>Source Files\Spherical Harmonics</Filter>
-    </ClCompile>
     <ClCompile Include="SphericalHarmonicsSampler.cpp">
       <Filter>Source Files\Spherical Harmonics</Filter>
     </ClCompile>
@@ -104,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="SphericalHarmonicsLighting.cpp">
       <Filter>Source Files\Qt Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="SphericalHarmonicsEvaluation.cpp">
+      <Filter>Source Files\Spherical Harmonics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,9 +140,6 @@
     </ClInclude>
     <ClInclude Include="Transformational.h">
       <Filter>Header Files\Graphics Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="SphericalHarmonicsEvaluator.h">
-      <Filter>Header Files\Spherical Harmonics</Filter>
     </ClInclude>
     <ClInclude Include="SphericalHarmonicsSampler.h">
       <Filter>Header Files\Spherical Harmonics</Filter>

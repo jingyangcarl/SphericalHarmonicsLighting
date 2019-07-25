@@ -10,7 +10,6 @@
 #include "Camera3D.h"
 #include "SkyBox.h"
 #include "SphericalHarmonicsSampler.h"
-#include "SphericalHarmonicsEvaluator.h"
 
 class Widget :
 	public QOpenGLWidget {
