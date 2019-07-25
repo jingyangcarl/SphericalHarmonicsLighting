@@ -1,7 +1,6 @@
 #pragma once
 #include <qopenglwidget.h>
 #include <qopenglshaderprogram>
-#include <qopengldebug.h>
 #include <QKeyEvent>
 #include <QtMath>
 #include <qbasictimer.h>
@@ -20,20 +19,22 @@ public:
 	~Widget();
 
 	/*------------------WidgetParameter.cpp-------------------*/
+	void setProjectionMatrix(const QMatrix4x4 & projectMatrix);
+	const QMatrix4x4 & getProjectionMatrix() const;
+	void setMeshScale(const float meshScale);
+	const float getMeshScale() const;
+	void setMaterialType(const float materialType);
+	void setMaterialType(const QString & materialType);
+	const float getMaterialType() const;
 	void setAmbientFactor(const float ambientFactor);
 	const float getAmbientFactor() const;
 	void setContrast(const float contrast);
 	const float getContrast() const;
 	void setBrightness(const float brightness);
 	const float getBrightness() const;
-	void setMeshScale(const float meshScale);
-	const float getMeshScale() const;
-	void setMaterialType(const float materialType);
-	void setMaterialType(const QString & materialType);
-	const float getMaterialType() const;
 	void setRefractRatio(const float refractRatio);
 	const float getRefractRatio() const;
-	void reloadMesh(const QString file);
+	void reloadMesh(const QString & file);
 
 protected:
 	/*----------------Widget.cpp-------------------*/
@@ -44,7 +45,6 @@ protected:
 	void paintGL();
 
 	/*----------------WidgetCallback.cpp-------------------*/
-	// callback
 	void keyPressEvent(QKeyEvent* event);
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
@@ -55,7 +55,6 @@ private:
 	// shader
 	QOpenGLShaderProgram skyboxShader;
 	QOpenGLShaderProgram objectShader;
-	QOpenGLDebugLogger * debugLogger;
 
 	// object
 	Skybox* skybox;
@@ -63,29 +62,26 @@ private:
 	QVector<Group3D*> groups;
 	QVector<Transformational*> transformObjects;
 
-	// index
-	int skyboxIndex = 0;
-
 	// camera
 	Camera3D* camera;
 
 	// pMatrix
 	QMatrix4x4 projectionMatrix;
 
-	// mouse
-	QVector2D mousePosition;
+	// paramters
+	float meshScale = 1.0f;
+	float materialType = 0.0f;
+	float ambientFactor = 0.35f;
+	float contrast = 2.0f;
+	float brightness = 0.13f;
+	float refractRatio = 0.6f;
 
 	// timer
 	QBasicTimer timer;
 	float angleObject = 0.0f;
 	float angleGroup = 0.0f;
 
-	// paramters
-	float ambientFactor = 0.35f;
-	float contrast = 2.0f;
-	float brightness = 0.13f;
-	float meshScale = 1.0f;
-	float materialType = 0.0f;
-	float refractRatio = 0.6f;
+	// mouse
+	QVector2D mousePosition;
 };
 

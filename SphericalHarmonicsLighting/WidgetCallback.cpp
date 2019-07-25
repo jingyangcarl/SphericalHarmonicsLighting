@@ -1,9 +1,18 @@
 #include "Widget.h"
 
+/*
+Description:
+	This function is used to process key events, which is a Qt event function
+Intput:
+	@ QKeyEvent* event: a key event;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::keyPressEvent(QKeyEvent* event) {
 
 	QVector<QVector3D> temp;
 
+	// process the event
 	switch (event->key()) {
 	case Qt::Key_Left:
 		skybox->loadPrev();
@@ -20,10 +29,21 @@ void Widget::keyPressEvent(QKeyEvent* event) {
 		camera->translate(QVector3D(0.0, 0.0, -35.0));
 		break;
 	}
+
+	// update widget
 	update();
 }
 
+/*
+Description:
+	This function is used to process mouse events, which is a Qt event function
+Intput:
+	@ QKeyEvent* event: a mouse event;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::mousePressEvent(QMouseEvent* event) {
+	// process the event
 	if (event->buttons() == Qt::LeftButton)
 		mousePosition = QVector2D(event->localPos());
 	if (event->buttons() == Qt::RightButton)
@@ -31,9 +51,19 @@ void Widget::mousePressEvent(QMouseEvent* event) {
 	if (event->buttons() == Qt::MiddleButton)
 		mousePosition = QVector2D(event->localPos());
 	event->accept();
+
+	// update widget
 	update();
 }
 
+/*
+Description:
+	This function is used to process mouse move events, which is a Qt event function
+Intput:
+	@ QKeyEvent* event: a mouse move event;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::mouseMoveEvent(QMouseEvent* event) {
 
 	QVector2D diff = QVector2D(event->localPos()) - mousePosition;
@@ -42,6 +72,7 @@ void Widget::mouseMoveEvent(QMouseEvent* event) {
 	float angle = diff.length();
 	QVector3D axis = QVector3D(diff.y(), diff.x(), 0.0f);
 
+	// process the event
 	if (event->buttons() == Qt::LeftButton) {
 		camera->rotate(QQuaternion::fromAxisAndAngle(axis, angle));
 	}
@@ -50,19 +81,42 @@ void Widget::mouseMoveEvent(QMouseEvent* event) {
 	}
 	if (event->buttons() == Qt::MiddleButton) {
 	}
+
+	// update widget
 	update();
 }
 
+/*
+Description:
+	This function is used to process wheel events, which is a Qt event function
+Intput:
+	@ QKeyEvent* event: a wheel event;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::wheelEvent(QWheelEvent* event) {
+	// process the event
 	if (event->delta() > 0)
 		camera->translate(QVector3D(0.0f, 0.0f, 3.0f));
 	else if (event->delta() < 0)
 		camera->translate(QVector3D(0.0f, 0.0f, -3.0f));
+
+	// update widget
 	update();
 }
 
+/*
+Description:
+	This function is used to process timer events, which is a Qt event function
+Intput:
+	@ QKeyEvent* event: a timer event;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::timerEvent(QTimerEvent* event) {
-	//  for each cube 
+	// process the event
+
+	// for each cube 
 	for (int i = 0; i < 8; i++) {
 		if (i % 2 == 0) {
 			objects[i]->rotate(QQuaternion::fromAxisAndAngle(1.0, 0.0, 0.0, qSin(angleObject)));
@@ -72,7 +126,6 @@ void Widget::timerEvent(QTimerEvent* event) {
 			objects[i]->rotate(QQuaternion::fromAxisAndAngle(1.0, 0.0, 0.0, qCos(angleObject)));
 		}
 	}
-
 
 	// for group
 	if (groups.size() < 1) {
@@ -86,5 +139,6 @@ void Widget::timerEvent(QTimerEvent* event) {
 	angleObject += M_PI / 180.0f;
 	angleGroup += M_PI / 360.0f;
 
+	// update widget
 	update();
 }

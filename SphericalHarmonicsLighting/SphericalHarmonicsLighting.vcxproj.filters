@@ -43,8 +43,17 @@
     <Filter Include="Source Files\Spherical Harmonics">
       <UniqueIdentifier>{d7d0a472-0c25-4c5d-babf-e064445c081d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Widget">
+    <Filter Include="Header Files\OpenGLWidget">
+      <UniqueIdentifier>{8b48bfc0-cf6b-4613-b249-5b2d820a757a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OpenGLWidget">
       <UniqueIdentifier>{e819f486-c8f2-461c-bc56-571cd2106dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Qt Framework">
+      <UniqueIdentifier>{4a8cbee1-0cc8-4756-8c2b-053d9ecfee0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Qt Framework">
+      <UniqueIdentifier>{60d6baaa-0881-44b7-b9d4-fa234029302a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,29 +87,24 @@
     <ClCompile Include="SphericalHarmonicsSampler.cpp">
       <Filter>Source Files\Spherical Harmonics</Filter>
     </ClCompile>
-    <ClCompile Include="SphericalHarmonicsLighting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Widget.cpp">
-      <Filter>Source Files\Widget</Filter>
+      <Filter>Source Files\OpenGLWidget</Filter>
     </ClCompile>
     <ClCompile Include="WidgetCallback.cpp">
-      <Filter>Source Files\Widget</Filter>
+      <Filter>Source Files\OpenGLWidget</Filter>
     </ClCompile>
     <ClCompile Include="WidgetParameter.cpp">
-      <Filter>Source Files\Widget</Filter>
+      <Filter>Source Files\OpenGLWidget</Filter>
     </ClCompile>
     <ClCompile Include="QtInitialization.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Qt Framework</Filter>
     </ClCompile>
     <ClCompile Include="QtSlotFunction.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Qt Framework</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="SphericalHarmonicsLighting.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
+    <ClCompile Include="SphericalHarmonicsLighting.cpp">
+      <Filter>Source Files\Qt Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SphericalHarmonicsLighting.ui">
@@ -113,9 +117,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Widget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera3D.h">
       <Filter>Header Files\Graphics Engine</Filter>
     </ClInclude>
@@ -146,6 +147,9 @@
     <ClInclude Include="SphericalHarmonicsSampler.h">
       <Filter>Header Files\Spherical Harmonics</Filter>
     </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>Header Files\OpenGLWidget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Object.fsh">
@@ -168,5 +172,10 @@
     <FxCompile Include="Shader.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="SphericalHarmonicsLighting.h">
+      <Filter>Header Files\Qt Framework</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

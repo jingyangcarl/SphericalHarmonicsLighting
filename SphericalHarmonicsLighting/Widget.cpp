@@ -1,13 +1,65 @@
 #include "Widget.h"
 
+/*
+Description:
+	This function is a constructor;
+Input:
+	@ QWidget* parent: 
+*/
 Widget::Widget(QWidget* parent) :
 	QOpenGLWidget(parent) {
 	camera = new Camera3D();
 	camera->translate(QVector3D(0.0, 0.0, -35.0));
 }
 
-Widget::~Widget() {}
+/*
+Description:
+	This function is a destructor;
+Input:
+	@ void patameter: void;
+*/
+Widget::~Widget() {
+	// delete shader program
+	delete &skyboxShader;
+	delete &objectShader;
 
+	// delete objects
+	delete skybox;
+	qDeleteAll(objects);
+	qDeleteAll(groups);
+	qDeleteAll(transformObjects);
+
+	// delete camera
+	delete camera;
+
+	// delete projection materia
+	delete &projectionMatrix;
+
+	// delete parameters
+	delete &ambientFactor;;
+	delete &contrast;
+	delete &brightness;
+	delete &meshScale;
+	delete &materialType;
+	delete &refractRatio;
+
+	// delete timer
+	delete &timer;
+	delete &angleObject;
+	delete &angleGroup;
+
+	// delete mouse position
+	delete &mousePosition;
+}
+
+/*
+Description:
+	This function is used to initialize shaders for skybox and objects;
+Input:
+	@ void parameter: void;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::initShaders() {
 	// objectShader
 	if (!objectShader.addShaderFromSourceFile(QOpenGLShader::Vertex, "./Object.vsh")) {
@@ -37,6 +89,14 @@ void Widget::initShaders() {
 	}
 }
 
+/*
+Description:
+	This function is used to initialize OpenGL state machine, and initialize skybox ,objects as well as timers;
+Input:
+	@ void parameter: void;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::initializeGL() {
 
 	// Enable Keyboard
@@ -85,18 +145,35 @@ void Widget::initializeGL() {
 	timer.start(10, this);
 }
 
+/*
+Description:
+	This function is used to deal with resive event;
+Input:
+	@ int width: window width after resize event;
+	@ int height: window height after resize event;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::resizeGL(int width, int height) {
 	float aspect = width / (float)height;
 	projectionMatrix.setToIdentity();
 	projectionMatrix.perspective(45, aspect, 0.01f, 500.0f);
 }
 
+/*
+Description:
+	This function is used to set parameters for the vertex shader, fragment shader and etc. and draw skybox and other objects;
+Input:
+	@ void parameter: void;
+Output:
+	@ void returnValue: void;
+*/
 void Widget::paintGL() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// draw skybox
 	skyboxShader.bind();
-	skyboxShader.setUniformValue("u_projectionMatrix", projectionMatrix);
+	skyboxShader.setUniformValue("u_projectionMatrix", this->getProjectionMatrix());
 	skyboxShader.setProperty("textureIndex", 0);
 	camera->draw(&skyboxShader);
 	skybox->draw(&skyboxShader, context()->functions());
@@ -111,15 +188,17 @@ void Widget::paintGL() {
 	objectShader.setProperty("textureIndex", 1);
 	objectShader.setUniformValue("u_skyboxTexture", 0);
 	objectShader.setUniformValueArray("u_coef", (skybox->getCoefficient()).constData(), 16);
-	objectShader.setUniformValue("u_projectionMatrix", projectionMatrix);
-	objectShader.setUniformValue("u_materialType", getMaterialType());
-	objectShader.setUniformValue("u_ambientFactor", getAmbientFactor());
-	objectShader.setUniformValue("u_contrast", getContrast());
-	objectShader.setUniformValue("u_brightness", getBrightness());
-	objectShader.setUniformValue("u_refractRatio", getRefractRatio());
+	objectShader.setUniformValue("u_projectionMatrix", this->getProjectionMatrix());
+	objectShader.setUniformValue("u_materialType", this->getMaterialType());
+	objectShader.setUniformValue("u_ambientFactor", this->getAmbientFactor());
+	objectShader.setUniformValue("u_contrast", this->getContrast());
+	objectShader.setUniformValue("u_brightness", this->getBrightness());
+	objectShader.setUniformValue("u_refractRatio", this->getRefractRatio());
 	camera->draw(&objectShader);
 	for (int i = 0; i < transformObjects.size(); i++)
 		transformObjects[i]->draw(&objectShader, context()->functions());
 	objectShader.release();
+
+	// release skybox texture
 	skyboxTexture->release();
 }
