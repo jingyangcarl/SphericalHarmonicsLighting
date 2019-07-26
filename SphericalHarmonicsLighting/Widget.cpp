@@ -20,8 +20,8 @@ Input:
 */
 Widget::~Widget() {
 	// delete shader program
-	delete &skyboxShader;
-	delete &objectShader;
+	// delete &skyboxShader;
+	// delete &objectShader;
 
 	// delete objects
 	delete skybox;

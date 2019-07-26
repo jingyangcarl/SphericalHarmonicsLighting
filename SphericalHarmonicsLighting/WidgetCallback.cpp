@@ -28,6 +28,18 @@ void Widget::keyPressEvent(QKeyEvent* event) {
 		camera = new Camera3D();
 		camera->translate(QVector3D(0.0, 0.0, -35.0));
 		break;
+	case Qt::Key_W:
+		camera->rotate(QQuaternion::fromAxisAndAngle(1.0, 0.0, 0.0, 4.0));
+		break;
+	case Qt::Key_S:
+		camera->rotate(QQuaternion::fromAxisAndAngle(1.0, 0.0, 0.0, -4.0));
+		break;
+	case Qt::Key_A:
+		camera->rotate(QQuaternion::fromAxisAndAngle(0.0, 1.0, 0.0, -4.0));
+		break;
+	case Qt::Key_D:
+		camera->rotate(QQuaternion::fromAxisAndAngle(0.0, 1.0, 0.0, 4.0));
+		break;
 	}
 
 	// update widget

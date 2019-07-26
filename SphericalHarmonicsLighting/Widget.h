@@ -79,6 +79,7 @@ private:
 	QBasicTimer timer;
 	float angleObject = 0.0f;
 	float angleGroup = 0.0f;
+	float angleCamera = 0.0f;
 
 	// mouse
 	QVector2D mousePosition;
