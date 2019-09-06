@@ -111,7 +111,7 @@ void Group3D::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functi
 
 /*
 Description:
-	This function is used to add object into the group list. An initialization of its position is necessary.
+	This function is used to add object into the group list. An initialization of its position is necessary;
 Input:
 	@ Transformational * object: a given object;
 Output:

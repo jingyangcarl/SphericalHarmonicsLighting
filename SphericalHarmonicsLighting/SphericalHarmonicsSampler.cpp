@@ -110,6 +110,27 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 	int width = (images.begin()).value()->width();
 	int height = (images.begin()).value()->height();
 
+	/*-------------------------*/
+	//QImage output_negx(width, height, QImage::Format_RGB32);
+	//QImage output_negy(width, height, QImage::Format_RGB32);
+	//QImage output_negz(width, height, QImage::Format_RGB32);
+	//QImage output_posx(width, height, QImage::Format_RGB32);
+	//QImage output_posy(width, height, QImage::Format_RGB32);
+	//QImage output_posz(width, height, QImage::Format_RGB32);
+	//output_negx.fill(Qt::black);
+	//output_negy.fill(Qt::black);
+	//output_negz.fill(Qt::black);
+	//output_posx.fill(Qt::black);
+	//output_posy.fill(Qt::black);
+	//output_posz.fill(Qt::black);
+	//int count_negx(0);
+	//int count_negy(0);
+	//int count_negz(0);
+	//int count_posx(0);
+	//int count_posy(0);
+	//int count_posz(0);
+	/*-------------------------*/
+
 	for (int i = 0; i < number; i++) {
 		float x = NormalRandom(0.0f, 1.0f);
 		float y = NormalRandom(0.0f, 1.0f);
@@ -121,5 +142,40 @@ void SphericalHarmonicsSampler::RandomSampling(int number) {
 		int pixelCoordY = uvPair.second[1] * height;
 		sample->verColor = (images.find(uvPair.first).value())->pixelColor(pixelCoordX, pixelCoordY).rgb();
 		samples << sample;
+
+		/*-------------------------*/
+		//int colorFactor = 1.5;
+		//if (uvPair.first == "negx") {
+		//	count_negx++;
+		//	output_negx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb() * colorFactor);
+		//}
+		//else if (uvPair.first == "negy") {
+		//	count_negy++;
+		//	output_negy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb() * colorFactor);
+		//}
+		//else if (uvPair.first == "negz") {
+		//	count_negz++;
+		//	output_negz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb() * colorFactor);
+		//}
+		//else if (uvPair.first == "posx") {
+		//	count_posx++;
+		//	output_posx.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb() * colorFactor);
+		//}
+		//else if (uvPair.first == "posy") {
+		//	count_posy++;
+		//	output_posy.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb() * colorFactor);
+		//} 
+		//else if (uvPair.first == "posz") {
+		//	count_posz++;
+		//	output_posz.setPixelColor(int(uvPair.second[0] * width), int(uvPair.second[1] * height), sample->verColor.rgb() * colorFactor);
+		//}
+		/*-------------------------*/
 	}
+
+	//output_negx.save("./Resources/Output/negx.jpg");
+	//output_negy.save("./Resources/Output/negy.jpg");
+	//output_negz.save("./Resources/Output/negz.jpg");
+	//output_posx.save("./Resources/Output/posx.jpg");
+	//output_posy.save("./Resources/Output/posy.jpg");
+	//output_posz.save("./Resources/Output/posz.jpg");
 }

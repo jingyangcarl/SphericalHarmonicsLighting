@@ -224,7 +224,7 @@ Description:
 Input:
 	@ void parameter: void;
 Output:
-	@ void returnValue: void;
+	@ QOpenGLTexture *: a texture;
 */
 QOpenGLTexture * Material::getTexture() const {
 	if (!this->texture) {

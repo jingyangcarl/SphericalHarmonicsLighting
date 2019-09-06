@@ -41,7 +41,7 @@ void MaterialLibrary::addMaterial(Material * material) {
 
 /*
 Description:
-	this function is used to get material from the material list by its index;
+	This function is used to get material from the material list by its index;
 Input:
 	@ const int index: a index refer to the material;
 Output:
