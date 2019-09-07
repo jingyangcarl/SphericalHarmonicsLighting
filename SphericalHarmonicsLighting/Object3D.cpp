@@ -74,7 +74,7 @@ Object3D::~Object3D() {
 
 /*
 Description:
-	This function is used to set a new texture for the given object
+	This function is used to set a new texture for the given object;
 Input:
 	@ const QImage& image: an image used as the object texture;
 Output:
