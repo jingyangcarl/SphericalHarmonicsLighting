@@ -5,7 +5,7 @@ Spherical Harmonic Lighting
 ![Tutorial 1](https://github.com/jingyangcarl/Resources/blob/master/QtOpenGLTutorials/Tutorial1/result.jpg)
 
 # Solution Introduction
-This tutorial solution is used to build up an template for using OpenGL with Qt, and display a simple cube with texture;
+This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics Engine interpretes all the geometrical objects including meshes, materials and transformations. OpenGLWidget
 
 # Solution Environment:
 * Windows 10
@@ -13,6 +13,129 @@ This tutorial solution is used to build up an template for using OpenGL with Qt,
 * Qt 5.13.0
 
 # Solution Documentation:
+> Header Files
+>
+>> Graphics Engine
+>>
+>>> [Camera3D.h]():
+>>>
+>>>> void rotate(const QQuaternion& r): This function is used to rotate the camera;
+>>>> 
+>>>> void translate(const QVector3D& t): This function is used to translate the camera;
+>>>> 
+>>>> void scale(const float& s): This function is used to scale the camera;
+>>>> 
+>>>> void setGlobalTransform(const QMatrix4x4& g): This function is used to set the global transform for the camera;
+>>>> 
+>>>> void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions = 0): This function is used to set parameters for the vertex shader, fragment shader and etc.;
+>>>
+>>> [Group3D.h]():
+>>>
+>>>> void rotate(const QQuaternion& r): This function is used to rotate all the objects in a group, which calls Object3D::rotate(const QQuaternion&) for object rotation;
+>>>> 
+>>>> void translate(const QVector3D& t): This function is used to translate all the objects in a group, which calls Object3D::translate(const QVector3D&) for object translation;
+>>>> 
+>>>> void scale(const float& s): This function is used to scale all the objects in a group, which calls Object3D::scale(const float&) for object scaling;
+>>>> 
+>>>> void setGlobalTransform(const QMatrix4x4& g): This function is used to set the global transform for all the objects in a group, which calls Object3D::setGlobalTransform(const QMatrix4x4&) for setting global transform;
+>>>> 
+>>>> void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions = 0): This function is used to draw all the objects in a group, which calls Object3D::draw(QOpenGLShaderProgram*, QOpenGLFunctions*);
+>>>>
+>>>> void addObject(Transformational* object): This function is used to add object into the group list. An initialization of its position is necessary;
+>>>>
+>>>> void delObject(Transformational* object): This function is used to remove an object from the group.
+>>>
+>>> [Material.h]():
+>>>
+>>> [MaterialLibrary.h]():
+>>>
+>>> [Object3D.h]():
+>>>
+>>> [ObjectEngine3D.h]():
+>>>
+>>> [Skybox.h]():
+>>
+>> OpenGLWidget
+>>
+>>> [Widget.h]():
+>>
+>> Qt Framework
+>>
+>>> [SphericalHarmonicsLighting.h]():
+>>
+>> Spherical Harmonics
+>>
+>>>[SphericalHarmonicsSampler.h]():
+>>
+>
+> Shader
+>>
+>> Object Shader
+>>
+>>> [Object.vsh]():
+>>>
+>>> [Object.fsh]():
+>>
+>> Skybox Shader
+>>
+>>> [Skybox.vsh]():
+>>>
+>>> [Skybox.fsh]():
+>>
+>> Test Shader
+>>
+>>> [TestShader.vsh]():
+>>>
+>>> [TestShader.fsh]():
+>>
+>
+> Source Files
+>
+>> Graphics Engine
+>>
+>>> [Camera3D.cpp](): implements Camera3D.h
+>>>
+>>> [Group3D.cpp](): implements Group3D.h
+>>>
+>>> [Material.cpp](): implements Material.h
+>>>
+>>> [MaterialLibrary.cpp](): implements MaterialLibrary.h
+>>>
+>>> [Object3D.cpp](): implements Object3D.h
+>>>
+>>> [ObjectEngine3D.cpp](): implements ObjectEngine3D.h
+>>>
+>>> [Skybox.cpp]: implements skybox.h
+>>
+>> OpenGLWidget
+>>
+>>> [Widget.cpp](): implements Widget.h
+>>>
+>>> [WidgetCallback.cpp](): implements all callback functions in Widget.h
+>>>
+>>> [WidgetParameter.cpp](): implements all parameter setting functions in Widget.h
+>>
+>> QtFrameWork
+>>
+>>> [QtInitialization.cpp](): implements all Qt initialization functions in SphericalHarmonicsLighting.h
+>>>
+>>> [QtSlotFunction.cpp](): implements all Qt Slot functions in SphericalHarmonicsLighting.h
+>>>
+>>> [SphericalHarmonicsLighting.cpp](): implements SphericalHarmonicsLighting.h
+>>
+>> Spherical Harmonics
+>>
+>>> [SphericalHarmonicsEvaluation.cpp](): implements all spherical harmonic lighting coefficients evaluation in SphericalHarmonicsSampler.h
+>>>
+>>> [SphericalHarmonicsSampler.cpp](): implements SphericalHarmonicsSampler.cpp
+>>
+>> [main.cpp]()
+>
+
+
+
+
+
 > Form Files
 >> [Tutorial1.ui](https://github.com/jingyangcarl/QtOpenGLTutorials/blob/master/Code/Tutorial1/Tutorial1/Tutorial1.ui): Qt UI file, where QOpenGLWidget is promoted to Widget defined in Widget.h;
 >
@@ -31,8 +154,6 @@ This tutorial solution is used to build up an template for using OpenGL with Qt,
 >>>
 >>> void initCube(float width): This function is used to load graphics data for a cube, including vertex data and index data;
 >>
->
-> Source Files
 >> [main.cpp](https://github.com/jingyangcarl/QtOpenGLTutorials/blob/master/Code/Tutorial1/Tutorial1/main.cpp)
 >>
 >> [Tutorial1.cpp](https://github.com/jingyangcarl/QtOpenGLTutorials/blob/master/Code/Tutorial1/Tutorial1/Tutorial1.cpp): implements Tutorial1.h;
