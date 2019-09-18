@@ -157,10 +157,11 @@
     <None Include="Object.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
-    <None Include="Shader.fsh">
+    <None Include="Skybox.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
-    <None Include="Skybox.fsh">
+    <None Include="..\README.md" />
+    <None Include="TestShader.fsh">
       <Filter>Resource Files\Shader</Filter>
     </None>
   </ItemGroup>
@@ -168,10 +169,10 @@
     <FxCompile Include="Object.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Shader.vsh">
+    <FxCompile Include="Skybox.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Skybox.vsh">
+    <FxCompile Include="TestShader.vsh">
       <Filter>Resource Files\Shader</Filter>
     </FxCompile>
   </ItemGroup>

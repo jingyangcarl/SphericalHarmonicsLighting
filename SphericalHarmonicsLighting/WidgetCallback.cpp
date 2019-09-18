@@ -2,7 +2,7 @@
 
 /*
 Description:
-	This function is used to process key events, which is a Qt event function
+	This function is used to process key events, which is a Qt event function;
 Intput:
 	@ QKeyEvent* event: a key event;
 Output:
@@ -48,7 +48,7 @@ void Widget::keyPressEvent(QKeyEvent* event) {
 
 /*
 Description:
-	This function is used to process mouse events, which is a Qt event function
+	This function is used to process mouse events, which is a Qt event function;
 Intput:
 	@ QKeyEvent* event: a mouse event;
 Output:
@@ -70,7 +70,7 @@ void Widget::mousePressEvent(QMouseEvent* event) {
 
 /*
 Description:
-	This function is used to process mouse move events, which is a Qt event function
+	This function is used to process mouse move events, which is a Qt event function;
 Intput:
 	@ QKeyEvent* event: a mouse move event;
 Output:

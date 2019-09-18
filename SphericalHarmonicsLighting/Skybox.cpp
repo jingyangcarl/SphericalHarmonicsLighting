@@ -289,6 +289,14 @@ bool Skybox::setTexture(int index) {
 	return true;
 }
 
+/*
+Description:
+	This funciton is used to get the current texture;
+Input:
+	@ void parameter: void;
+Output:
+	@ QOpenGLTexture * returnValue: the current texture;
+*/
 QOpenGLTexture * Skybox::getTexture() const {
 	return object->getTexture();
 }
