@@ -383,6 +383,7 @@ This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics E
 >
 
 ## Solution Hierarchy:
+![Solution Hierarchy](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Solution_Hierarchy.jpg)
 ```
 │   .gitattributes
 │   .gitignore
