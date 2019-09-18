@@ -4,9 +4,15 @@ Spherical Harmonic Lighting
 ## Spherical Harmonic Lighting Result
 | Scene | Scene 1 | Scene 2 | Scene 3 |
 | :---: | :-----: | :-----: | :-----: | 
-| Spherical Harmonic Lighting | ![Spherical Harmonic Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_1.gif) | ![Spherical Harmonic Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_2.gif) | ![Spherical Harmonic Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_1.gif) |
-| Mirror Lighting | ![]() | ![]() | ![]() |
-| Glass Lighting | ![]() | ![]() | ![]() |
+| Spherical Harmonic Lighting | ![Spherical Harmonic Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_1.gif) | ![Spherical Harmonic Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_2.gif) | ![Spherical Harmonic Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_3.gif) |
+| Mirror Lighting | ![Mirror Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_GlassLighting_Scene_1.gif) | ![Mirror Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_GlassLighting_Scene_2.gif) | ![Mirror Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_GlassLighting_Scene_3.gif) |
+| Glass Lighting | ![Glass Lighting Scene 1]() | ![Glass Lighting Scene 2]() | ![Glass Lighting Scene 3]() |
+
+| Scene | Scene 1 | Scene 2 | Scene 3 |
+| :---: | :-----: | :-----: | :-----: | 
+| Spherical Harmonic Lighting | [![Spherical Harmonic Lighting Scene 1](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg)](https://www.youtube.com/watch?v=2R7f_KR2g5c) | [![Spherical Harmonic Lighting Scene 2](https://img.youtube.com/vi/wvXcyf_CwMM/0.jpg)](https://www.youtube.com/watch?v=wvXcyf_CwMM) | [![Spherical Harmonic Lighting Scene 3](https://img.youtube.com/vi/sL7c8y7MrPg/0.jpg)](https://www.youtube.com/watch?v=sL7c8y7MrPg) |
+| Mirror Lighting | [![Mirror Lighting Scene 1](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg)](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg) | [![Mirror Lighting Scene 2](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg)](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg) | [![Mirror Lighting Scene 3](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg)](https://img.youtube.com/vi/2R7f_KR2g5c/0.jpg) |
+| Glass Lighting | ![Glass Lighting Scene 1]() | ![Glass Lighting Scene 2]() | ![Glass Lighting Scene 3]() |
 
 ## Solution Introduction
 This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics Engine interpretes all the geometrical objects including meshes, materials and transformations. OpenGLWidget
