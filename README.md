@@ -1,18 +1,22 @@
 Spherical Harmonic Lighting
 =============================
 
-# Spherical Harmonic Lighting Result
-![Tutorial 1](https://github.com/jingyangcarl/Resources/blob/master/QtOpenGLTutorials/Tutorial1/result.jpg)
+## Spherical Harmonic Lighting Result
+| Scene | Scene 1 | Scene 2 | Scene 3 |
+| :---: | :-----: | :-----: | :-----: | 
+| Spherical Harmonic Lighting | ![Spherical Harmonic Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_1.gif) | ![Spherical Harmonic Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_2.gif) | ![Spherical Harmonic Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_SphericalHarmonicsLighting_Scene_1.gif) |
+| Mirror Lighting | ![]() | ![]() | ![]() |
+| Glass Lighting | ![]() | ![]() | ![]() |
 
-# Solution Introduction
+## Solution Introduction
 This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics Engine interpretes all the geometrical objects including meshes, materials and transformations. OpenGLWidget
 
-# Solution Environment:
+## Solution Environment:
 * Windows 10
 * Visual Studio 2019
 * Qt 5.13.0
 
-# Solution Documentation:
+## Solution Documentation:
 > Header Files
 >
 >> Graphics Engine
@@ -378,7 +382,7 @@ This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics E
 >> [main.cpp](https://github.com/jingyangcarl/SphericalHarmonicsLighting/blob/master/SphericalHarmonicsLighting/main.cpp): main function;
 >
 
-# Solution Hierarchy:
+## Solution Hierarchy:
 ```
 │   .gitattributes
 │   .gitignore

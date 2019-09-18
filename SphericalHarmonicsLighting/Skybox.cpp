@@ -167,7 +167,7 @@ bool Skybox::loadTextures() {
 	QStringList dirList = directory.entryList(QDir::Dirs);
 	dirList.removeFirst(); // remove ./
 	dirList.removeFirst(); // remove ../
-	for (int i = 5; i < 7; i++) {
+	for (int i = 5; i < 17; i++) {
 		directory.cd(dirList[i]);
 		QStringList jpgList = directory.entryList(QStringList() << "*.jpg");
 
