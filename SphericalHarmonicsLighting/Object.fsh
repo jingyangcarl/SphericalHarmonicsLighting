@@ -30,10 +30,7 @@ void main(void) {
 
 	if (u_materialType == DIFFUSE) {
 		
-		vec4 eyePosition = mat4(mat3(v_viewMatrix)) * v_viewMatrix[3];
-		vec3 eyeVec = normalize(v_position.xyz - eyePosition.xyz);
-
-		vec4 lightPosition = eyePosition;
+		vec4 lightPosition = vec4(0.0, 0.0, -5.0, 0.0);
 		vec3 lightVec = normalize(v_position.xyz - lightPosition.xyz);
 
 		float lightPower = 2.0f;
