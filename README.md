@@ -8,15 +8,15 @@ Spherical Harmonic Lighting
 | Glass Lighting | [![Glass Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_GlassLighting_Scene_1.gif)](https://www.youtube.com/watch?v=-c_BF3ifxa8) | [![Glass Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_GlassLighting_Scene_2.gif)](https://www.youtube.com/watch?v=O0RZkTBJpsc) | [![Glass Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_GlassLighting_Scene_3.gif)](https://www.youtube.com/watch?v=dFXXyniNXd8) |
 | Mirror Lighting | [![Mirror Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_MirrorLighting_Scene_1.gif)](https://www.youtube.com/watch?v=WrSahuWK1mk) | [![Mirror Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_MirrorLighting_Scene_2.gif)](https://www.youtube.com/watch?v=Edo2vsf7mW4) | [![Mirror Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_MirrorLighting_Scene_3.gif)](https://www.youtube.com/watch?v=SWxjBzJcLN0) |
 
-## Solution Introduction
+## Introduction
 This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics Engine interpretes all the geometrical objects including meshes, materials and transformations. OpenGLWidget
 
-## Solution Environment:
+## Environment:
 * Windows 10
 * Visual Studio 2019
 * Qt 5.13.0
 
-## Solution Documentation:
+## Documentation:
 > Header Files
 >
 >> Graphics Engine
@@ -382,7 +382,7 @@ This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics E
 >> [main.cpp](https://github.com/jingyangcarl/SphericalHarmonicsLighting/blob/master/SphericalHarmonicsLighting/main.cpp): main function;
 >
 
-## Solution Hierarchy:
+## Hierarchy:
 ![Solution Hierarchy](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Solution_Hierarchy.jpg)
 ```
 │   .gitattributes
