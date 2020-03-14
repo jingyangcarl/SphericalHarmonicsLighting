@@ -9,7 +9,7 @@ Spherical Harmonic Lighting
 | Mirror Lighting | [![Mirror Lighting Scene 1](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_MirrorLighting_Scene_1.gif)](https://www.youtube.com/watch?v=WrSahuWK1mk) | [![Mirror Lighting Scene 2](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_MirrorLighting_Scene_2.gif)](https://www.youtube.com/watch?v=Edo2vsf7mW4) | [![Mirror Lighting Scene 3](https://github.com/jingyangcarl/Resources/blob/master/SphericalHarmonicsLighting/Sphere_MirrorLighting_Scene_3.gif)](https://www.youtube.com/watch?v=SWxjBzJcLN0) |
 
 ## Introduction
-This solution implements a basic Graphics Engine using Qt and OpenGL. Graphics Engine interpretes all the geometrical objects including meshes, materials and transformations. OpenGLWidget
+This project implements a simple Graphics Engine and Spherical Harmonics Lighting Estimation using Qt and OpenGL, where the engine consists of cameras (view matrix), objects (model matrix), OpenGL widget (projection matrix) as a basic model and integrated with a material library, a transformation engine, and spherical harmonics lighting engine.
 
 ## Environment:
 * Windows 10
