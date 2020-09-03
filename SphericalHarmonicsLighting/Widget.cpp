@@ -103,9 +103,13 @@ void Widget::initializeGL() {
 	setFocusPolicy(Qt::StrongFocus);
 
 	// clear the screen with black
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	QOpenGLFunctions glFuncs(QOpenGLContext::currentContext());
+	glFuncs.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glFuncs.glEnable(GL_DEPTH_TEST);
+	glFuncs.glEnable(GL_CULL_FACE);
+	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
 
 	// initialize shaders
 	initShaders();
@@ -169,7 +173,9 @@ Output:
 	@ void returnValue: void;
 */
 void Widget::paintGL() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	QOpenGLFunctions glFuncs(QOpenGLContext::currentContext());
+	glFuncs.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// draw skybox
 	skyboxShader.bind();

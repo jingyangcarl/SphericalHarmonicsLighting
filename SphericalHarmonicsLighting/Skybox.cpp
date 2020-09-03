@@ -153,7 +153,7 @@ Output:
 bool Skybox::loadTextures() {
 
 	// init
-	QString dirPath = "./Resources/Skybox/";
+	QString dirPath = "./Resources/Skybox/SixSide";
 	QDir directory(dirPath);
 	if (!directory.exists()) {
 		qDebug() << "ERROR::Carl::Skybox::loadTextures::dirPath: no such directory";
@@ -167,7 +167,7 @@ bool Skybox::loadTextures() {
 	QStringList dirList = directory.entryList(QDir::Dirs);
 	dirList.removeFirst(); // remove ./
 	dirList.removeFirst(); // remove ../
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 15; i++) {
 		directory.cd(dirList[i]);
 		QStringList jpgList = directory.entryList(QStringList() << "*.jpg");
 

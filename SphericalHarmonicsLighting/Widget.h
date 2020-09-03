@@ -1,6 +1,7 @@
 #pragma once
 #include <qopenglwidget.h>
 #include <qopenglshaderprogram>
+#include <qopenglfunctions.h>
 #include <QKeyEvent>
 #include <QtMath>
 #include <qbasictimer.h>
